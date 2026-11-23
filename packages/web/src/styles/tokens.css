@@ -20,6 +20,8 @@
   --sidebar-bg: var(--n-navy);
   --sidebar-fg: #e6e9f2;
   --sidebar-muted: #9aa3bf;
+  --sidebar-accent: var(--n-mint); /* added: unread counts, as text only on the navy sidebar */
+  --sidebar-hover: rgba(255, 255, 255, 0.08); /* added */
   --fg: var(--n-navy); /* headings, names */
   --fg-body: #1f2433; /* message text, max readability */
   --fg-muted: #5b6378; /* timestamps, meta (6.0:1) */
@@ -34,37 +36,48 @@
   --focus-ring: 0 0 0 3px rgba(24, 75, 255, 0.35);
   --focus-ring-on-brand: 0 0 0 3px var(--n-mint); /* added: the blue ring is invisible on the blue header */
   --on-brand-divider: rgba(255, 255, 255, 0.45); /* added: decorative divider in the header */
+  --on-brand-fill: rgba(
+    255,
+    255,
+    255,
+    0.16
+  ); /* added: segmented control track on the blue header */
   --mention-bg: rgba(0, 255, 148, 0.18); /* message that mentions me: mint wash + mint left bar */
   --overlay: rgba(11, 18, 48, 0.55); /* added: dialog backdrop */
   --highlight-bg: rgba(24, 75, 255, 0.12); /* added: message jumped to from a reply */
-  /* added: avatar fills, white initials ≥ 5.19:1 on each */
-  --avatar-1: #184bff;
-  --avatar-2: #132153;
-  --avatar-3: #5b6378;
-  --avatar-4: #0b7a5a;
-  --avatar-5: #7a3fe4;
-  --avatar-6: #b42318;
-  --avatar-7: #a15c00;
-  --avatar-8: #0e6e8c;
 
   --font-sans: 'Raleway', 'Segoe UI', system-ui, sans-serif;
   --font-mono: 'JetBrains Mono', 'Cascadia Code', Consolas, monospace;
 
-  --radius-sm: 4px;
-  --radius-md: 6px;
-  --radius-lg: 10px;
-  --radius-pill: 999px;
+  /* shape (D-48: Apple-style continuous corners, no pills) */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
   --space-1: 4px;
   --space-2: 8px;
   --space-3: 12px;
   --space-4: 16px;
+  --space-5: 20px;
   --space-6: 24px;
   --space-8: 32px;
-  --shadow-1: 0 1px 2px rgba(19, 33, 83, 0.08);
-  --shadow-2: 0 6px 24px rgba(19, 33, 83, 0.14);
+  --space-10: 40px;
+  --space-12: 48px;
+  --hit-min: 44px; /* added: minimum pointer target (Apple HIG) */
+  /* added: soft layered shadows replace borders on cards, sheets and menus */
+  --shadow-1: 0 1px 2px rgba(19, 33, 83, 0.06), 0 1px 1px rgba(19, 33, 83, 0.04);
+  --shadow-2: 0 4px 12px rgba(19, 33, 83, 0.08), 0 12px 32px rgba(19, 33, 83, 0.1);
+  --shadow-3: 0 8px 24px rgba(19, 33, 83, 0.12), 0 24px 64px rgba(19, 33, 83, 0.18);
+  --separator: rgba(19, 33, 83, 0.1); /* added: hairline between regions */
+  /* added: translucent materials (used with --blur) */
+  --material-sheet: rgba(255, 255, 255, 0.86);
+  --material-bar: rgba(255, 255, 255, 0.78);
+  --blur: blur(20px) saturate(180%);
+  --fill: rgba(19, 33, 83, 0.06); /* added: filled inputs and tinted buttons */
+  --fill-hover: rgba(19, 33, 83, 0.1);
   --dur-fast: 120ms;
   --dur-med: 200ms;
   --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --ease-spring: cubic-bezier(0.32, 0.72, 0, 1); /* added: iOS-like settle */
 }
 
 [data-theme='dark'] {
@@ -87,4 +100,12 @@
   --border: #22306a;
   --mention-bg: rgba(0, 255, 148, 0.1);
   --highlight-bg: rgba(138, 162, 255, 0.18);
+  --separator: rgba(255, 255, 255, 0.1);
+  --material-sheet: rgba(19, 33, 83, 0.88);
+  --material-bar: rgba(11, 18, 48, 0.8);
+  --fill: rgba(255, 255, 255, 0.08);
+  --fill-hover: rgba(255, 255, 255, 0.12);
+  --shadow-1: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-2: 0 4px 12px rgba(0, 0, 0, 0.3), 0 12px 32px rgba(0, 0, 0, 0.35);
+  --shadow-3: 0 8px 24px rgba(0, 0, 0, 0.4), 0 24px 64px rgba(0, 0, 0, 0.5);
 }

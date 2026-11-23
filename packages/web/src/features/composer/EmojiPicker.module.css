@@ -6,10 +6,10 @@
   height: 360px;
   display: flex;
   flex-direction: column;
-  background: var(--bg);
-  border: 1px solid var(--border);
+  background: var(--material-sheet);
+  backdrop-filter: var(--blur);
   border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-2);
+  box-shadow: var(--shadow-3);
   z-index: 30;
 }
 
@@ -31,9 +31,9 @@
 .search {
   margin: var(--space-2);
   padding: var(--space-2) var(--space-3);
-  border: 1px solid var(--border);
+  border: 0;
   border-radius: var(--radius-sm);
-  background: var(--bg);
+  background: var(--fill);
   color: var(--fg-body);
   font: inherit;
 }
@@ -72,7 +72,7 @@
 
 .cell:hover,
 .cell:focus-visible {
-  background: var(--bg-subtle);
+  background: var(--fill-hover);
 }
 
 .none {

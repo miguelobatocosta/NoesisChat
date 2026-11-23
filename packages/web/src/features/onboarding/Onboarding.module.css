@@ -2,16 +2,16 @@
   width: 100%;
   max-width: 520px;
   padding: var(--space-8);
-  background: var(--bg-subtle);
-  border: 1px solid var(--border);
+  background: var(--bg);
   border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-1);
+  box-shadow: var(--shadow-3);
 }
 
 .title {
-  font-size: 24px;
-  line-height: 32px;
+  font-size: 28px;
+  line-height: 34px;
   font-weight: 700;
+  letter-spacing: -0.02em;
 }
 
 .subtitle {
@@ -21,8 +21,7 @@
 .rules {
   margin-bottom: var(--space-6);
   padding: var(--space-4);
-  background: var(--bg);
-  border: 1px solid var(--border);
+  background: var(--fill);
   border-radius: var(--radius-md);
   font-size: 14px;
   line-height: 20px;

@@ -2,8 +2,8 @@
   display: inline-flex;
   padding: 2px;
   gap: 2px;
-  border-radius: var(--radius-pill);
-  box-shadow: inset 0 0 0 1px var(--on-brand-divider);
+  border-radius: var(--radius-sm);
+  background: var(--on-brand-fill);
 }
 
 .option {
@@ -14,7 +14,7 @@
   line-height: 20px;
   font-weight: 700;
   padding: 2px var(--space-3);
-  border-radius: var(--radius-pill);
+  border-radius: 6px;
   cursor: pointer;
   transition:
     background-color var(--dur-fast) var(--ease),
@@ -22,7 +22,7 @@
 }
 
 .option:hover {
-  background: var(--primary-hover);
+  background: var(--on-brand-fill);
 }
 
 .option[aria-checked='true'] {

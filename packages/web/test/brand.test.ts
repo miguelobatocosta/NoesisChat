@@ -36,7 +36,10 @@ function parseBlock(css: string, selector: string): Record<string, string> {
 
 const css = readFileSync(TOKENS, 'utf8');
 const light = parseBlock(css, ':root');
-const dark = { ...light, ...parseBlock(css, '[data-theme="dark"]') };
+// tokens.css writes the selector with single quotes; accept either so the dark checks really run.
+const darkSelector = /\[data-theme=(?:'dark'|"dark")\]/.exec(css)?.[0];
+if (!darkSelector) throw new Error('dark theme block not found in tokens.css');
+const dark = { ...light, ...parseBlock(css, darkSelector) };
 
 function resolve(vars: Record<string, string>, name: string): string {
   let value = vars[name];
@@ -74,6 +77,7 @@ const TEXT_PAIRS: [fg: string, bg: string][] = [
   ['--on-accent', '--accent'],
   ['--sidebar-fg', '--sidebar-bg'],
   ['--sidebar-muted', '--sidebar-bg'],
+  ['--sidebar-accent', '--sidebar-bg'],
 ];
 
 describe.each([

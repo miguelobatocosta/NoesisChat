@@ -8,15 +8,25 @@
   align-items: center;
   justify-content: center;
   gap: var(--space-2);
-  min-height: 36px;
-  padding: 0 var(--space-4);
+  min-height: 40px;
+  padding: 0 var(--space-5);
   border-radius: var(--radius-sm);
-  border: 1px solid transparent;
+  border: 0;
   font-size: 14px;
   line-height: 20px;
   font-weight: 700;
+  letter-spacing: -0.01em;
   cursor: pointer;
-  transition: background-color var(--dur-fast) var(--ease);
+  transition:
+    background-color var(--dur-fast) var(--ease),
+    transform var(--dur-fast) var(--ease-spring);
+}
+
+.primary:active:not(:disabled),
+.secondary:active:not(:disabled),
+.danger:active:not(:disabled),
+.accent:active:not(:disabled) {
+  transform: scale(0.98);
 }
 
 .primary {
@@ -34,12 +44,11 @@
 }
 
 .secondary {
-  background: var(--bg);
+  background: var(--fill);
   color: var(--fg);
-  border-color: var(--border);
 }
 .secondary:hover:not(:disabled) {
-  background: var(--bg-subtle);
+  background: var(--fill-hover);
 }
 
 .danger {
@@ -52,7 +61,7 @@
   color: var(--fg-body);
 }
 .ghost:hover:not(:disabled) {
-  background: var(--bg-subtle);
+  background: var(--fill);
 }
 
 .primary:disabled,
@@ -66,17 +75,17 @@
 .icon {
   display: inline-grid;
   place-items: center;
-  width: 32px;
-  height: 32px;
+  width: 36px;
+  height: 36px;
   padding: 0;
   border: 0;
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-sm);
   background: transparent;
   color: var(--fg-muted);
   cursor: pointer;
 }
 .icon:hover:not(:disabled) {
-  background: var(--bg-subtle);
+  background: var(--fill);
   color: var(--fg);
 }
 .icon:disabled {

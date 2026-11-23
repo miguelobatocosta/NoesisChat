@@ -1,5 +1,5 @@
 .composer {
-  padding: 0 var(--space-6) var(--space-4);
+  padding: 0 var(--space-8) var(--space-5);
   flex-shrink: 0;
 }
 
@@ -8,10 +8,8 @@
   align-items: center;
   gap: var(--space-2);
   padding: var(--space-1) var(--space-1) var(--space-1) var(--space-3);
-  border: 1px solid var(--border);
-  border-bottom: 0;
   border-radius: var(--radius-md) var(--radius-md) 0 0;
-  background: var(--bg-subtle);
+  background: var(--fill);
   font-size: 13px;
   line-height: 18px;
   color: var(--fg-muted);
@@ -41,9 +39,7 @@
   margin: 0;
   padding: var(--space-2);
   list-style: none;
-  border: 1px solid var(--border);
-  border-bottom: 0;
-  background: var(--bg-subtle);
+  background: var(--fill);
 }
 
 .upload {
@@ -92,12 +88,12 @@
   right: 2px;
   display: grid;
   place-items: center;
-  width: 20px;
-  height: 20px;
+  width: 22px;
+  height: 22px;
   padding: 0;
   border: 0;
-  border-radius: var(--radius-pill);
-  background: var(--n-navy);
+  border-radius: var(--radius-sm);
+  background: var(--overlay);
   color: var(--n-white);
   cursor: pointer;
 }
@@ -107,10 +103,13 @@
   display: flex;
   align-items: flex-end;
   gap: var(--space-1);
-  padding: var(--space-1);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-md);
-  background: var(--bg);
+  padding: var(--space-1) var(--space-1) var(--space-1) var(--space-2);
+  border: 0;
+  border-radius: var(--radius-lg);
+  background: var(--fill);
+  transition:
+    background-color var(--dur-med) var(--ease-spring),
+    box-shadow var(--dur-med) var(--ease-spring);
 }
 
 .banner + .box,
@@ -120,11 +119,12 @@
 }
 
 .box:focus-within {
-  border-color: var(--primary);
+  background: var(--bg);
+  box-shadow: var(--shadow-2);
 }
 
 .box[data-disabled] {
-  background: var(--bg-subtle);
+  opacity: 0.6;
 }
 
 .textarea {
@@ -162,10 +162,10 @@
   margin: 0;
   padding: var(--space-1);
   list-style: none;
-  background: var(--bg);
-  border: 1px solid var(--border);
+  background: var(--material-sheet);
+  backdrop-filter: var(--blur);
   border-radius: var(--radius-md);
-  box-shadow: var(--shadow-2);
+  box-shadow: var(--shadow-3);
   z-index: 25;
 }
 
@@ -173,10 +173,12 @@
   display: flex;
   align-items: center;
   gap: var(--space-2);
-  padding: var(--space-1) var(--space-2);
+  min-height: 36px;
+  padding: var(--space-1) var(--space-3);
   border-radius: var(--radius-sm);
   cursor: pointer;
   font-size: 14px;
+  font-weight: 600;
 }
 
 .suggestion[aria-selected='true'] {

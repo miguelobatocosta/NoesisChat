@@ -5,7 +5,6 @@ import { errorCode } from '../../api/errors';
 import { t } from '../../i18n';
 import { formatFull, formatRelative } from '../../lib/format';
 import { getStore, useChat } from '../../state/store';
-import { Avatar } from '../../ui/Avatar';
 import buttons from '../../ui/buttons.module.css';
 import { Dialog } from '../../ui/Dialog';
 import forms from '../../ui/forms.module.css';
@@ -213,7 +212,6 @@ function Members({ onError }: { onError: (e: unknown) => void }) {
       <ul className={styles.rows}>
         {list.map((m) => (
           <li key={m.id} className={styles.row}>
-            <Avatar userId={m.id} name={m.displayName} size={32} />
             <div className={styles.rowMain}>
               <span className={styles.rowTitle}>
                 {m.displayName} <span className={styles.role}>{t(`roles.${m.role}`)}</span>

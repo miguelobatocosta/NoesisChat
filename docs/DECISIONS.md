@@ -136,3 +136,14 @@ bug farm), `lucide-react` (the one outline icon set BRAND.md §5 asks for), `@ax
 
 ### D-47 · Join rate limit is configurable (`JOIN_RATE_PER_MIN`, default 5)
 Only so the E2E suite can create many users from one IP. Never raise it in production.
+
+## Owner requests after the build
+
+### D-48 · Apple-style refresh inside the Noesis brand: SETTLED (2026-11-23, owner)
+The owner asked for a more premium look following Apple's design guidelines and no circles around text.
+Kept: Noesis colours and Raleway (SF Pro's licence only allows Apple platforms). Removed: avatars with
+initials, pills and badges (unread count is a plain number, mention is an "@", connection status is text),
+borders on buttons/fields/cards. Added: softer corners (8/12/16), layered shadows, translucent materials,
+spring easing. The focus ring stays for keyboard users only (`:focus-visible`): removing it entirely fails
+WCAG 2.4.7 and the axe check. BRAND.md §3–5 updated. Also fixed `brand.test.ts`, whose dark-theme contrast
+checks were silently testing the light values.

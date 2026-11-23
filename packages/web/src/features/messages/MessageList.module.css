@@ -48,13 +48,31 @@
   content: '';
   flex: 1;
   height: 1px;
-  background: var(--border);
+  background: var(--separator);
 }
 
 .jump {
   position: absolute;
   right: var(--space-6);
-  bottom: var(--space-3);
-  border-radius: var(--radius-pill);
-  box-shadow: var(--shadow-2);
+  bottom: var(--space-4);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 40px;
+  padding: 0 var(--space-5);
+  border: 0;
+  border-radius: var(--radius-md);
+  background: var(--material-sheet);
+  backdrop-filter: var(--blur);
+  box-shadow: var(--shadow-3);
+  color: var(--link);
+  font: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform var(--dur-fast) var(--ease-spring);
+}
+
+.jump:active {
+  transform: scale(0.97);
 }

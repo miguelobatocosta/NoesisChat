@@ -11,8 +11,9 @@ Update at the end of every phase: status, date, commit, and anything deferred.
 | 4 | Invites, sessions, admin | ✅ done | 2026-11-23 | ad6707e, b38d4c9 | Per-device admin revoke deferred: logout revokes a device, admin revokes a member |
 | 5 | Images, notifications, room settings | ✅ done | 2026-11-23 | ad6707e, b38d4c9 | |
 | 6 | Go live: tunnel, PWA, backups, security pass | ✅ done | 2026-11-23 | phase-6 commit | No service worker (D-42). `pnpm demo` tested with a stand-in cloudflared; the real tunnel + office network check is D-00, on the owner |
+| 7 | Premium look, no circles (owner request, D-48) | ✅ done | 2026-11-23 | phase/07-premium-look | Avatars, pills and borders removed; focus ring keyboard-only; dark contrast test fixed |
 
-**Test totals:** 27 shared + 111 server + 227 web unit/integration, 17 Playwright E2E (incl. axe contrast in light and dark).
+**Test totals:** 27 shared + 111 server + 226 web unit/integration, 17 Playwright E2E (incl. axe contrast in light and dark).
 
 **Owner to-dos before the demo:** D-00 network check from an office laptop; set `ALLOWED_MAIL` in `.env`;
 D-01 brand approval before showing it beyond the team.

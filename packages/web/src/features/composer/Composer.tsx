@@ -21,7 +21,6 @@ import { isAcceptedImage, prepareImage } from '../../lib/imageprep';
 import { findTrigger, fromWire, toWire, type Trigger } from '../../lib/mentions';
 import { plainText } from '../../lib/plaintext';
 import { getStore, useChat } from '../../state/store';
-import { Avatar } from '../../ui/Avatar';
 import buttons from '../../ui/buttons.module.css';
 import styles from './Composer.module.css';
 import { EmojiPicker } from './EmojiPicker';
@@ -374,11 +373,7 @@ export const Composer = forwardRef<
                   applySuggestion(s);
                 }}
               >
-                {s.member ? (
-                  <Avatar userId={s.member.id} name={s.member.displayName} size={24} />
-                ) : (
-                  <span className={styles.suggestionEmoji}>{s.label}</span>
-                )}
+                {!s.member && <span className={styles.suggestionEmoji}>{s.label}</span>}
                 <span>{s.member ? s.label : s.detail}</span>
               </li>
             ))}

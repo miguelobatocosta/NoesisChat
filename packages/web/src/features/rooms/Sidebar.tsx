@@ -4,7 +4,6 @@ import type { Member, RoomView } from '@pausa/shared';
 import type { DialogName } from '../../app/ChatApp';
 import { t } from '../../i18n';
 import { getStore, useChat } from '../../state/store';
-import { Avatar } from '../../ui/Avatar';
 import { archivedRooms, hiddenRooms, visibleRooms } from './roomOrder';
 import styles from './Sidebar.module.css';
 
@@ -113,7 +112,11 @@ function RoomRow({ room }: { room: RoomView }) {
           {room.emoji ?? '#'}
         </span>
         <span className={styles.roomName}>{room.name}</span>
-        {room.mentions > 0 && <span className={styles.mentionDot} aria-hidden="true" />}
+        {room.mentions > 0 && (
+          <span className={styles.mention} aria-hidden="true">
+            @
+          </span>
+        )}
         {room.unread > 0 && (
           <span className={`${styles.badge} num`} aria-hidden="true">
             {room.unread > 99 ? '99+' : room.unread}
@@ -127,10 +130,7 @@ function RoomRow({ room }: { room: RoomView }) {
 function MemberRow({ member, isMe }: { member: Member; isMe: boolean }) {
   return (
     <li className={styles.member} data-online={member.online || undefined}>
-      <span className={styles.avatarWrap}>
-        <Avatar userId={member.id} name={member.displayName} size={24} />
-        <span className={styles.presence} aria-hidden="true" />
-      </span>
+      <span className={styles.presence} aria-hidden="true" />
       <span className={styles.memberName}>{member.displayName}</span>
       {isMe && <span className={styles.meTag}>{t('sidebar.you')}</span>}
     </li>
@@ -162,7 +162,6 @@ function MeFooter({ onOpen }: { onOpen: (d: DialogName) => void }) {
 
   return (
     <div className={styles.me} ref={ref}>
-      <Avatar userId={me.id} name={me.displayName} size={32} />
       <div className={styles.meText}>
         <span className={styles.meName}>{me.displayName}</span>
         <span className={styles.meRole}>{t(`roles.${me.role}`)}</span>

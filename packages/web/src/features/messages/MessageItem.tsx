@@ -7,7 +7,6 @@ import { isJumboEmoji, renderMarkdown } from '../../lib/markdown';
 import { plainText } from '../../lib/plaintext';
 import { QUICK_REACTIONS } from '../../lib/emoji';
 import { getStore, type PendingMessage, useChat } from '../../state/store';
-import { Avatar } from '../../ui/Avatar';
 import buttons from '../../ui/buttons.module.css';
 import { EmojiPicker } from '../composer/EmojiPicker';
 import styles from './MessageItem.module.css';
@@ -48,19 +47,15 @@ export const MessageItem = memo(function MessageItem({
       data-message-id={message.id}
       aria-label={author}
     >
-      <div className={styles.gutter}>
-        {grouped ? (
-          <time
-            className={`${styles.hoverTime} num`}
-            dateTime={new Date(message.createdAt).toISOString()}
-            title={formatFull(message.createdAt)}
-          >
-            {formatTime(message.createdAt)}
-          </time>
-        ) : (
-          <Avatar userId={message.userId} name={author} size={36} />
-        )}
-      </div>
+      {grouped && (
+        <time
+          className={`${styles.hoverTime} num`}
+          dateTime={new Date(message.createdAt).toISOString()}
+          title={formatFull(message.createdAt)}
+        >
+          {formatTime(message.createdAt)}
+        </time>
+      )}
 
       <div className={styles.content}>
         {!grouped && (
@@ -249,9 +244,6 @@ export function PendingItem({ pending }: { pending: PendingMessage }) {
   const nameOf = (id: string) => members[id]?.displayName ?? store.nameOf(id);
   return (
     <article className={styles.message} data-pending={pending.status} aria-label={me.displayName}>
-      <div className={styles.gutter}>
-        <Avatar userId={me.id} name={me.displayName} size={36} />
-      </div>
       <div className={styles.content}>
         <header className={styles.meta}>
           <span className={styles.author}>{me.displayName}</span>

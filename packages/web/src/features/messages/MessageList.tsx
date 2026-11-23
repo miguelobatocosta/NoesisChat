@@ -162,7 +162,7 @@ export function MessageList({ roomId }: { roomId: string }) {
       {!atBottom && (
         <button
           type="button"
-          className={`${buttons.primary} ${styles.jump}`}
+          className={styles.jump}
           onClick={() => virtuoso.current?.scrollToIndex({ index: 'LAST', behavior: 'smooth' })}
         >
           <ArrowDown size={16} strokeWidth={1.75} aria-hidden />

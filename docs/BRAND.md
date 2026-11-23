@@ -100,7 +100,9 @@ so it can be bundled. **Bundle the woff2 files locally. No Google Fonts CDN at r
 **Added while building** (all in `tokens.css`, each checked by `packages/web/test/brand.test.ts`):
 `--primary-hover` `#0035EE` (blue darkened 8%, white on it 7.65:1) · `--focus-ring-on-brand` (mint ring, because the
 blue ring is invisible on the blue header) · `--on-brand-divider` (decorative) · `--overlay` (dialog backdrop) ·
-`--highlight-bg` (message jumped to from a reply) · `--avatar-1…8` (avatar fills; white initials ≥ 5.19:1 on each).
+`--highlight-bg` (message jumped to from a reply) · `--sidebar-accent` (mint, as text only on the navy sidebar) ·
+`--separator`, `--fill`, `--fill-hover`, `--material-sheet`, `--material-bar`, `--blur`, `--on-brand-fill`,
+`--shadow-3`, `--ease-spring`, `--hit-min` (D-48: Apple-style refresh). The avatar fills were removed with the avatars (D-48).
 
 Theme: follow the OS by default (`prefers-color-scheme`), user override System / Light / Dark, remembered in
 `localStorage` (wrapped in try/catch). The override sets `data-theme` on `<html>`.
@@ -109,7 +111,7 @@ Theme: follow the OS by default (`prefers-color-scheme`), user override System /
 
 | Role | Size / line | Weight |
 |---|---|---|
-| Room title | 18 / 24 | 700 |
+| Room title | 20 / 26, −0.02em | 700 |
 | Section label (sidebar groups) | 11 / 16, uppercase, +0.06em tracking | 700 |
 | Author name | 14 / 20 | 700 |
 | Message body | 15 / 22 | 500 (Raleway 400 is thin on Windows ClearType, test both) |
@@ -121,14 +123,19 @@ Raleway's default old-style numerals look odd in timestamps and counts: enable l
 
 ## 5. Components (brand application)
 
-- **Header bar:** `--surface-brand` blue, white logo at left (24px tall), server name, connection status pill.
-- **Primary button:** blue bg, white text, `--radius-sm`, 700 weight. Hover: darken 8%.
+- **Header bar:** `--surface-brand` blue, white logo at left (24px tall), server name, connection status as
+  plain text with a small dot (no pill, D-48).
+- **Primary button:** blue bg, white text, `--radius-sm`, 700 weight, no border. Hover: darken 8%.
+- **Shape language (D-48, Apple HIG principles):** no borders on buttons, fields or cards. Fields are filled
+  (`--fill`); cards, dialogs and menus float on `--shadow-3`, menus and pop-overs use the translucent
+  `--material-sheet` with `--blur`. Regions are split by 1px `--separator` hairlines. No pills, no circles around text.
 - **Accent CTA** (sparingly, e.g. "Create invite", "Join"): mint bg + navy text. This mirrors the site's "Get in touch".
 - **Sidebar:** navy background, room rows `#E6E9F2`; active row = blue bg + white text; unread = 700 weight + white;
-  unread badge = mint pill with navy number; mention badge = mint dot.
-- **Presence:** mint dot (online), hollow `--sidebar-muted` ring (offline).
+  unread count = plain mint number (`--sidebar-accent`), mention = mint "@". No badges (D-48).
+- **People:** names only, no avatars (D-48). Presence: small mint dot (online), faded `--sidebar-muted` dot (offline).
 - **Own messages:** not bubbles. Same left-aligned layout as everyone (team chat convention), subtle `--bg-selected` tint optional.
-- **Focus:** always visible `--focus-ring`. Keyboard navigation for rooms (Ctrl+K quick switcher, Alt+↑/↓).
+- **Focus:** `--focus-ring` on `:focus-visible` only, so it shows for the keyboard and not the mouse (D-48).
+  Filled fields show focus by lifting to `--bg` with a shadow. Keyboard navigation for rooms (Ctrl+K quick switcher, Alt+↑/↓).
 - **Empty states:** one line of friendly copy + one action. No stock illustrations.
 - **Iconography:** one outline icon set (e.g. Lucide), 1.75px stroke, 18–20px. Don't mix sets.
 

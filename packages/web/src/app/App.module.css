@@ -15,10 +15,9 @@
   max-width: 480px;
   padding: var(--space-8);
   text-align: center;
-  background: var(--bg-subtle);
-  border: 1px solid var(--border);
+  background: var(--bg);
   border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-1);
+  box-shadow: var(--shadow-3);
 }
 
 .muted {
