@@ -1,6 +1,7 @@
 # Pausa — Product & Technical Spec
 
-Status: v2 (web demo), 2026-11-23. Owner: Costa. Supersedes the Electron plan in `_archive/`.
+Status: v2.1 (web demo, built), 2026-11-23. Owner: Costa. Supersedes the Electron plan in `_archive/`.
+v2.1 records what changed while building; each change is also a decision in DECISIONS.md (D-39…D-46).
 Anything marked **[OPEN]** is tracked in `DECISIONS.md`.
 
 ---
@@ -45,8 +46,9 @@ Every admin/host action is written to `admin_log` (who, what, when, target).
 ## 3. Core UX
 
 ### 3.1 Joining
-- **Host bootstrap (once):** `pnpm server:init` creates the host user and prints a one-time host invite
-  link. The host joins in the browser like everyone else. There is no host-only UI or host mode.
+- **Host bootstrap (once):** `pnpm server:init` creates a one-time host invite link (and, once a host
+  exists, a link that signs the host in on another browser). The host joins in the browser like everyone
+  else. There is no host-only UI or host mode. `pnpm server:invite` creates member invites from the terminal.
 - **Colleague:** clicks the invite link `<PUBLIC_URL>/join#<code>` → passes Cloudflare's email PIN screen
   (if the tunnel is gated, §4) → sees the house rules and privacy note (§3.7) → picks a display name
   (prefilled and locked if the invite names the person) → lands in `#geral`.
@@ -152,15 +154,16 @@ Shown on the join screen and from the user menu, in pt-PT, plain words:
 pausa/
   CLAUDE.md
   docs/ (SPEC, BRAND, DECISIONS, PROMPTS, PROGRESS; later OPERATIONS, SECURITY, DEMO)
-  scripts/ (demo.mjs, backup.mjs)
+  scripts/demo.mjs
   packages/
     shared/  src/{schemas,events,constants,types}.ts
-    server/  src/{main.ts,app.ts,config.ts,cli/init.ts,db/,auth/,rooms/,messages/,uploads/,admin/,backup/}
+    server/  src/{main.ts,app.ts,config.ts,db/,auth/,rooms/,messages/,members/,uploads/,admin/,realtime/,
+                  cli/{init,invite,backup,restore,seed}.ts}
              migrations/0001_init.sql ...
              test/
     web/     src/{app/,features/{rooms,messages,composer,members,admin,onboarding}/,ui/,
                   styles/tokens.css,i18n/pt-PT.json,assets/brand/,assets/fonts/}
-             public/{manifest.webmanifest,icons/,sw.js}
+             public/{favicon.svg,theme-init.js,icons/}   (manifest generated at build)
              e2e/
   pnpm-workspace.yaml
 ```
@@ -210,6 +213,7 @@ settings     (key PK, value JSON)          -- includes 'change_seq' (see below)
 | Method | Path | Auth | Purpose |
 |---|---|---|---|
 | GET | `/health` | none | `{ ok: true }`. No version or name (don't hand scanners a fingerprint) |
+| GET | `/api/session` | cookie (optional) | `{ ok: true, user }`, with `user: null` when signed out. Always 200 (D-43) |
 | POST | `/api/join` | invite code + Origin | Redeem invite → user + device → sets session cookie, returns the user |
 | POST | `/api/logout` | cookie + Origin | Revokes this device, clears the cookie |
 | POST | `/api/uploads` | cookie + Origin | Multipart image upload → unattached attachment record |
@@ -237,18 +241,19 @@ Client → server:
   and the client reloads the latest page instead.
 - `messages:send {roomId, clientId, body, replyToId?, attachmentIds[]}`, `messages:edit {messageId, body}`,
   `messages:delete {messageId}`, `reactions:toggle {messageId, emoji}`
-- `typing {roomId}`, `read:mark {roomId, messageId}`, `prefs:update {roomId, notify?, hidden?}`, `members:list`
-- Admin (role-checked server-side): `admin:invites:create|list|revoke`, `admin:members:list|revoke|setRole`,
+- `typing {roomId}`, `read:mark {roomId, messageId}`, `prefs:update {roomId, notify?, hidden?}`
+- `members:list` → every user, revoked ones with `active: false` so old messages keep a name (D-44)
+- Admin (role-checked server-side): `admin:invites:create|list|revoke`, `admin:members:revoke|setRole`,
   `admin:log:list`
 
-Server → client: `message:new`, `message:updated`, `message:deleted`, `reaction:updated` (all carry the
-message's `seq`), `room:created`, `room:updated`, `presence {userId, online}`, `typing {roomId, userId}`,
-`member:updated`, `session:revoked`, `server:shutdown`.
+Server → client: `message:new`; `message:updated` for edits, deletes and reaction changes alike (full
+message with its new `seq`, D-45); `room:created`, `room:updated`, `presence {userId, online}`,
+`typing {roomId, userId}`, `member:updated`, `session:revoked`, `server:shutdown`.
 
 - **Reconnect:** the client keeps the highest `seq` it has seen per loaded room. After reconnecting it calls
   `rooms:list` (badges) and `messages:sync` for each loaded room.
 - Rate limits per device: `messages:send` 10/10s, `typing` 1/2s, `rooms:create` 5/hour, uploads 30/10min.
-  Per client IP (rule 8): `/api/join` 5/min.
+  Per client IP (rule 8): `/api/join` 5/min (`JOIN_RATE_PER_MIN`, raised only for automated tests).
 
 ---
 
@@ -279,7 +284,7 @@ message's `seq`), `room:created`, `room:updated`, `presence {userId, online}`, `
 ## 8. Reliability and operations
 
 - SQLite in WAL mode; `PRAGMA foreign_keys=ON`; busy timeout 5s.
-- `pnpm backup` → `backups/YYYY-MM-DD-HHmm/` with `db.sqlite` (better-sqlite3 `.backup()`) **and a copy of
+- `pnpm backup` → `backups/YYYY-MM-DD-HHmmss/` with `db.sqlite` (better-sqlite3 `.backup()`) **and a copy of
   `uploads/`**. Keeps the last 14. A backup on the same disk isn't a backup: OPERATIONS.md tells the host to
   copy the folder off the PC (OneDrive, USB).
 - Graceful shutdown on Ctrl+C: emit `server:shutdown` ("o servidor foi desligado"), close sockets, close the DB.
@@ -290,9 +295,10 @@ message's `seq`), `room:created`, `room:updated`, `presence {userId, online}`, `
 
 ## 9. Distribution
 
-None. **The URL is the distribution.** A web app manifest, a placeholder icon set (not the Noesis logo,
-see BRAND.md §6) and a minimal service worker with a pass-through fetch handler let Edge/Chrome offer
-"Install app". The service worker caches nothing in v1: no stale app versions, no cached messages.
+None. **The URL is the distribution.** A web app manifest built from `APP_NAME` and a placeholder icon set
+(not the Noesis logo, see BRAND.md §6) let Edge/Chrome offer "Install app" from the browser menu.
+No service worker: Chrome dropped that requirement for menu install in version 112 (D-42), and without
+one there are no stale cached versions and nothing cached at all.
 
 ---
 

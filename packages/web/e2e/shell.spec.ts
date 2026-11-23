@@ -66,3 +66,21 @@ test('server paths never get the app shell, and carry the CSP', async ({ request
   const files = await request.get('/files/01JA0000000000000000000000');
   expect(files.status()).toBe(401);
 });
+
+test('installable: manifest with name and icons is served', async ({ request, page }) => {
+  await page.goto('/');
+  const href = await page.locator('link[rel=manifest]').getAttribute('href');
+  const res = await request.get(href!);
+  expect(res.ok()).toBe(true);
+  const manifest = (await res.json()) as {
+    name: string;
+    display: string;
+    icons: { src: string; sizes: string }[];
+  };
+  expect(manifest).toMatchObject({ name: APP_NAME, display: 'standalone' });
+  expect(manifest.icons.map((i) => i.sizes)).toEqual(
+    expect.arrayContaining(['192x192', '512x512']),
+  );
+  for (const icon of manifest.icons)
+    expect((await request.get(icon.src)).headers()['content-type']).toBe('image/png');
+});

@@ -7,10 +7,12 @@ interface Props {
   onPick: (emoji: string) => void;
   onClose: () => void;
   align?: 'left' | 'right';
+  /** In normal flow instead of a popover (inside dialogs, where a popover would be clipped). */
+  inline?: boolean;
 }
 
 /** Bundled emoji picker: search + categories. Closes on Esc or outside click. */
-export function EmojiPicker({ onPick, onClose, align = 'left' }: Props) {
+export function EmojiPicker({ onPick, onClose, align = 'left', inline = false }: Props) {
   const [query, setQuery] = useState('');
   const ref = useRef<HTMLDivElement>(null);
   const input = useRef<HTMLInputElement>(null);
@@ -38,6 +40,7 @@ export function EmojiPicker({ onPick, onClose, align = 'left' }: Props) {
     <div
       className={styles.picker}
       data-align={align}
+      data-inline={inline || undefined}
       ref={ref}
       role="dialog"
       aria-label={t('composer.emoji')}

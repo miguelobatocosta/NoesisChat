@@ -31,6 +31,9 @@ async function main(): Promise<void> {
     if (closing) return;
     closing = true;
     console.log(`\n${signal} recebido, a desligar…`);
+    // Tell every client first, so they show "the server was switched off" instead of a generic drop.
+    app.pausa.io.emit('server:shutdown');
+    await new Promise((resolve) => setTimeout(resolve, 300));
     await app.close();
     process.exit(0);
   };

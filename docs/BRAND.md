@@ -97,6 +97,11 @@ so it can be bundled. **Bundle the woff2 files locally. No Google Fonts CDN at r
   --mention-bg:    rgba(0, 255, 148, 0.10);
 }
 ```
+**Added while building** (all in `tokens.css`, each checked by `packages/web/test/brand.test.ts`):
+`--primary-hover` `#0035EE` (blue darkened 8%, white on it 7.65:1) · `--focus-ring-on-brand` (mint ring, because the
+blue ring is invisible on the blue header) · `--on-brand-divider` (decorative) · `--overlay` (dialog backdrop) ·
+`--highlight-bg` (message jumped to from a reply) · `--avatar-1…8` (avatar fills; white initials ≥ 5.19:1 on each).
+
 Theme: follow the OS by default (`prefers-color-scheme`), user override System / Light / Dark, remembered in
 `localStorage` (wrapped in try/catch). The override sets `data-theme` on `<html>`.
 
@@ -146,6 +151,11 @@ For Pausa: short, informal, friendly. pt-PT first. Examples:
 - Never corporate jargon in a social space. Never guilt-trippy copy.
 
 ## 8. Brand QA checklist (run on every UI phase)
+
+Automated: raw colours outside `tokens.css` and token-pair contrast (`brand.test.ts`), hardcoded text and
+raw colours in components (ESLint), real rendered contrast in light and dark (axe in Playwright), no external
+requests and Raleway loaded (Playwright). `/brand-check` covers the rest by review.
+
 
 - [ ] No raw hex values in components; everything through tokens
 - [ ] No mint text on light surfaces; no blue text on navy

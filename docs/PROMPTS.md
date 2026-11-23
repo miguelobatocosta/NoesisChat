@@ -1,5 +1,10 @@
 # PROMPTS.md — phased build prompts for Claude Code
 
+> **Status 2026-11-23:** all six phases were built in one session at the owner's request ("do everything
+> in one go"), in the order 1 → 2+4 (server with real auth) → 5 (server) → 3+4+5 (web) → 6. Deviations are
+> in DECISIONS D-39…D-47. Keep these prompts: they're the script for re-running the build as a live demo,
+> and the template for backlog items (SPEC §11).
+
 How to use: one phase per session (or `/next-phase`). Paste the prompt, let Claude plan in plan mode,
 review the plan, approve, then let it build. Don't start a phase until the previous one meets its
 acceptance criteria. Clear context between phases (`/clear`). CLAUDE.md and the docs carry the memory.

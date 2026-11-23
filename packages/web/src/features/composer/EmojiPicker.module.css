@@ -20,6 +20,14 @@
   top: calc(100% + var(--space-1));
 }
 
+.picker[data-inline] {
+  position: static;
+  width: 100%;
+  height: 260px;
+  margin-top: var(--space-2);
+  box-shadow: var(--shadow-1);
+}
+
 .search {
   margin: var(--space-2);
   padding: var(--space-2) var(--space-3);

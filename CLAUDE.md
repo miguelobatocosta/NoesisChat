@@ -1,8 +1,9 @@
 # CLAUDE.md — Pausa (team social chat, web demo)
 
-You are building **Pausa**, a private web chat for a team's non-work conversation. It is a **demo**:
-it has to work end to end, look good and stay safe on the open internet, built in about seven
-short sessions. Working name only: the display name lives in one config value (`APP_NAME`). Do not hardcode it.
+You are working on **Pausa**, a private web chat for a team's non-work conversation. It is a **demo**:
+it has to work end to end, look good and stay safe on the open internet. All six phases were built on
+2026-11-23 (see `docs/PROGRESS.md`); new work starts from the backlog in SPEC §11. Working name only: the
+display name lives in one constant, `APP_NAME` in `packages/shared/src/constants.ts` (D-40). Do not hardcode it.
 
 Read these before any non-trivial change:
 - `docs/SPEC.md`: what we're building, architecture, data model, protocol, security rules
@@ -21,12 +22,15 @@ through a Cloudflare quick tunnel that only lets in the listed email addresses. 
 the protected main room (`#geral`), and any member can create topic rooms. Text, images, reactions, replies, mentions.
 
 ## Stack (use current stable versions; check with `npm view <pkg> version`, don't guess)
-- Monorepo: **pnpm workspaces**, TypeScript `strict: true` everywhere. Node: current LTS.
+- Monorepo: **pnpm 12** workspaces, **TypeScript 6** `strict: true` everywhere (not 7 yet: D-39). Node ≥ 22.12.
 - `packages/shared`: zod schemas for every socket event and HTTP payload, shared types, constants
 - `packages/server`: **Fastify** + **Socket.IO** + **better-sqlite3** (WAL mode). Serves the built web app
   with `@fastify/static` in production. Runs as a plain Node process (`node dist/main.js`).
-- `packages/web`: **Vite** + **React** + CSS variables (tokens from BRAND.md). PWA manifest.
-- Tests: **Vitest** (unit + server integration with `socket.io-client`), **Playwright** (Chromium) for E2E
+- `packages/web`: **Vite** + **React** + CSS modules over CSS variables (tokens from BRAND.md).
+  `react-virtuoso` for the message list, `lucide-react` icons, `socket.io-client`. PWA manifest, no service worker.
+- Tests: **Vitest** (unit + server integration with `socket.io-client`), **Playwright** (Chromium) for E2E,
+  `@axe-core/playwright` for contrast. Lint: ESLint 10 flat config; brand/i18n/raw-HTML rules are
+  `no-restricted-syntax` selectors in `eslint.config.js`.
 - Exposure: `cloudflared` quick tunnel with `--allowed-mail` (see SPEC §4 and DECISIONS D-20)
 
 **pnpm gotcha:** pnpm ≥10 blocks dependency install scripts by default, and better-sqlite3 needs its
@@ -38,14 +42,20 @@ Check `pnpm --version` first; don't guess.
 ```
 pnpm install
 pnpm dev              # server (watch) + Vite dev server with proxy → http://localhost:5173
-pnpm start            # build web + run server on http://localhost:4747
-pnpm server:init      # first run only: create the host user, print a one-time host invite link
-pnpm demo             # start tunnel, capture its URL, start server with PUBLIC_URL set (Phase 6)
-pnpm test             # all Vitest suites
-pnpm test:e2e         # Playwright
-pnpm lint && pnpm typecheck
-pnpm backup           # db + uploads → backups/<timestamp>/ (Phase 6)
+pnpm build            # web (Vite) + server and CLIs (esbuild → packages/server/dist)
+pnpm start            # build + run server on http://localhost:4747
+pnpm demo             # build, quick tunnel with email gate, server with PUBLIC_URL, host link
+pnpm server:init      # host invite link (or, once a host exists, a host sign-in link for another browser)
+pnpm server:invite    # member invite link from the terminal (--name, --expires 24h|7d, --json)
+pnpm backup           # db + uploads → data/backups/<timestamp>/, keeps 14
+pnpm restore <dir>    # server stopped; current data moved aside first
+pnpm test             # all Vitest suites (shared, server, web)
+pnpm e2e:install      # once: Playwright's Chromium
+pnpm test:e2e         # Playwright against the production build
+pnpm lint && pnpm typecheck && pnpm format:check
 ```
+Config keys (env > `.env` > `pausa.config.json`): `PORT`, `BIND`, `DATA_DIR`, `PUBLIC_URL`, `UPLOAD_MAX_MB`,
+`JOIN_RATE_PER_MIN` (tests only), `WEB_DIST`; `ALLOWED_MAIL` is read by `scripts/demo.mjs`.
 Scripts that need logic (tunnel, backup) are Node scripts in `scripts/`, not shell one-liners:
 the host runs Windows.
 

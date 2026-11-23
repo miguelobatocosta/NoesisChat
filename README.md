@@ -1,37 +1,44 @@
-# Pausa: Claude Code starter kit (web demo)
+# Pausa — a private team chat, built with Claude Code
 
-A private team chat, built in seven short Claude Code sessions to show how fast it can be done.
-Colleagues use a browser; nothing gets installed on their machines.
+A web chat for colleagues' non-work talk: rooms, mentions, reactions, replies, images, notifications,
+invite-only access, Noesis look. Built from a written spec in one Claude Code session (2026-11-23):
+**~365 automated tests**, 17 browser tests, threat model included. Colleagues only need a browser.
 
 ```
-CLAUDE.md                        ← auto-loaded by Claude Code every session: rules, stack, commands
-docs/SPEC.md                     ← product + architecture + data model + protocol + security
-docs/BRAND.md                    ← Noesis tokens, contrast rules, components, logo rules
-docs/DECISIONS.md                ← what's settled, what's still open (D-00 network check, D-01 brand)
-docs/PROMPTS.md                  ← Phase 0–6 prompts, each with tests + acceptance criteria
-docs/PROGRESS.md                 ← phase tracker Claude updates as it goes
-.claude/commands/next-phase.md   → /next-phase   plan the next unfinished phase
-.claude/commands/brand-check.md  → /brand-check  audit UI against BRAND.md
-_archive/                        ← the superseded Electron plan, for reference only
+CLAUDE.md                        ← auto-loaded by Claude Code: rules, stack, commands
+docs/SPEC.md                     ← product, architecture, data model, protocol, security
+docs/DECISIONS.md                ← every decision and why (D-00 and D-01 are still on you)
+docs/PROMPTS.md                  ← the phase prompts the build followed
+docs/PROGRESS.md                 ← what's done
+docs/OPERATIONS.md               ← running it: setup, demo day, backups, troubleshooting
+docs/DEMO.md                     ← 5-minute demo script
+docs/SECURITY.md                 ← threat model with evidence
+docs/BRAND.md                    ← Noesis tokens, contrast rules
+packages/shared · server · web   ← the code
+scripts/demo.mjs                 ← `pnpm demo`
+.claude/commands/                → /next-phase, /brand-check
+_archive/                        ← the superseded Electron plan, reference only
 ```
 
-## Before you start
-1. `git init` in this folder. It isn't a repo yet, and the workflow uses one branch per phase.
-2. Install on the host PC: Node LTS, pnpm (`corepack enable`), and cloudflared
-   (`winget install --id Cloudflare.cloudflared`).
-3. **Network check (D-00), 5 minutes, do it now:** run `cloudflared tunnel --url http://localhost:8080`
-   (nothing needs to be listening), then open the printed `trycloudflare.com` URL from a colleague's laptop
-   on the office network. A Cloudflare error page means the domain gets through. A company block page means
-   it doesn't: read D-00 and D-20 for the fallback.
+## Run it (Windows, from this folder)
 
-## Run order
-1. In Claude Code: paste the **Phase 0** prompt. Answer its questions and update the docs.
-2. Then `/next-phase` → review the plan → approve → build → check acceptance → `/clear` → repeat.
-3. Run `/brand-check` after Phases 3 and 5. Phase 6 runs the built-in `/security-review`.
-4. Demo day: `pnpm demo`, send the invite links, follow `docs/DEMO.md`.
+```
+npm install -g pnpm
+winget install --id Cloudflare.cloudflared
+pnpm install
+copy .env.example .env          # then set ALLOWED_MAIL
+pnpm start                      # local only → http://localhost:4747
+pnpm server:init --name "Costa" # your one-time host link (local)
+pnpm demo                       # reachable by colleagues through the email-gated tunnel
+```
 
-## Rules of thumb
-- One phase per session. Clear context between phases; the docs are the memory.
-- Never approve a plan that skips "tests first" for server phases.
-- If Claude says the spec is wrong, it's probably worth a look. Update SPEC.md, don't let it improvise.
-- Keep the demo honest: if a phase overruns, cut scope into the SPEC §11 backlog rather than skipping tests.
+Full instructions: `docs/OPERATIONS.md`. Before showing anyone: the office network check (D-00) and
+brand approval (D-01) in `docs/DECISIONS.md`.
+
+## Checks
+
+```
+pnpm lint && pnpm typecheck && pnpm test
+pnpm e2e:install   # once
+pnpm test:e2e
+```

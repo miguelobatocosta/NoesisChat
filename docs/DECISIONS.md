@@ -95,3 +95,44 @@ shown on join, stating plainly that the host can read everything.
 
 ### D-38 · Idempotent sends
 The server dedupes `messages:send` on `(user_id, client_id)` so retries after a dropped ack never duplicate.
+
+---
+
+## Made while building (2026-11-23, all six phases in one session at the owner's request)
+
+### D-39 · Toolchain pins
+TypeScript **6.0.3**, not 7: typescript-eslint supports `<6.1`. ESLint **10** without `eslint-plugin-react`
+(no ESLint 10 support); the "no hardcoded UI text / no raw colours / no raw HTML" rules are core
+`no-restricted-syntax` selectors instead. pnpm **12.23**, pinned in `packageManager`. Revisit when
+typescript-eslint supports TS 7.
+
+### D-40 · APP_NAME is one constant in `packages/shared/src/constants.ts`, not an env variable
+The web app needs it at build time (title, manifest, header); an env value would need an extra endpoint.
+Still one place to change it.
+
+### D-41 · No dev-user seam
+Auth was built in the same session as the server core, so the UI was developed against real invites
+from the start. Nothing to delete later.
+
+### D-42 · No service worker
+Chrome/Edge allow "Install app" from the menu without one since version 112. Without it there's no stale
+cached app and nothing cached at all. Web Push stays out (D-37).
+
+### D-43 · `GET /api/session` always answers 200 (`user: null` when signed out)
+A 401 on every signed-out visit shows up as a console error; this keeps the console clean and the
+E2E "no errors" check meaningful.
+
+### D-44 · Revoked members stay in `members:list` with `active: false`
+So their old messages keep a name. The sidebar and admin panel only show active members.
+
+### D-45 · One `message:updated` event for edits, deletes and reaction changes
+Each carries the full message and its new `seq`; the client has one code path. Replaces the separate
+`message:deleted` / `reaction:updated` events in the first SPEC draft.
+
+### D-46 · New UI dependencies
+`react-virtuoso` (reverse-scrolling chat list with prepend anchoring; hand-rolling that is the classic
+bug farm), `lucide-react` (the one outline icon set BRAND.md §5 asks for), `@axe-core/playwright`
+(automated contrast checks). Server: `socket.io`, `ulid` (monotonic IDs), `@fastify/multipart`.
+
+### D-47 · Join rate limit is configurable (`JOIN_RATE_PER_MIN`, default 5)
+Only so the E2E suite can create many users from one IP. Never raise it in production.

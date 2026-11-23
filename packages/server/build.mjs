@@ -15,6 +15,8 @@ await build({
     init: 'src/cli/init.ts',
     invite: 'src/cli/invite.ts',
     seed: 'src/cli/seed.ts',
+    backup: 'src/cli/backup.ts',
+    restore: 'src/cli/restore.ts',
   },
   outdir: 'dist',
   bundle: true,
