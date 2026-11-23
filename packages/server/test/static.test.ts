@@ -46,7 +46,7 @@ describe('web app serving', () => {
     'never serves the app shell for server path %s',
     async (url) => {
       const res = await (await appWithWeb()).inject({ method: 'GET', url });
-      expect(res.statusCode).toBe(404);
+      expect([401, 404]).toContain(res.statusCode);
       expect(res.headers['content-type']).toContain('application/json');
     },
   );

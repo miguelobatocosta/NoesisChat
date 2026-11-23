@@ -10,6 +10,7 @@
     "dev": "pnpm -r --parallel run dev",
     "build": "pnpm -r run build",
     "start": "pnpm run build && pnpm --filter @pausa/server run start",
+    "server:init": "pnpm --filter @pausa/server run init",
     "test": "pnpm -r run test",
     "test:e2e": "pnpm --filter @pausa/web run test:e2e",
     "e2e:install": "pnpm --filter @pausa/web exec playwright install chromium",

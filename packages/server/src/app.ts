@@ -1,10 +1,25 @@
-import { existsSync } from 'node:fs';
+import { existsSync, mkdirSync } from 'node:fs';
 import { join } from 'node:path';
+import fastifyMultipart from '@fastify/multipart';
 import fastifyStatic from '@fastify/static';
-import Fastify, { LogController, type FastifyInstance, type FastifyReply } from 'fastify';
+import Fastify, { type FastifyInstance, type FastifyReply, LogController } from 'fastify';
 import type { ErrorBody, HealthResponse } from '@pausa/shared';
+import { allowedOrigins } from './auth/origin';
+import { registerAuthRoutes } from './auth/routes';
 import type { Config } from './config';
+import type { AppContext } from './context';
+import { openDatabase } from './db';
+import { Presence } from './members/presence';
+import { RateLimiter } from './rateLimit';
+import { createRealtime } from './realtime';
 import { registerSecurityHeaders } from './security';
+import { cleanupOrphans, registerUploadRoutes } from './uploads/routes';
+
+declare module 'fastify' {
+  interface FastifyInstance {
+    pausa: AppContext;
+  }
+}
 
 export interface BuildAppOptions {
   logger?: boolean;
@@ -21,13 +36,36 @@ export async function buildApp(
     logger: options.logger ? { level: config.env === 'development' ? 'info' : 'warn' } : false,
     // Request logging only in development: fewer logs, nothing about who requested what in production.
     logController: new LogController({ disableRequestLogging: config.env !== 'development' }),
-    // Client IP handling behind the tunnel arrives in Phase 4 (CLAUDE.md rule 8).
+    // Client IP is resolved explicitly (CLAUDE.md rule 8), never from X-Forwarded-For.
     trustProxy: false,
+    // On shutdown, don't wait for keep-alive or streaming connections; clients reconnect on their own.
+    forceCloseConnections: true,
   });
 
   registerSecurityHeaders(app);
 
+  mkdirSync(config.dataDir, { recursive: true });
+  const uploadsDir = join(config.dataDir, 'uploads');
+  mkdirSync(uploadsDir, { recursive: true });
+  const db = openDatabase(join(config.dataDir, 'db.sqlite'));
+
+  const base = {
+    config,
+    db,
+    log: app.log,
+    limiter: new RateLimiter(),
+    origins: allowedOrigins(config),
+    presence: new Presence(),
+    uploadsDir,
+  };
+  const io = createRealtime(app, base);
+  const ctx: AppContext = { ...base, io };
+  app.decorate('pausa', ctx);
+
+  await app.register(fastifyMultipart);
   app.get('/health', async (): Promise<HealthResponse> => ({ ok: true }));
+  registerAuthRoutes(app, ctx);
+  registerUploadRoutes(app, ctx);
 
   const hasWebBuild = existsSync(join(config.webDist, 'index.html'));
   if (hasWebBuild) {
@@ -59,6 +97,16 @@ export async function buildApp(
       return reply.header('Cache-Control', 'no-cache').sendFile('index.html');
     }
     return notFound(reply);
+  });
+
+  void cleanupOrphans(ctx);
+  const cleanup = setInterval(() => void cleanupOrphans(ctx), 60 * 60 * 1000);
+  cleanup.unref();
+
+  app.addHook('onClose', async () => {
+    clearInterval(cleanup);
+    await new Promise<void>((resolve) => void io.close(() => resolve()));
+    db.close();
   });
 
   return app;
