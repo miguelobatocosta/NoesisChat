@@ -72,6 +72,7 @@ export function revokeMember(db: Db, actor: UserRow, userId: string): UserRow {
     const target = getUser(db, userId);
     if (!target || target.revoked_at !== null) throw new AppError('NOT_FOUND', 'Member not found');
     if (target.id === actor.id) throw new AppError('FORBIDDEN', 'Cannot revoke yourself');
+    if (target.is_bot === 1) throw new AppError('FORBIDDEN', 'Mascots cannot be revoked');
     if (target.role === 'host') throw new AppError('FORBIDDEN', 'The host cannot be revoked');
     if (target.role === 'admin' && actor.role !== 'host')
       throw new AppError('FORBIDDEN', 'Only the host revokes admins');
@@ -95,6 +96,7 @@ export function setRole(
     const target = getUser(db, input.userId);
     if (!target || target.revoked_at !== null) throw new AppError('NOT_FOUND', 'Member not found');
     if (target.role === 'host') throw new AppError('FORBIDDEN', 'The host role cannot change');
+    if (target.is_bot === 1) throw new AppError('FORBIDDEN', 'Mascots have no role');
     if (target.role !== input.role) {
       db.prepare('UPDATE users SET role = ? WHERE id = ?').run(input.role, target.id);
       logAdmin(db, actor.id, 'member.role', 'user', target.id, {

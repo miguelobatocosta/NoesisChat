@@ -46,6 +46,9 @@ export default defineConfig({
       NODE_ENV: 'test',
       DATA_DIR: E2E_DATA,
       JOIN_RATE_PER_MIN: '1000',
+      // Mascots (D-49): answer instantly, never on keywords, so message counts stay predictable.
+      MASCOT_DELAY_MS: '0',
+      MASCOT_CHANCE: '0',
     },
   },
 });

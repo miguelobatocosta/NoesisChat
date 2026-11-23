@@ -16,3 +16,58 @@
 .hide {
   margin-top: var(--space-4);
 }
+
+.mascots {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-2);
+}
+
+.mascotOption {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: var(--space-3) var(--space-2);
+  border: 0;
+  border-radius: var(--radius-md);
+  background: var(--fill);
+  color: var(--fg);
+  font: inherit;
+  cursor: pointer;
+  transition:
+    background-color var(--dur-fast) var(--ease),
+    transform var(--dur-fast) var(--ease-spring);
+}
+
+.mascotOption:hover:not(:disabled) {
+  background: var(--fill-hover);
+}
+
+.mascotOption:active:not(:disabled) {
+  transform: scale(0.97);
+}
+
+.mascotOption[aria-checked='true'] {
+  background: var(--bg-selected);
+  box-shadow: var(--shadow-1);
+}
+
+.mascotOption:disabled {
+  cursor: default;
+}
+
+.mascotOption:disabled:not([aria-checked='true']) {
+  opacity: 0.55;
+}
+
+.mascotName {
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.mascotSpecies {
+  font-size: 12px;
+  line-height: 16px;
+  color: var(--fg-muted);
+}

@@ -52,6 +52,7 @@ import {
 } from '../messages/service';
 import { RATE_LIMITS } from '../rateLimit';
 import { archiveRoom, createRoom, listRoomsFor, updatePrefs, updateRoom } from '../rooms/service';
+import { Mascots } from '../mascots/service';
 
 type PausaSocket = Socket<
   ClientToServerEvents,
@@ -71,7 +72,10 @@ type Handler<K extends ClientEventName> = (
   hc: HandlerContext,
 ) => ClientEventResults[K] | Promise<ClientEventResults[K]>;
 
-export function createRealtime(app: FastifyInstance, ctx: Omit<AppContext, 'io'>): PausaIo {
+export function createRealtime(
+  app: FastifyInstance,
+  ctx: Omit<AppContext, 'io' | 'mascots'>,
+): { io: PausaIo; mascots: Mascots } {
   const io: PausaIo = new Server(app.server, {
     serveClient: false,
     // Origin check on every handshake and polling request (CLAUDE.md rule 3, SPEC §7.5).
@@ -93,8 +97,10 @@ export function createRealtime(app: FastifyInstance, ctx: Omit<AppContext, 'io'>
     next();
   });
 
-  io.on('connection', (socket) => onConnection({ ...ctx, io }, socket));
-  return io;
+  const full = { ...ctx, io } as AppContext;
+  full.mascots = new Mascots(full);
+  io.on('connection', (socket) => onConnection(full, socket));
+  return { io, mascots: full.mascots };
 }
 
 function onConnection(ctx: AppContext, socket: PausaSocket): void {
@@ -121,6 +127,7 @@ function onConnection(ctx: AppContext, socket: PausaSocket): void {
     const room = createRoom(ctx.db, actor, input);
     const { unread: _u, mentions: _m, notify: _n, hidden: _h, lastReadId: _l, ...shared } = room;
     socket.broadcast.to(ROOM_MEMBERS).emit('room:created', { room: shared });
+    ctx.mascots.onRoomCreated(room.id);
     return { room };
   });
 
@@ -144,7 +151,10 @@ function onConnection(ctx: AppContext, socket: PausaSocket): void {
 
   on('messages:send', (input, { actor }) => {
     const { message, created } = sendMessage(ctx.db, actor, input);
-    if (created) ctx.io.to(ROOM_MEMBERS).emit('message:new', { message });
+    if (created) {
+      ctx.io.to(ROOM_MEMBERS).emit('message:new', { message });
+      ctx.mascots.onMessage(message, actor);
+    }
     return { message };
   });
 

@@ -1,6 +1,6 @@
 import { memo, useState } from 'react';
 import { CornerUpLeft, Pencil, SmilePlus, Trash2 } from 'lucide-react';
-import type { Attachment, Message } from '@pausa/shared';
+import { type Attachment, mascotByUserId, type Message } from '@pausa/shared';
 import { t } from '../../i18n';
 import { formatFull, formatTime } from '../../lib/format';
 import { isJumboEmoji, renderMarkdown } from '../../lib/markdown';
@@ -9,6 +9,7 @@ import { QUICK_REACTIONS } from '../../lib/emoji';
 import { getStore, type PendingMessage, useChat } from '../../state/store';
 import buttons from '../../ui/buttons.module.css';
 import { EmojiPicker } from '../composer/EmojiPicker';
+import { Mascot } from '../mascots/Mascot';
 import styles from './MessageItem.module.css';
 
 interface Props {
@@ -37,6 +38,7 @@ export const MessageItem = memo(function MessageItem({
   const mine = message.userId === me.id;
   const staff = me.role === 'host' || me.role === 'admin';
   const mentionsMe = message.mentions.includes(me.id);
+  const mascot = mascotByUserId(message.userId);
 
   return (
     <article
@@ -44,6 +46,7 @@ export const MessageItem = memo(function MessageItem({
       data-grouped={grouped || undefined}
       data-mention={mentionsMe || undefined}
       data-highlight={highlighted || undefined}
+      data-mascot={mascot ? true : undefined}
       data-message-id={message.id}
       aria-label={author}
     >
@@ -60,7 +63,9 @@ export const MessageItem = memo(function MessageItem({
       <div className={styles.content}>
         {!grouped && (
           <header className={styles.meta}>
+            {mascot && <Mascot mascot={mascot.key} size={22} className={styles.mascot} />}
             <span className={styles.author}>{author}</span>
+            {mascot && <span className={styles.tag}>{t('mascots.tag')}</span>}
             <time
               className={`${styles.time} num`}
               dateTime={new Date(message.createdAt).toISOString()}

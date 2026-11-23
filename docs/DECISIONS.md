@@ -147,3 +147,19 @@ borders on buttons/fields/cards. Added: softer corners (8/12/16), layered shadow
 spring easing. The focus ring stays for keyboard users only (`:focus-visible`): removing it entirely fails
 WCAG 2.4.7 and the axe check. BRAND.md §3–5 updated. Also fixed `brand.test.ts`, whose dark-theme contrast
 checks were silently testing the light values.
+
+### D-49 · Room mascots that talk: SETTLED (2026-11-23, owner)
+Every room has a mascot with a funny personality: Dona Lurdes (#geral, gossiping pigeon), Bolacha (greedy
+dachshund), Faísca (squirrel on caffeine), Sr. Ferreira (slow, wise tortoise), Pixel (sarcastic tech octopus),
+Nuvem (lazy cat). Original SVG drawings in `features/mascots/Mascot.tsx`, coloured by `--mascot-*` tokens.
+- **Server-side bot users** with fixed IDs (`MASCOTS` in shared constants), `users.is_bot = 1`, no devices.
+  Created at startup by `ensureMascots()`; migration 0002 adds `is_bot`, `rooms.mascot_key`, `rooms.mascot_enabled`.
+- **They post through `sendMessage()`** and the normal `message:new` broadcast, so sync, unread and replies need
+  nothing new. Triggers: an @mention of any mascot or the room mascot's name (always answers, 10 s cooldown per
+  person), keywords of its personality (35% chance, once a minute per room), and an introduction in a new room.
+  Never reacts to a bot, so mascots can't loop.
+- **Scripted lines, no LLM**: `packages/server/src/mascots/lines.pt-PT.json`. No network calls.
+- Can't be revoked or promoted; whoever manages a room can change its mascot or switch it off.
+- `MASCOT_DELAY_MS` (default 1200) and `MASCOT_CHANCE` (default 0.35) exist for tests, like D-47.
+- BRAND.md §5's "no stock illustrations" still holds: these are the app's own characters, used in the room
+  header, the empty state, next to their messages and in room settings.

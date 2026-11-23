@@ -136,7 +136,10 @@ Raleway's default old-style numerals look odd in timestamps and counts: enable l
 - **Own messages:** not bubbles. Same left-aligned layout as everyone (team chat convention), subtle `--bg-selected` tint optional.
 - **Focus:** `--focus-ring` on `:focus-visible` only, so it shows for the keyboard and not the mouse (D-48).
   Filled fields show focus by lifting to `--bg` with a shadow. Keyboard navigation for rooms (Ctrl+K quick switcher, Alt+↑/↓).
-- **Empty states:** one line of friendly copy + one action. No stock illustrations.
+- **Empty states:** one line of friendly copy + one action. No stock illustrations; the room's own mascot
+  (D-49) is the one drawing allowed there.
+- **Mascots (D-49):** original SVG characters, colours only from `--mascot-*` tokens, always decorative
+  (`aria-hidden`, name shown as text). They never replace people's names and never carry text.
 - **Iconography:** one outline icon set (e.g. Lucide), 1.75px stroke, 18–20px. Don't mix sets.
 
 ## 6. Logo

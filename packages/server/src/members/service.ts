@@ -11,6 +11,7 @@ export interface UserRow {
   created_at: number;
   last_seen_at: number | null;
   revoked_at: number | null;
+  is_bot: number;
 }
 
 export function getUser(db: Db, id: string): UserRow | undefined {
@@ -25,7 +26,8 @@ export function toMember(row: UserRow, presence: Presence): Member {
   return {
     ...toSessionUser(row),
     active: row.revoked_at === null,
-    online: row.revoked_at === null && presence.isOnline(row.id),
+    online: row.revoked_at === null && row.is_bot === 0 && presence.isOnline(row.id),
+    isBot: row.is_bot === 1,
     joinedAt: row.created_at,
     lastSeenAt: row.last_seen_at,
   };

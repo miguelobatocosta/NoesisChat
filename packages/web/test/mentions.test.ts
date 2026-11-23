@@ -11,6 +11,7 @@ const member = (id: string, displayName: string, active = true): Member => ({
   online: true,
   joinedAt: 0,
   lastSeenAt: null,
+  isBot: false,
 });
 const ANA = '01JA0000000000000000000000';
 const ANA_RITA = '01JB0000000000000000000000';

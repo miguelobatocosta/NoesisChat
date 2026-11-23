@@ -46,6 +46,31 @@
   --overlay: rgba(11, 18, 48, 0.55); /* added: dialog backdrop */
   --highlight-bg: rgba(24, 75, 255, 0.12); /* added: message jumped to from a reply */
 
+  /* added (D-49): mascot illustrations, decorative only (never text colours) */
+  --mascot-ink: #132153;
+  --mascot-shine: #ffffff;
+  --mascot-cheek: #ff8fa3;
+  --mascot-beak: #ffa53d;
+  --mascot-drop: 0 10px 18px rgba(19, 33, 83, 0.18);
+  --mascot-lurdes-1: #9aa3bf;
+  --mascot-lurdes-2: #dde1ee;
+  --mascot-lurdes-3: #2fc28f;
+  --mascot-bolacha-1: #c27a3e;
+  --mascot-bolacha-2: #f0c9a0;
+  --mascot-bolacha-3: #8a4f22;
+  --mascot-faisca-1: #ec7a3c;
+  --mascot-faisca-2: #fbd3b2;
+  --mascot-faisca-3: #8a3f18;
+  --mascot-ferreira-1: #6fb784;
+  --mascot-ferreira-2: #a8d8b4;
+  --mascot-ferreira-3: #2f6b47;
+  --mascot-pixel-1: #8a6cff;
+  --mascot-pixel-2: #c6b8ff;
+  --mascot-pixel-3: #4b2fc2;
+  --mascot-nuvem-1: #e9ecf5;
+  --mascot-nuvem-2: #ffc2cf;
+  --mascot-nuvem-3: #9aa3bf;
+
   --font-sans: 'Raleway', 'Segoe UI', system-ui, sans-serif;
   --font-mono: 'JetBrains Mono', 'Cascadia Code', Consolas, monospace;
 

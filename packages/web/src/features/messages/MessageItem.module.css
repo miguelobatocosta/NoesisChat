@@ -63,6 +63,20 @@
   color: var(--fg);
 }
 
+.mascot {
+  align-self: center;
+  flex-shrink: 0;
+}
+
+.tag {
+  font-size: 11px;
+  line-height: 16px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--fg-muted);
+}
+
 .time {
   font-size: 12px;
   line-height: 16px;
@@ -112,16 +126,17 @@
 }
 
 .body :global(.mention) {
-  padding: 0 2px;
-  border-radius: var(--radius-sm);
-  background: var(--bg-selected);
   color: var(--link);
   font-weight: 700;
 }
 
+/* Me: no box around the text (D-48), a thick mint underline instead (mint as decoration, not text). */
 .body :global(.mention-me) {
-  background: var(--accent);
-  color: var(--on-accent);
+  color: var(--fg);
+  text-decoration: underline;
+  text-decoration-color: var(--accent);
+  text-decoration-thickness: 3px;
+  text-underline-offset: 3px;
 }
 
 .edited {

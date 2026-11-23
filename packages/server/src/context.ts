@@ -3,6 +3,7 @@ import type { Server } from 'socket.io';
 import type { ClientToServerEvents, ServerToClientEvents } from '@pausa/shared';
 import type { Config } from './config';
 import type { Db } from './db';
+import type { Mascots } from './mascots/service';
 import type { Presence } from './members/presence';
 import type { RateLimiter } from './rateLimit';
 
@@ -28,6 +29,8 @@ export interface AppContext {
   presence: Presence;
   io: PausaIo;
   uploadsDir: string;
+  /** Room mascots (D-49). */
+  mascots: Mascots;
 }
 
 /** Socket.IO rooms. */

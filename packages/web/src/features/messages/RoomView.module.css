@@ -27,6 +27,16 @@
   flex-shrink: 0;
 }
 
+.mascot {
+  flex-shrink: 0;
+  margin-right: var(--space-1);
+  transition: transform var(--dur-med) var(--ease-spring);
+}
+
+.header:hover .mascot {
+  transform: rotate(-6deg) scale(1.06);
+}
+
 .icon {
   color: var(--fg-muted);
   font-size: 18px;

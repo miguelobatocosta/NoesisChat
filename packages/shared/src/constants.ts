@@ -36,5 +36,30 @@ export type InviteExpiry = keyof typeof INVITE_EXPIRY_MS;
 /** Fixed ID of the protected main room, seeded by migration 0001. */
 export const MAIN_ROOM_ID = '00000000000000000000000001';
 
+/**
+ * Room mascots (D-49): server-side bot users with fixed IDs, one character per room.
+ * Their lines live in packages/server/src/mascots/lines.pt-PT.json, their drawings in the web app.
+ */
+export const MASCOTS = [
+  { key: 'lurdes', userId: '0000000000000000000000MA01', name: 'Dona Lurdes' },
+  { key: 'bolacha', userId: '0000000000000000000000MA02', name: 'Bolacha' },
+  { key: 'faisca', userId: '0000000000000000000000MA03', name: 'Faísca' },
+  { key: 'ferreira', userId: '0000000000000000000000MA04', name: 'Sr. Ferreira' },
+  { key: 'pixel', userId: '0000000000000000000000MA05', name: 'Pixel' },
+  { key: 'nuvem', userId: '0000000000000000000000MA06', name: 'Nuvem' },
+] as const;
+export type MascotKey = (typeof MASCOTS)[number]['key'];
+export const MASCOT_KEYS = MASCOTS.map((m) => m.key) as [MascotKey, ...MascotKey[]];
+/** #geral's mascot. */
+export const MAIN_MASCOT: MascotKey = 'lurdes';
+
+export function mascotByKey(key: MascotKey) {
+  return MASCOTS.find((m) => m.key === key)!;
+}
+
+export function mascotByUserId(userId: string) {
+  return MASCOTS.find((m) => m.userId === userId);
+}
+
 /** Authors' consecutive messages within this window are grouped under one header (SPEC §3.2). */
 export const GROUPING_WINDOW_MS = 5 * 60 * 1000;

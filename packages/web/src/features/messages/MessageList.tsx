@@ -7,6 +7,7 @@ import { dayKey, formatDay } from '../../lib/format';
 import { getStore, type PendingMessage, useChat } from '../../state/store';
 import buttons from '../../ui/buttons.module.css';
 import { Dialog } from '../../ui/Dialog';
+import { EmptyRoom } from '../mascots/EmptyRoom';
 import { Lightbox } from './Lightbox';
 import { MessageItem, PendingItem } from './MessageItem';
 import styles from './MessageList.module.css';
@@ -106,7 +107,7 @@ export function MessageList({ roomId }: { roomId: string }) {
   if (rows.length === 0) {
     return (
       <div className={styles.list}>
-        <p className={styles.empty}>{t('room.empty')}</p>
+        <EmptyRoom roomId={roomId} />
       </div>
     );
   }

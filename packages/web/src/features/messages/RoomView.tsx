@@ -4,6 +4,7 @@ import { t } from '../../i18n';
 import { useChat } from '../../state/store';
 import buttons from '../../ui/buttons.module.css';
 import { Composer, type ComposerHandle } from '../composer/Composer';
+import { Mascot } from '../mascots/Mascot';
 import { MessageList } from './MessageList';
 import styles from './RoomView.module.css';
 import { TypingIndicator } from './TypingIndicator';
@@ -44,9 +45,13 @@ export function RoomView({
       data-dragging={dragging || undefined}
     >
       <header className={styles.header}>
-        <span className={styles.icon} aria-hidden="true">
-          {room.emoji ?? '#'}
-        </span>
+        {room.mascotKey ? (
+          <Mascot mascot={room.mascotKey} size={40} className={styles.mascot} />
+        ) : (
+          <span className={styles.icon} aria-hidden="true">
+            {room.emoji ?? '#'}
+          </span>
+        )}
         <h1 className={styles.name}>{room.name}</h1>
         {room.description && <p className={styles.description}>{room.description}</p>}
         <button

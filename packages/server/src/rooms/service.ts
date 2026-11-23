@@ -1,5 +1,8 @@
 import {
   type ClientEventPayload,
+  MAIN_MASCOT,
+  MASCOT_KEYS,
+  type MascotKey,
   type NotifyLevel,
   type Room,
   type RoomView,
@@ -20,6 +23,8 @@ export interface RoomRow {
   created_by: string | null;
   created_at: number;
   archived_at: number | null;
+  mascot_key: string | null;
+  mascot_enabled: number;
 }
 
 export function toRoom(row: RoomRow): Room {
@@ -30,6 +35,10 @@ export function toRoom(row: RoomRow): Room {
     emoji: row.emoji,
     description: row.description,
     isMain: row.is_main === 1,
+    mascotKey: (MASCOT_KEYS as string[]).includes(row.mascot_key ?? '')
+      ? (row.mascot_key as MascotKey)
+      : null,
+    mascotEnabled: row.mascot_enabled === 1,
     createdBy: row.created_by,
     createdAt: row.created_at,
     archivedAt: row.archived_at,
@@ -118,10 +127,34 @@ export function createRoom(
   const slug = uniqueSlug(db, input.name);
   const id = newId();
   db.prepare(
-    `INSERT INTO rooms (id, slug, name, emoji, description, is_main, created_by, created_at)
-     VALUES (?, ?, ?, ?, ?, 0, ?, ?)`,
-  ).run(id, slug, input.name, input.emoji ?? null, input.description || null, actor.id, Date.now());
+    `INSERT INTO rooms (id, slug, name, emoji, description, is_main, created_by, created_at, mascot_key)
+     VALUES (?, ?, ?, ?, ?, 0, ?, ?, ?)`,
+  ).run(
+    id,
+    slug,
+    input.name,
+    input.emoji ?? null,
+    input.description || null,
+    actor.id,
+    Date.now(),
+    nextMascot(db),
+  );
   return roomViewFor(db, actor.id, id);
+}
+
+/** Least-used mascot among topic rooms (#geral keeps its own), first in list order on ties. */
+export function nextMascot(db: Db): MascotKey {
+  const counts = new Map(
+    (
+      db
+        .prepare(
+          'SELECT mascot_key AS k, COUNT(*) AS n FROM rooms WHERE is_main = 0 GROUP BY mascot_key',
+        )
+        .all() as { k: string | null; n: number }[]
+    ).map((r) => [r.k, r.n]),
+  );
+  const pool = MASCOT_KEYS.filter((k) => k !== MAIN_MASCOT);
+  return pool.reduce((best, k) => ((counts.get(k) ?? 0) < (counts.get(best) ?? 0) ? k : best));
 }
 
 /** Creator, admins and host manage a room. Only the host touches #geral (SPEC §2, §3.2). */
@@ -143,14 +176,14 @@ export function updateRoom(
   const emoji = input.emoji !== undefined ? input.emoji : room.emoji;
   const description =
     input.description !== undefined ? input.description || null : room.description;
+  const mascotKey = input.mascotKey ?? room.mascot_key;
+  const mascotEnabled =
+    input.mascotEnabled !== undefined ? (input.mascotEnabled ? 1 : 0) : room.mascot_enabled;
 
-  db.prepare('UPDATE rooms SET name = ?, slug = ?, emoji = ?, description = ? WHERE id = ?').run(
-    name,
-    slug,
-    emoji,
-    description,
-    room.id,
-  );
+  db.prepare(
+    `UPDATE rooms SET name = ?, slug = ?, emoji = ?, description = ?, mascot_key = ?, mascot_enabled = ?
+     WHERE id = ?`,
+  ).run(name, slug, emoji, description, mascotKey, mascotEnabled, room.id);
   return toRoom(requireRoom(db, room.id));
 }
 

@@ -134,10 +134,12 @@ test.describe('two people chatting', () => {
       .getByRole('button', { name: new RegExp(`^${roomName}`) });
     await expect(ruiRoom).toBeVisible();
 
+    // The room's mascot introduces itself first (D-49), so that's one more unread.
+    await expect(ana.page.getByRole('article').first()).toBeVisible();
     await send(ana.page, 'golo!');
     await send(ana.page, 'outro golo!');
-    await expect(ruiRoom).toHaveAccessibleName(`${roomName}, 2 por ler`);
-    await expect(rui.page).toHaveTitle(/^\(2\) /);
+    await expect(ruiRoom).toHaveAccessibleName(`${roomName}, 3 por ler`);
+    await expect(rui.page).toHaveTitle(/^\(3\) /);
 
     await ruiRoom.click();
     await expect(message(rui.page, 'outro golo!')).toBeVisible();
@@ -209,6 +211,35 @@ test.describe('two people chatting', () => {
 
     await ana.context.close();
     await rui.context.close();
+  });
+});
+
+test.describe('mascots', () => {
+  test('call Dona Lurdes by name in #geral and she answers as a reply; new rooms get a mascot', async ({
+    browser,
+  }) => {
+    const ana = await join(browser, memberInvite(), uniqueName('Ana'));
+    await expect(ana.page.getByRole('heading', { name: 'geral' })).toBeVisible();
+
+    const text = `Dona Lurdes, já sabe a novidade ${Date.now().toString(36)}?`;
+    await send(ana.page, text);
+    const answer = ana.page
+      .getByRole('article', { name: 'Dona Lurdes' })
+      .filter({ has: ana.page.getByRole('button', { name: 'Ver mensagem original' }) })
+      .filter({ hasText: text.slice(0, 40) });
+    await expect(answer).toBeVisible();
+    await expect(answer.getByText('mascote', { exact: true })).toBeVisible();
+
+    await ana.page.getByRole('button', { name: 'Nova sala' }).click();
+    const dialog = ana.page.getByRole('dialog', { name: 'Nova sala' });
+    await dialog.getByLabel('Nome').fill(`petiscos ${Date.now().toString(36).slice(-4)}`);
+    await dialog.getByRole('button', { name: 'Criar sala' }).click();
+    await expect(
+      ana.page.getByRole('article', { name: /Bolacha|Faísca|Sr\. Ferreira|Pixel|Nuvem/ }),
+    ).toBeVisible();
+
+    expect(ana.errors).toEqual([]);
+    await ana.context.close();
   });
 });
 

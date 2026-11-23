@@ -1,3 +1,5 @@
+import type { MascotKey } from './constants';
+
 /** Wire types sent by the server. Inputs from clients are validated with the zod schemas in events.ts. */
 
 export type Role = 'host' | 'admin' | 'member';
@@ -13,6 +15,8 @@ export interface Member extends SessionUser {
   /** false once revoked. Kept in the list so old messages still show the author's name. */
   active: boolean;
   online: boolean;
+  /** A room mascot (D-49): never online, can't be revoked or promoted. */
+  isBot: boolean;
   joinedAt: number;
   lastSeenAt: number | null;
 }
@@ -24,6 +28,9 @@ export interface Room {
   emoji: string | null;
   description: string | null;
   isMain: boolean;
+  /** The room's mascot (D-49) and whether it talks there. */
+  mascotKey: MascotKey | null;
+  mascotEnabled: boolean;
   createdBy: string | null;
   createdAt: number;
   archivedAt: number | null;

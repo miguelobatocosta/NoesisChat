@@ -21,6 +21,10 @@ const ConfigInput = z.object({
   /** Invite redemptions per client IP per minute (SPEC §6.2). Only raised for automated tests. */
   JOIN_RATE_PER_MIN: z.coerce.number().int().min(1).max(10_000).default(5),
   WEB_DIST: z.string().min(1).optional(),
+  /** Base delay before a mascot answers, plus up to 1.3 s of jitter. 0 in tests. */
+  MASCOT_DELAY_MS: z.coerce.number().int().min(0).max(60_000).default(1200),
+  /** Chance a mascot reacts to one of its keywords (mentions always get an answer). Tests use 0 or 1. */
+  MASCOT_CHANCE: z.coerce.number().min(0).max(1).default(0.35),
 });
 
 const KEYS = Object.keys(ConfigInput.shape) as (keyof z.input<typeof ConfigInput>)[];
@@ -39,6 +43,8 @@ export interface Config {
   publicOrigin: string | undefined;
   uploadMaxBytes: number;
   joinRatePerMin: number;
+  mascotDelayMs: number;
+  mascotChance: number;
 }
 
 export class ConfigError extends Error {
@@ -83,6 +89,8 @@ export function loadConfig(options: LoadConfigOptions = {}): Config {
     publicOrigin: c.PUBLIC_URL ? new URL(c.PUBLIC_URL).origin : undefined,
     uploadMaxBytes: c.UPLOAD_MAX_MB * 1024 * 1024,
     joinRatePerMin: c.JOIN_RATE_PER_MIN,
+    mascotDelayMs: c.MASCOT_DELAY_MS,
+    mascotChance: c.MASCOT_CHANCE,
   };
 }
 

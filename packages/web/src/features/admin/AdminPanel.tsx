@@ -199,7 +199,7 @@ function Members({ onError }: { onError: (e: unknown) => void }) {
   const list = useMemo(
     () =>
       Object.values(members)
-        .filter((m) => m.active)
+        .filter((m) => m.active && !m.isBot)
         .sort((a, b) => a.displayName.localeCompare(b.displayName, 'pt-PT')),
     [members],
   );

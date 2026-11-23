@@ -165,7 +165,10 @@
     "archiveHint": "Uma sala arquivada fica só de leitura para toda a gente.",
     "readOnly": "Só quem criou a sala e os administradores podem mudar os detalhes.",
     "close": "Fechar",
-    "clearEmoji": "Sem emoji"
+    "clearEmoji": "Sem emoji",
+    "mascot": "Mascote",
+    "mascotEnabled": "A mascote fala nesta sala",
+    "mascotHint": "Responde quando a mencionam ou dizem o nome dela, e às vezes mete-se na conversa."
   },
   "switcher": {
     "title": "Ir para uma sala",
@@ -253,5 +256,48 @@
     "INTERNAL": "Algo correu mal no servidor.",
     "TIMEOUT": "O servidor não respondeu a tempo.",
     "OFFLINE": "Sem ligação ao servidor."
+  },
+  "mascots": {
+    "label": "Mascotes",
+    "tag": "mascote",
+    "of": "{name}, a mascote da sala",
+    "lurdes": {
+      "species": "pomba coscuvilheira",
+      "welcome1": "A Dona Lurdes já está à janela à espera de novidades.",
+      "welcome2": "Ninguém disse nada ainda? A Dona Lurdes não aguenta o suspense.",
+      "welcome3": "Silêncio no #{room}… a Dona Lurdes está desconfiada."
+    },
+    "bolacha": {
+      "species": "cão salsicha guloso",
+      "welcome1": "O Bolacha está à espera. Se for sobre comida, melhor.",
+      "welcome2": "Nada por aqui ainda. O Bolacha já farejou tudo, só migalhas.",
+      "welcome3": "O Bolacha abana a cauda: alguém diz olá?"
+    },
+    "faisca": {
+      "species": "esquilo a cafeína",
+      "welcome1": "A Faísca já bebeu três bicas à espera da primeira mensagem!!!",
+      "welcome2": "Tudo calmo? A Faísca não sabe o que é calma!!!",
+      "welcome3": "Primeira mensagem? A Faísca está pronta desde ontem!!!"
+    },
+    "ferreira": {
+      "species": "tartaruga sábia",
+      "welcome1": "O Sr. Ferreira chegou cedo. Para ele, isto é cedo.",
+      "welcome2": "Com calma. O Sr. Ferreira espera a primeira mensagem há três dias.",
+      "welcome3": "Sem pressa. O Sr. Ferreira gosta de começos devagar."
+    },
+    "pixel": {
+      "species": "polvo técnico e sarcástico",
+      "welcome1": "O Pixel já testou a sala. Funciona. Por agora.",
+      "welcome2": "Zero mensagens. O Pixel diz que é um bug. É mentira.",
+      "welcome3": "O Pixel tem oito braços e nenhum para escrever a primeira mensagem. Escreves tu?"
+    },
+    "nuvem": {
+      "species": "gata preguiçosa",
+      "welcome1": "A Nuvem está a dormir. Acorda-a com uma mensagem. Ou não.",
+      "welcome2": "Silêncio perfeito. A Nuvem aprova.",
+      "welcome3": "A Nuvem abriu um olho. Diz qualquer coisa antes que o feche."
+    },
+    "sayHi": "Dizer olá",
+    "hello": "Olá"
   }
 }

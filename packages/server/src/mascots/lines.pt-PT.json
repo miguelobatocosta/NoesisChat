@@ -1,0 +1,257 @@
+{
+  "lurdes": {
+    "names": ["lurdes"],
+    "intro": [
+      "Bom dia, meus queridos! Sou a **Dona Lurdes** e estou no {room} desde sempre. Contem-me tudo, que eu não conto a ninguém. 🕊️ (Conto.)",
+      "Cheguei! Dona Lurdes, pomba de serviço. Se alguém tiver novidades, a minha janela está sempre aberta. 🕊️"
+    ],
+    "mention": [
+      "Diga, {name}, diga! Já tenho o caderninho aberto. 📒",
+      "Ai, {name}, chamou? Espero que seja fofoca, que de trabalho já estou farta.",
+      "Estou aqui, {name}! Pomba que é pomba nunca está longe de uma conversa.",
+      "{name}, querido(a), fale mais baixo… não, fale mais alto, que eu quero ouvir tudo.",
+      "Oiço, {name}! Mas olhe que isto fica entre nós. E o resto do {room}.",
+      "Sim, {name}? Hoje já ouvi três segredos e ainda não são onze horas. 🕊️"
+    ],
+    "triggers": [
+      {
+        "words": ["bom dia", "boa tarde", "olá a todos", "olá pessoal", "bom dia a todos"],
+        "lines": [
+          "Bom dia, {name}! Então, o que é que se passa por aí? Conte, conte. 🕊️",
+          "Olha quem chegou! Bom dia, {name}. Dormiu bem? Sonhou com quem?",
+          "Bom dia! Já reparei que o {name} chegou hoje mais cedo… hmm, curioso. 🧐"
+        ]
+      },
+      {
+        "words": [
+          "novidade",
+          "novidades",
+          "sabias",
+          "ouvi dizer",
+          "fofoca",
+          "segredo",
+          "contaram-me"
+        ],
+        "lines": [
+          "NOVIDADES?! {name}, não se mexa daí, vou buscar o chá. ☕🕊️",
+          "Eu já sabia. Eu sei sempre. Mas conte na mesma, {name}, que eu gosto de confirmar.",
+          "Segredo? Comigo? Está mais seguro que no banco. (Não está.)"
+        ]
+      },
+      {
+        "words": ["reunião", "reuniões"],
+        "lines": [
+          "Reunião? Eu vou de penetra. Fico na janela, ninguém repara. 🕊️",
+          "Mais uma reunião… Depois contem-me quem é que bocejou primeiro."
+        ]
+      },
+      {
+        "words": ["férias", "feriado"],
+        "lines": [
+          "Férias?! Para onde, {name}? Com quem? Quanto tempo? Mande postal!",
+          "Feriado é o meu dia preferido: toda a gente na esplanada e eu a ouvir tudo. 🕊️"
+        ]
+      }
+    ]
+  },
+  "bolacha": {
+    "names": ["bolacha"],
+    "intro": [
+      "Olá {room}! Sou o **Bolacha**, cão salsicha profissional. Especialidade: migalhas. 🐶🥨",
+      "Au! Bolacha ao serviço do {room}. Se alguém deixar um pastel de nata sozinho, eu tomo conta dele. 🐶"
+    ],
+    "mention": [
+      "Au au! {name}, isso é comida? Diz-me que é comida. 🐶",
+      "Estou aqui, {name}! Abanar a cauda conta como resposta? 🐕",
+      "{name}, prometo que estava a ouvir e não a farejar o teu lanche.",
+      "Chamaste? Eu vim logo. Trazes alguma coisa? Nem uma bolachinha? 🥺",
+      "Ouvi o meu nome e o meu estômago ao mesmo tempo, {name}."
+    ],
+    "triggers": [
+      {
+        "words": ["almoço", "almoçar", "fome", "lanche", "jantar", "comer", "comida"],
+        "lines": [
+          "ALMOÇO?! Eu vou. Eu vou sempre. Onde? A que horas? 🐶🍽️",
+          "Disseram comida e as minhas orelhas fizeram *ping*. {name}, sobra alguma coisa?",
+          "Fome é um estado de espírito. O meu espírito tem sempre fome. 🦴"
+        ]
+      },
+      {
+        "words": [
+          "pastel de nata",
+          "pastéis de nata",
+          "bolo",
+          "pizza",
+          "sobremesa",
+          "chocolate",
+          "bolachas"
+        ],
+        "lines": [
+          "{name}, eu não estou a pedir. Estou só a olhar. Muito. Fixamente. 🥺",
+          "Pastel de nata é a prova de que o universo gosta de nós. 🐶✨",
+          "Uma regra de ouro: o que cai ao chão é do Bolacha."
+        ]
+      },
+      {
+        "words": ["passeio", "caminhada", "rua", "parque"],
+        "lines": [
+          "PASSEIO?! Já tenho a trela na boca. Bora, {name}! 🐕💨",
+          "Um passeio faz bem ao corpo e às migalhas que se encontram pelo caminho."
+        ]
+      }
+    ]
+  },
+  "faisca": {
+    "names": ["faísca"],
+    "intro": [
+      "OLÁ {room}!!! Sou a **Faísca**, esquilo, já bebi três bicas e são só nove da manhã!!! 🐿️⚡",
+      "Faísca a chegar ao {room} a toda a velocidade!!! Alguém tem avelãs? Ou café? Ou as duas? 🐿️☕"
+    ],
+    "mention": [
+      "SIM {name}!!! Estou aqui!!! Estava ali!!! Agora estou aqui!!! 🐿️",
+      "{name}! Diz depressa que eu tenho de ir a quatro sítios ao mesmo tempo!",
+      "Presente!!! O que é? É urgente? Eu adoro coisas urgentes!!! ⚡",
+      "Chamaste, {name}? Eu já respondi antes de chamares. É o café. ☕",
+      "Faísca online!!! A ouvir!!! A sério!!! Ok, a tentar!!! 🐿️"
+    ],
+    "triggers": [
+      {
+        "words": ["café", "bica", "cafezinho", "expresso", "cafeína"],
+        "lines": [
+          "CAFÉ?!?! Conta comigo!!! Vou já!!! Já fui!!! Já voltei!!! ☕⚡",
+          "{name}, é a minha quinta bica e sinto-me capaz de programar um foguetão. 🚀",
+          "Café é amor. Café é vida. Café é… espera, já bebi outro. 🐿️"
+        ]
+      },
+      {
+        "words": ["sono", "cansado", "cansada", "exausto", "exausta", "bocejo"],
+        "lines": [
+          "Sono?! Eu não sei o que isso é. Ouvi dizer que é tipo café ao contrário. 🐿️",
+          "{name}, a solução é simples: uma bica. Ou três. Confia em mim."
+        ]
+      },
+      {
+        "words": ["urgente", "pressa", "rápido", "depressa", "prazo"],
+        "lines": [
+          "URGENTE?! Finalmente alguém fala a minha língua!!! ⚡⚡⚡",
+          "Pressa é comigo! Já fiz, já entreguei, já esqueci o que era. 🐿️💨"
+        ]
+      }
+    ]
+  },
+  "ferreira": {
+    "names": ["ferreira"],
+    "intro": [
+      "Boa… tarde… {room}. Sou o **Sr. Ferreira**. Tartaruga. Cheguei a tempo para… a próxima semana. 🐢",
+      "Com calma se vai ao longe. Eu sou o Sr. Ferreira e demorei três dias a chegar ao {room}. Valeu a pena. 🐢"
+    ],
+    "mention": [
+      "Sim… {name}… estou… a… pensar. Já respondo. Talvez amanhã. 🐢",
+      "{name}, a pressa é inimiga da perfeição. E de mim, que sou lento.",
+      "Ouvi, {name}. Ouvi tudo. Só demoro a processar. 🐢☕",
+      "Meu caro {name}, quando eu era novo, as mensagens vinham por pombo. Pergunte à Dona Lurdes.",
+      "Estou aqui, {name}. Estou sempre aqui. Não me consigo mexer muito depressa."
+    ],
+    "triggers": [
+      {
+        "words": ["sexta", "sexta-feira", "fim de semana", "fds"],
+        "lines": [
+          "Sexta-feira… a palavra mais bonita da língua portuguesa. 🐢✨",
+          "{name}, a sexta-feira é como eu: chega devagar, mas chega sempre.",
+          "Fim de semana à vista. Vou celebrar com uma folha de alface. Com calma. 🥬"
+        ]
+      },
+      {
+        "words": ["calma", "devagar", "paciência", "stress", "stressado", "stressada"],
+        "lines": [
+          "Respire, {name}. Inspire em três segundos. Expire em três dias, como eu. 🐢",
+          "Já vi muita coisa urgente. Quase nenhuma era. Paciência, meu caro."
+        ]
+      },
+      {
+        "words": ["atrasado", "atrasada", "atraso", "trânsito"],
+        "lines": [
+          "Atrasado? Eu nasci atrasado e nunca ninguém se queixou. 🐢",
+          "O trânsito é só o mundo a aprender a andar ao meu ritmo."
+        ]
+      }
+    ]
+  },
+  "pixel": {
+    "names": ["pixel"],
+    "intro": [
+      "Olá {room}. Sou o **Pixel**, polvo, oito braços, zero paciência para impressoras. 🐙",
+      "Pixel a entrar no {room}. Já experimentaram desligar e voltar a ligar? Era só para saber. 🐙💻"
+    ],
+    "mention": [
+      "Sim, {name}? Já tentaste reiniciar? Pergunto por hábito. 🐙",
+      "Estou aqui, {name}. Os oito braços estão ocupados, mas um ouve-te.",
+      "{name}, isso que disseste compila? Duvido, mas respeito. 🐙",
+      "Chamaste o polvo de serviço. Tempo médio de resposta: agora. Qualidade: discutível.",
+      "Recebido, {name}. A processar… 12%… 47%… erro 418: sou um polvo. 🐙"
+    ],
+    "triggers": [
+      {
+        "words": ["bug", "erro", "crash", "não funciona", "avaria"],
+        "lines": [
+          "Um bug? Não é um bug, {name}, é uma funcionalidade surpresa. 🐙",
+          "Já tentaste desligar e voltar a ligar? Eu sei. Eu sei. Mas tentaste?",
+          "Diagnóstico do Pixel: o problema está entre a cadeira e o teclado. Brincadeira. Talvez. 🐙"
+        ]
+      },
+      {
+        "words": ["wifi", "internet", "rede", "password", "palavra-passe"],
+        "lines": [
+          "A internet caiu? Eu tenho oito braços e nenhum chega ao router. 🐙📡",
+          "Password segura: comprida, aleatória, e nunca num post-it. Estou a olhar para ti, {name}."
+        ]
+      },
+      {
+        "words": ["excel", "folha de cálculo", "impressora", "powerpoint"],
+        "lines": [
+          "Excel? Já vi polvos a chorar por menos. 🐙📊",
+          "A impressora sente medo. É por isso que encrava. Fala-lhe com carinho, {name}."
+        ]
+      }
+    ]
+  },
+  "nuvem": {
+    "names": ["nuvem"],
+    "intro": [
+      "Mmm… olá {room}. Sou a **Nuvem**, gata. Acordei só para dizer isto. Vou voltar a dormir. 🐱💤",
+      "A Nuvem chegou ao {room}. Não esperem muito. Ou nada. Esperem sentados, de preferência no sofá. 🐱"
+    ],
+    "mention": [
+      "Hmm? {name}… acordaste-me. Espero que seja importante. Não é. Volto a dormir. 😾",
+      "*abre um olho* Sim, {name}? *fecha o olho* 🐱",
+      "{name}, eu ouvi. Simplesmente escolhi ignorar com muita elegância.",
+      "Estou a trabalhar, {name}. Visualmente parece que estou a dormir, mas é estratégia. 💤",
+      "Miau. Isto significa \"não\". Também pode significar \"talvez\". Depende do meu humor. 🐱"
+    ],
+    "triggers": [
+      {
+        "words": ["segunda", "segunda-feira", "segundas"],
+        "lines": [
+          "Segunda-feira. A palavra mais triste do calendário. Vou ali deitar-me ao sol e fingir que é sábado. 😿",
+          "{name}, quem inventou as segundas-feiras nunca teve uma boa sesta.",
+          "Segunda? Não. Recuso-me. Acordem-me na sexta. 🐱💤"
+        ]
+      },
+      {
+        "words": ["sesta", "dormir", "sono", "sofá", "cama", "preguiça"],
+        "lines": [
+          "Sesta? Finalmente alguém com prioridades certas. 🐱💤",
+          "{name}, dormir não é preguiça. É manutenção preventiva.",
+          "Eu durmo dezasseis horas por dia e mesmo assim sinto que me falta uma. 😴"
+        ]
+      },
+      {
+        "words": ["chuva", "frio", "inverno", "aquecedor"],
+        "lines": [
+          "Chuva lá fora, eu cá dentro em cima do aquecedor. A vida é boa. 🐱🌧️",
+          "Frio? Ponham-me uma manta e não me chamem até à primavera."
+        ]
+      }
+    ]
+  }
+}

@@ -33,9 +33,10 @@ describe('migrations', () => {
   it('apply new numbered files in order', () => {
     const dir = tempDir();
     mkdirSync(dir, { recursive: true });
-    for (const f of readdirSync(MIGRATIONS_DIR))
-      copyFileSync(join(MIGRATIONS_DIR, f), join(dir, f));
-    writeFileSync(join(dir, '0002_extra.sql'), 'CREATE TABLE extra (id INTEGER);');
+    const existing = readdirSync(MIGRATIONS_DIR);
+    for (const f of existing) copyFileSync(join(MIGRATIONS_DIR, f), join(dir, f));
+    const next = String(existing.length + 1).padStart(4, '0');
+    writeFileSync(join(dir, `${next}_extra.sql`), 'CREATE TABLE extra (id INTEGER);');
     const db = openDatabase(join(tempDir(), 'db.sqlite'), dir);
     expect(db.prepare(`SELECT name FROM sqlite_master WHERE name = 'extra'`).get()).toEqual({
       name: 'extra',

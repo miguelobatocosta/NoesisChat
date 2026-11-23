@@ -1,11 +1,12 @@
 import { type FormEvent, useState } from 'react';
-import { LIMITS, type NotifyLevel } from '@pausa/shared';
+import { LIMITS, MASCOTS, type NotifyLevel } from '@pausa/shared';
 import { errorCode } from '../../api/errors';
 import { t } from '../../i18n';
 import { getStore, useChat } from '../../state/store';
 import buttons from '../../ui/buttons.module.css';
 import { Dialog } from '../../ui/Dialog';
 import forms from '../../ui/forms.module.css';
+import { Mascot } from '../mascots/Mascot';
 import { EmojiField } from './EmojiField';
 import styles from './RoomSettings.module.css';
 
@@ -126,6 +127,39 @@ export function RoomSettingsDialog({ roomId, onClose }: { roomId: string; onClos
             <span>{t('roomSettings.hide')}</span>
           </label>
         )}
+      </fieldset>
+
+      <fieldset className={styles.section}>
+        <legend className={styles.heading}>{t('roomSettings.mascot')}</legend>
+        <div className={styles.mascots} role="radiogroup" aria-label={t('roomSettings.mascot')}>
+          {MASCOTS.map((m) => (
+            <button
+              key={m.key}
+              type="button"
+              role="radio"
+              aria-checked={room.mascotKey === m.key}
+              className={styles.mascotOption}
+              disabled={!canManage}
+              onClick={() => void run(() => store.updateRoom({ roomId, mascotKey: m.key }))}
+            >
+              <Mascot mascot={m.key} size={48} />
+              <span className={styles.mascotName}>{m.name}</span>
+              <span className={styles.mascotSpecies}>{t(`mascots.${m.key}.species`)}</span>
+            </button>
+          ))}
+        </div>
+        <label className={`${forms.check} ${styles.hide}`}>
+          <input
+            type="checkbox"
+            checked={room.mascotEnabled}
+            disabled={!canManage}
+            onChange={(e) =>
+              void run(() => store.updateRoom({ roomId, mascotEnabled: e.target.checked }))
+            }
+          />
+          <span>{t('roomSettings.mascotEnabled')}</span>
+        </label>
+        <p className={forms.hint}>{t('roomSettings.mascotHint')}</p>
       </fieldset>
 
       {canManage && !room.isMain && (

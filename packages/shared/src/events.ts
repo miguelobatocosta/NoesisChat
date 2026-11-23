@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { LIMITS } from './constants';
+import { LIMITS, MASCOT_KEYS } from './constants';
 import { isEmoji, ULID_RE } from './text';
 import type {
   AdminLogEntry,
@@ -39,6 +39,8 @@ export const ClientEventSchemas = {
     name: RoomName.optional(),
     emoji: Emoji.nullable().optional(),
     description: RoomDescription.nullable().optional(),
+    mascotKey: z.enum(MASCOT_KEYS).optional(),
+    mascotEnabled: z.boolean().optional(),
   }),
   'rooms:archive': z.object({ roomId: Id, archived: z.boolean() }),
   'messages:history': z.object({

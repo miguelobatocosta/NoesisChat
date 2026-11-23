@@ -1,9 +1,10 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { EllipsisVertical, Plus } from 'lucide-react';
-import type { Member, RoomView } from '@pausa/shared';
+import { type Member, mascotByUserId, type RoomView } from '@pausa/shared';
 import type { DialogName } from '../../app/ChatApp';
 import { t } from '../../i18n';
 import { getStore, useChat } from '../../state/store';
+import { Mascot } from '../mascots/Mascot';
 import { archivedRooms, hiddenRooms, visibleRooms } from './roomOrder';
 import styles from './Sidebar.module.css';
 
@@ -22,8 +23,10 @@ export function Sidebar({ onOpen }: { onOpen: (d: DialogName) => void }) {
         .sort((a, b) => a.displayName.localeCompare(b.displayName, 'pt-PT')),
     [members],
   );
-  const online = active.filter((m) => m.online);
-  const offline = active.filter((m) => !m.online);
+  const people = active.filter((m) => !m.isBot);
+  const mascots = active.filter((m) => m.isBot);
+  const online = people.filter((m) => m.online);
+  const offline = people.filter((m) => !m.online);
 
   return (
     <nav className={styles.sidebar} aria-label={t('sidebar.rooms')}>
@@ -72,7 +75,7 @@ export function Sidebar({ onOpen }: { onOpen: (d: DialogName) => void }) {
           {offline.length > 0 && (
             <details>
               <summary className={`${styles.label} num`}>
-                {t('sidebar.everyone', { count: active.length })}
+                {t('sidebar.everyone', { count: people.length })}
               </summary>
               <ul className={styles.members}>
                 {offline.map((m) => (
@@ -82,6 +85,23 @@ export function Sidebar({ onOpen }: { onOpen: (d: DialogName) => void }) {
             </details>
           )}
         </div>
+
+        {mascots.length > 0 && (
+          <details className={styles.section} open>
+            <summary className={styles.label}>{t('mascots.label')}</summary>
+            <ul className={styles.members}>
+              {mascots.map((m) => {
+                const key = mascotByUserId(m.id)?.key;
+                return (
+                  <li key={m.id} className={styles.member} data-online>
+                    {key && <Mascot mascot={key} size={20} />}
+                    <span className={styles.memberName}>{m.displayName}</span>
+                  </li>
+                );
+              })}
+            </ul>
+          </details>
+        )}
       </div>
       <MeFooter onOpen={onOpen} />
     </nav>
