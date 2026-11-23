@@ -1,0 +1,8 @@
+packages:
+  - packages/*
+
+# pnpm >= 10 blocks dependency install scripts unless allowed here.
+# better-sqlite3 needs its script to fetch the prebuilt native binary for your OS.
+allowBuilds:
+  better-sqlite3: true
+  esbuild: true

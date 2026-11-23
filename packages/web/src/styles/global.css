@@ -1,0 +1,75 @@
+/* Base styles. Colours only through tokens (BRAND.md §8). */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+html {
+  color-scheme: light;
+}
+
+html[data-theme='dark'] {
+  color-scheme: dark;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: 15px;
+  line-height: 22px;
+  font-weight: 500;
+  background: var(--bg);
+  color: var(--fg-body);
+  -webkit-font-smoothing: antialiased;
+  transition:
+    background-color var(--dur-med) var(--ease),
+    color var(--dur-med) var(--ease);
+}
+
+h1,
+h2,
+h3 {
+  color: var(--fg);
+  margin: 0;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+}
+
+:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}
+
+/* Raleway's default old-style figures look wrong in times, counts and badges (BRAND.md §4). */
+.num {
+  font-variant-numeric: lining-nums tabular-nums;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+    animation: none !important;
+  }
+}

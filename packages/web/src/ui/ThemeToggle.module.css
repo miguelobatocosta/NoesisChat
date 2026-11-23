@@ -1,0 +1,35 @@
+.group {
+  display: inline-flex;
+  padding: 2px;
+  gap: 2px;
+  border-radius: var(--radius-pill);
+  box-shadow: inset 0 0 0 1px var(--on-brand-divider);
+}
+
+.option {
+  border: 0;
+  background: transparent;
+  color: var(--on-primary);
+  font-size: 13px;
+  line-height: 20px;
+  font-weight: 700;
+  padding: 2px var(--space-3);
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  transition:
+    background-color var(--dur-fast) var(--ease),
+    color var(--dur-fast) var(--ease);
+}
+
+.option:hover {
+  background: var(--primary-hover);
+}
+
+.option[aria-checked='true'] {
+  background: var(--on-primary);
+  color: var(--primary);
+}
+
+.option:focus-visible {
+  box-shadow: var(--focus-ring-on-brand);
+}

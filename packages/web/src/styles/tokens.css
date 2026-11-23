@@ -1,0 +1,78 @@
+/*
+ * Design tokens: the ONLY file in packages/web allowed to contain raw colour values (BRAND.md §3, §8).
+ * Source: docs/BRAND.md §3. Additions beyond §3 are marked "added" and recorded in BRAND.md.
+ */
+:root {
+  /* brand primitives */
+  --n-blue: #184bff;
+  --n-mint: #00ff94;
+  --n-navy: #132153;
+  --n-slate: #6d758f;
+  --n-grey: #666666;
+  --n-white: #ffffff;
+  --n-paper: #f4f4f4;
+
+  /* light theme (default) */
+  --bg: #ffffff;
+  --bg-subtle: #f4f6fb; /* message hover, panels */
+  --bg-selected: #e8eeff; /* active room row, own-message tint */
+  --surface-brand: var(--n-blue); /* top header */
+  --sidebar-bg: var(--n-navy);
+  --sidebar-fg: #e6e9f2;
+  --sidebar-muted: #9aa3bf;
+  --fg: var(--n-navy); /* headings, names */
+  --fg-body: #1f2433; /* message text, max readability */
+  --fg-muted: #5b6378; /* timestamps, meta (6.0:1) */
+  --link: var(--n-blue);
+  --accent: var(--n-mint); /* dots, presence, highlights: never text on light */
+  --on-accent: var(--n-navy);
+  --primary: var(--n-blue);
+  --primary-hover: #0035ee; /* added: blue darkened 8% (white on it 7.65:1) */
+  --on-primary: #ffffff;
+  --danger: #b42318; /* 6.57 on white */
+  --border: #dde2ee;
+  --focus-ring: 0 0 0 3px rgba(24, 75, 255, 0.35);
+  --focus-ring-on-brand: 0 0 0 3px var(--n-mint); /* added: the blue ring is invisible on the blue header */
+  --on-brand-divider: rgba(255, 255, 255, 0.45); /* added: decorative divider in the header */
+  --mention-bg: rgba(0, 255, 148, 0.18); /* message that mentions me: mint wash + mint left bar */
+
+  --font-sans: 'Raleway', 'Segoe UI', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Cascadia Code', Consolas, monospace;
+
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 10px;
+  --radius-pill: 999px;
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --shadow-1: 0 1px 2px rgba(19, 33, 83, 0.08);
+  --shadow-2: 0 6px 24px rgba(19, 33, 83, 0.14);
+  --dur-fast: 120ms;
+  --dur-med: 200ms;
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+[data-theme='dark'] {
+  --bg: #0b1230;
+  --bg-subtle: #132153;
+  --bg-selected: #1c2a63;
+  --surface-brand: var(--n-blue);
+  --sidebar-bg: #070c22;
+  --sidebar-fg: #e6e9f2;
+  --sidebar-muted: #9aa3bf;
+  --fg: #ffffff;
+  --fg-body: #e6e9f2; /* 15.1 on bg */
+  --fg-muted: #9aa3bf; /* 7.3 on bg */
+  --link: #8aa2ff; /* 7.6 on bg, 5.57 on selected */
+  --accent: var(--n-mint);
+  --on-accent: var(--n-navy);
+  --primary: var(--n-blue);
+  --on-primary: #ffffff;
+  --danger: #ff6b6b;
+  --border: #22306a;
+  --mention-bg: rgba(0, 255, 148, 0.1);
+}

@@ -1,0 +1,15 @@
+{
+  "header": {
+    "label": "Barra superior da {app}"
+  },
+  "theme": {
+    "label": "Tema",
+    "system": "Sistema",
+    "light": "Claro",
+    "dark": "Escuro"
+  },
+  "shell": {
+    "tagline": "O sítio da equipa para falar de tudo menos trabalho.",
+    "status": "Em construção · fase {phase} de {total}"
+  }
+}

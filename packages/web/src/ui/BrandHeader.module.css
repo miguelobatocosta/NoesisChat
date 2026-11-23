@@ -1,0 +1,36 @@
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 56px;
+  padding: 0 var(--space-4);
+  background: var(--surface-brand);
+  color: var(--on-primary);
+  flex-shrink: 0;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.wordmark {
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 24px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.divider {
+  width: 1px;
+  height: 20px;
+  background: var(--on-brand-divider);
+}
+
+.appName {
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
+}
