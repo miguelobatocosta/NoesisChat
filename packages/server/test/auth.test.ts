@@ -168,12 +168,12 @@ describe('clientIp (CLAUDE.md rule 8)', () => {
 });
 
 describe('session and logout', () => {
-  it('GET /api/session is 401 without a cookie or with a bad one', async () => {
-    expect((await s.http('/api/session')).status).toBe(401);
-    expect(
-      (await s.http('/api/session', { headers: { cookie: `${SESSION_COOKIE}=${'x'.repeat(43)}` } }))
-        .status,
-    ).toBe(401);
+  it('GET /api/session returns user: null without a cookie or with a bad one', async () => {
+    expect(await (await s.http('/api/session')).json()).toEqual({ ok: true, user: null });
+    const bad = await s.http('/api/session', {
+      headers: { cookie: `${SESSION_COOKIE}=${'x'.repeat(43)}` },
+    });
+    expect(await bad.json()).toEqual({ ok: true, user: null });
   });
 
   it('logout revokes the device, clears the cookie and disconnects its sockets', async () => {
@@ -184,7 +184,9 @@ describe('session and logout', () => {
     expect(res.status).toBe(200);
     expect(res.headers.get('set-cookie')).toContain('Max-Age=0');
     await revoked;
-    expect((await s.http('/api/session', { user: ana })).status).toBe(401);
+    expect(await (await s.http('/api/session', { user: ana })).json()).toMatchObject({
+      user: null,
+    });
   });
 
   it('logout requires our Origin', async () => {
@@ -193,7 +195,9 @@ describe('session and logout', () => {
       (await s.http('/api/logout', { method: 'POST', user: ana, origin: 'https://evil.example' }))
         .status,
     ).toBe(403);
-    expect((await s.http('/api/session', { user: ana })).status).toBe(200);
+    expect(await (await s.http('/api/session', { user: ana })).json()).toMatchObject({
+      user: { displayName: 'Ana' },
+    });
   });
 });
 

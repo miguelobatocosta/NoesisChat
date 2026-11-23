@@ -28,6 +28,5 @@ export const RATE_LIMITS = {
   typing: [1, 2_000],
   'rooms:create': [5, 60 * 60_000],
   upload: [30, 10 * 60_000],
-  join: [5, 60_000],
   default: [60, 10_000],
 } as const satisfies Record<string, readonly [number, number]>;

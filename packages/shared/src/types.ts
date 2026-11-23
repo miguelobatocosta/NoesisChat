@@ -10,6 +10,8 @@ export interface SessionUser {
 }
 
 export interface Member extends SessionUser {
+  /** false once revoked. Kept in the list so old messages still show the author's name. */
+  active: boolean;
   online: boolean;
   joinedAt: number;
   lastSeenAt: number | null;

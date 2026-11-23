@@ -10,7 +10,8 @@
     "test": "vitest run",
     "typecheck": "tsc -p .",
     "init": "tsx src/cli/init.ts",
-    "test:coverage": "vitest run --coverage"
+    "test:coverage": "vitest run --coverage",
+    "invite": "tsx src/cli/invite.ts"
   },
   "dependencies": {
     "@fastify/multipart": "10.1.9",

@@ -12,7 +12,7 @@
 }
 
 .card {
-  max-width: 440px;
+  max-width: 480px;
   padding: var(--space-8);
   text-align: center;
   background: var(--bg-subtle);
@@ -21,25 +21,6 @@
   box-shadow: var(--shadow-1);
 }
 
-.title {
-  font-size: 32px;
-  line-height: 40px;
-  font-weight: 700;
-}
-
-.tagline {
-  margin: var(--space-3) 0 var(--space-6);
-  color: var(--fg-body);
-}
-
-.status {
-  display: inline-block;
-  margin: 0;
-  padding: var(--space-1) var(--space-3);
-  border-radius: var(--radius-pill);
-  background: var(--accent);
-  color: var(--on-accent);
-  font-size: 12px;
-  line-height: 16px;
-  font-weight: 700;
+.muted {
+  color: var(--fg-muted);
 }

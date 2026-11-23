@@ -1,5 +1,5 @@
-// Bundles the server into dist/main.js. Workspace packages (@pausa/*) are inlined because they ship
-// TypeScript source; every other dependency stays external and is loaded from node_modules at runtime.
+// Bundles the server and its CLIs into dist/. Workspace packages (@pausa/*) are inlined because they
+// ship TypeScript source; every other dependency stays external and loads from node_modules.
 import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { build } from 'esbuild';
@@ -10,8 +10,13 @@ const external = Object.keys(pkg.dependencies ?? {}).filter((name) => !name.star
 
 await build({
   absWorkingDir: root,
-  entryPoints: ['src/main.ts'],
-  outfile: 'dist/main.js',
+  entryPoints: {
+    main: 'src/main.ts',
+    init: 'src/cli/init.ts',
+    invite: 'src/cli/invite.ts',
+    seed: 'src/cli/seed.ts',
+  },
+  outdir: 'dist',
   bundle: true,
   platform: 'node',
   format: 'esm',

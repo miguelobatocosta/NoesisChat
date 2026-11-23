@@ -1,10 +1,14 @@
 import type { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify';
-import { type ErrorCode, JoinRequest, type SessionResponse } from '@pausa/shared';
+import {
+  type ErrorCode,
+  JoinRequest,
+  type SessionResponse,
+  type SessionState,
+} from '@pausa/shared';
 import { clientIp } from '../clientIp';
 import { type AppContext, ROOM_MEMBERS } from '../context';
 import { AppError } from '../errors';
 import { getUser, toMember, toSessionUser } from '../members/service';
-import { RATE_LIMITS } from '../rateLimit';
 import { kickDevice } from '../realtime';
 import { redeemInvite } from './invites';
 import { isAllowedRequest, isSecureContext } from './origin';
@@ -49,8 +53,8 @@ export function registerAuthRoutes(app: FastifyInstance, ctx: AppContext): void 
   app.post('/api/join', { bodyLimit: 4096 }, async (request, reply) => {
     if (!checkOrigin(ctx, request, reply)) return reply;
     const ip = clientIp(request.raw);
-    const [limit, windowMs] = RATE_LIMITS.join;
-    if (!ctx.limiter.hit(`join:${ip}`, limit, windowMs)) return sendError(reply, 'RATE_LIMITED');
+    if (!ctx.limiter.hit(`join:${ip}`, ctx.config.joinRatePerMin, 60_000))
+      return sendError(reply, 'RATE_LIMITED');
 
     const parsed = JoinRequest.safeParse(request.body);
     if (!parsed.success) return sendError(reply, 'VALIDATION', 'Invalid join request');
@@ -84,9 +88,8 @@ export function registerAuthRoutes(app: FastifyInstance, ctx: AppContext): void 
   app.get('/api/session', async (request, reply) => {
     const session = sessionFromRequest(ctx, request);
     const user = session ? getUser(ctx.db, session.userId) : undefined;
-    if (!session || !user) return sendError(reply, 'UNAUTHORIZED', 'No session');
     reply.header('Cache-Control', 'no-store');
-    const body: SessionResponse = { ok: true, user: toSessionUser(user) };
+    const body: SessionState = { ok: true, user: session && user ? toSessionUser(user) : null };
     return reply.send(body);
   });
 

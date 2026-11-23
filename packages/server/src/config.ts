@@ -18,6 +18,8 @@ const ConfigInput = z.object({
   DATA_DIR: z.string().min(1).default('data'),
   PUBLIC_URL: z.url({ protocol: /^https?$/ }).optional(),
   UPLOAD_MAX_MB: z.coerce.number().int().min(1).max(100).default(10),
+  /** Invite redemptions per client IP per minute (SPEC §6.2). Only raised for automated tests. */
+  JOIN_RATE_PER_MIN: z.coerce.number().int().min(1).max(10_000).default(5),
   WEB_DIST: z.string().min(1).optional(),
 });
 
@@ -36,6 +38,7 @@ export interface Config {
   /** Origin derived from publicUrl, or undefined. */
   publicOrigin: string | undefined;
   uploadMaxBytes: number;
+  joinRatePerMin: number;
 }
 
 export class ConfigError extends Error {
@@ -79,6 +82,7 @@ export function loadConfig(options: LoadConfigOptions = {}): Config {
     publicUrl: c.PUBLIC_URL,
     publicOrigin: c.PUBLIC_URL ? new URL(c.PUBLIC_URL).origin : undefined,
     uploadMaxBytes: c.UPLOAD_MAX_MB * 1024 * 1024,
+    joinRatePerMin: c.JOIN_RATE_PER_MIN,
   };
 }
 

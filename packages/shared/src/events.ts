@@ -158,3 +158,9 @@ export interface SessionResponse {
   ok: true;
   user: SessionUser;
 }
+
+/** GET /api/session: 200 either way, so a signed-out visit doesn't log a console error. */
+export interface SessionState {
+  ok: true;
+  user: SessionUser | null;
+}

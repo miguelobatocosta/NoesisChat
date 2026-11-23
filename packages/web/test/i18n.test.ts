@@ -13,11 +13,18 @@ describe('t()', () => {
   });
 
   it('fills placeholders', () => {
-    expect(t('shell.status', { phase: 1, total: 6 })).toBe('Em construção · fase 1 de 6');
+    expect(t('typing.two', { a: 'Ana', b: 'Rui' })).toBe('Ana e Rui estão a escrever…');
   });
 
   it('leaves unknown placeholders visible instead of inventing values', () => {
-    expect(t('shell.status', { phase: 1 })).toBe('Em construção · fase 1 de {total}');
+    expect(t('typing.two', { a: 'Ana' })).toBe('Ana e {b} estão a escrever…');
+  });
+
+  it('has a message for every error code the client can show', async () => {
+    const { ERROR_CODES } = await import('@pausa/shared');
+    for (const code of [...ERROR_CODES, 'TIMEOUT', 'OFFLINE'] as const) {
+      expect(t(`errors.${code}`)).not.toBe(`errors.${code}`);
+    }
   });
 
   it('every message is a non-empty string', () => {

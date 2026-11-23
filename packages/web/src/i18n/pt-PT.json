@@ -8,8 +8,250 @@
     "light": "Claro",
     "dark": "Escuro"
   },
-  "shell": {
-    "tagline": "O sítio da equipa para falar de tudo menos trabalho.",
-    "status": "Em construção · fase {phase} de {total}"
+  "connection": {
+    "connecting": "A ligar…",
+    "connected": "Ligado",
+    "reconnecting": "A tentar ligar de novo…",
+    "offline": "Servidor offline. A tentar ligar de novo…",
+    "shutdown": "O servidor foi desligado. Volta a ligar quando ele voltar."
+  },
+  "boot": {
+    "loading": "A carregar…",
+    "failed": "Não foi possível falar com o servidor.",
+    "retry": "Tentar de novo"
+  },
+  "join": {
+    "title": "Bem-vindo! Estás quase.",
+    "subtitle": "Foste convidado para a {app}, o sítio da equipa para falar de tudo menos trabalho.",
+    "nameLabel": "Como te chamamos?",
+    "namePlaceholder": "O teu nome",
+    "nameHint": "Se o convite foi feito com o teu nome, é esse que fica.",
+    "accept": "Li as regras e a nota de privacidade",
+    "submit": "Entrar",
+    "submitting": "A entrar…",
+    "noCode": "Este link não traz um convite. Pede um link novo a quem gere a {app}."
+  },
+  "noAccess": {
+    "title": "Precisas de um convite",
+    "body": "A {app} é só por convite. Pede um link a quem a gere.",
+    "revokedTitle": "A tua sessão terminou",
+    "revokedBody": "Saíste ou o teu acesso foi retirado. Para voltar, precisas de um convite novo.",
+    "reload": "Recarregar"
+  },
+  "rules": {
+    "title": "Regras e privacidade",
+    "intro": "Isto é para conversa social: futebol, comida, memes, planos de fim de semana. Não é para trabalho.",
+    "rule1": "Sê decente. Trata os outros como no café.",
+    "rule2": "Nada confidencial nem de clientes. Para isso há o Teams.",
+    "rule3": "Os administradores podem apagar mensagens e retirar acessos.",
+    "privacyTitle": "O que fica guardado",
+    "privacy1": "As mensagens e imagens ficam guardadas sem encriptação no computador de quem aloja a {app}.",
+    "privacy2": "Quem aloja consegue ler tudo.",
+    "privacy3": "Mensagens apagadas são mesmo apagadas. Para apagar a tua conta, pede a quem aloja.",
+    "privacy4": "Sem publicidade, sem rastreio. O tráfego passa pela Cloudflare até ao servidor.",
+    "close": "Fechar"
+  },
+  "sidebar": {
+    "rooms": "Salas",
+    "newRoom": "Nova sala",
+    "hidden": "Ocultas",
+    "archived": "Arquivadas",
+    "online": "Online · {count}",
+    "everyone": "Toda a gente · {count}",
+    "menu": "Menu",
+    "admin": "Administração",
+    "rules": "Regras e privacidade",
+    "logout": "Terminar sessão",
+    "unread": "{count} por ler",
+    "mentions": "{count} menções",
+    "you": "tu"
+  },
+  "roles": {
+    "host": "anfitrião",
+    "admin": "admin",
+    "member": "membro"
+  },
+  "room": {
+    "settings": "Definições da sala",
+    "archivedNotice": "Esta sala está arquivada. Dá para ler, não para escrever.",
+    "empty": "Ainda está tudo calmo por aqui. Diz olá 👋",
+    "loadingOlder": "A carregar mensagens antigas…",
+    "start": "Este é o início de #{name}.",
+    "jumpToLatest": "Ir para as mais recentes",
+    "today": "Hoje",
+    "yesterday": "Ontem"
+  },
+  "message": {
+    "edited": "editada",
+    "deleted": "mensagem apagada",
+    "reply": "Responder",
+    "react": "Reagir",
+    "edit": "Editar",
+    "delete": "Apagar",
+    "actions": "Ações da mensagem",
+    "replyingTo": "A responder a {name}",
+    "replyDeleted": "mensagem apagada",
+    "replyImage": "imagem",
+    "jumpToOriginal": "Ver mensagem original",
+    "sending": "a enviar…",
+    "failed": "Não foi enviada.",
+    "retry": "Tentar de novo",
+    "discard": "Descartar",
+    "reactedBy": "{names} reagiu com {emoji}",
+    "deleteTitle": "Apagar esta mensagem?",
+    "deleteBody": "Isto não dá para desfazer. A mensagem e as imagens são apagadas para toda a gente.",
+    "deleteConfirm": "Apagar",
+    "cancel": "Cancelar",
+    "openImage": "Abrir imagem",
+    "image": "Imagem enviada por {name}",
+    "formerMember": "Antigo membro"
+  },
+  "composer": {
+    "placeholder": "Escreve para #{name}",
+    "placeholderArchived": "Sala arquivada",
+    "send": "Enviar",
+    "attach": "Juntar imagem",
+    "emoji": "Emoji",
+    "cancelReply": "Cancelar resposta",
+    "editing": "A editar a mensagem · Enter para guardar, Esc para cancelar",
+    "cancelEdit": "Cancelar edição",
+    "removeAttachment": "Remover imagem",
+    "uploading": "A carregar…",
+    "uploadFailed": "Falhou",
+    "tooMany": "No máximo {max} imagens por mensagem.",
+    "notImage": "Só dá para enviar imagens (PNG, JPEG, GIF ou WebP).",
+    "tooLarge": "Esta imagem é demasiado grande (máximo {max} MB)."
+  },
+  "typing": {
+    "one": "{a} está a escrever…",
+    "two": "{a} e {b} estão a escrever…",
+    "many": "Várias pessoas estão a escrever…"
+  },
+  "emoji": {
+    "search": "Procurar emoji",
+    "none": "Nenhum emoji encontrado",
+    "smileys": "Caras",
+    "people": "Pessoas",
+    "nature": "Natureza",
+    "food": "Comida",
+    "activities": "Atividades",
+    "travel": "Viagens",
+    "objects": "Objetos",
+    "symbols": "Símbolos"
+  },
+  "newRoom": {
+    "title": "Nova sala",
+    "name": "Nome",
+    "namePlaceholder": "ex.: futebol",
+    "slug": "Vai aparecer como #{slug}",
+    "emoji": "Emoji (opcional)",
+    "description": "Descrição (opcional)",
+    "descriptionPlaceholder": "Sobre o que se fala aqui?",
+    "create": "Criar sala",
+    "cancel": "Cancelar"
+  },
+  "roomSettings": {
+    "title": "#{name}",
+    "details": "Detalhes",
+    "save": "Guardar",
+    "saved": "Guardado",
+    "notify": "Notificações",
+    "notifyAll": "Todas as mensagens",
+    "notifyMentions": "Só menções e respostas",
+    "notifyNone": "Nada",
+    "hide": "Ocultar esta sala da minha lista",
+    "archive": "Arquivar sala",
+    "unarchive": "Desarquivar sala",
+    "archiveHint": "Uma sala arquivada fica só de leitura para toda a gente.",
+    "readOnly": "Só quem criou a sala e os administradores podem mudar os detalhes.",
+    "close": "Fechar",
+    "clearEmoji": "Sem emoji"
+  },
+  "switcher": {
+    "title": "Ir para uma sala",
+    "placeholder": "Escreve o nome de uma sala",
+    "none": "Nenhuma sala encontrada"
+  },
+  "admin": {
+    "title": "Administração",
+    "invites": "Convites",
+    "members": "Membros",
+    "log": "Registo",
+    "close": "Fechar",
+    "inviteName": "Nome da pessoa (opcional)",
+    "inviteNameHint": "Se puseres o nome, fica fixo para essa pessoa.",
+    "expiry": "Expira em",
+    "expiry24h": "24 horas",
+    "expiry7d": "7 dias",
+    "create": "Criar convite",
+    "newLink": "Link de convite, uso único:",
+    "copy": "Copiar",
+    "copied": "Copiado",
+    "status": {
+      "active": "ativo",
+      "used": "usado",
+      "expired": "expirado",
+      "revoked": "revogado"
+    },
+    "redeemedBy": "usado por {name}",
+    "forName": "para {name}",
+    "anyone": "sem nome",
+    "expiresAt": "expira {date}",
+    "revoke": "Revogar",
+    "noInvites": "Ainda não há convites.",
+    "lastSeen": "visto {date}",
+    "neverSeen": "nunca visto",
+    "online": "online",
+    "promote": "Tornar admin",
+    "demote": "Tirar admin",
+    "revokeMember": "Retirar acesso",
+    "revokeTitle": "Retirar o acesso a {name}?",
+    "revokeBody": "A pessoa é desligada já e não consegue voltar sem um convite novo. As mensagens dela ficam.",
+    "revokeConfirm": "Retirar acesso",
+    "cancel": "Cancelar",
+    "noLog": "Ainda não há nada no registo.",
+    "loadMore": "Ver mais",
+    "actions": {
+      "invite": {
+        "create": "criou um convite",
+        "revoke": "revogou um convite"
+      },
+      "member": {
+        "revoke": "retirou o acesso a {target}",
+        "role": "mudou o papel de {target} para {role}"
+      },
+      "message": {
+        "delete": "apagou uma mensagem"
+      },
+      "cli": {
+        "host-invite": "criou o convite de anfitrião (terminal)",
+        "host-device-link": "criou um link de entrada do anfitrião (terminal)",
+        "member-invite": "criou um convite (terminal)"
+      }
+    },
+    "system": "Terminal"
+  },
+  "notifications": {
+    "image": "📷 Imagem",
+    "title": "#{room} · {name}"
+  },
+  "errors": {
+    "VALIDATION": "Alguma coisa não está bem preenchida.",
+    "UNAUTHORIZED": "A tua sessão terminou.",
+    "FORBIDDEN": "Não tens permissão para isso.",
+    "NOT_FOUND": "Já não existe.",
+    "RATE_LIMITED": "Calma! Demasiados pedidos seguidos. Tenta daqui a pouco.",
+    "ROOM_EXISTS": "Já existe uma sala com esse nome.",
+    "ROOM_ARCHIVED": "Esta sala está arquivada.",
+    "MAIN_ROOM_PROTECTED": "A sala #geral não pode ser arquivada nem ocultada.",
+    "NAME_TAKEN": "Esse nome já está a ser usado. Experimenta outro.",
+    "INVITE_INVALID": "Este convite não é válido ou já expirou. Pede um novo.",
+    "EMPTY_MESSAGE": "A mensagem está vazia.",
+    "BAD_ORIGIN": "Pedido recusado.",
+    "UPLOAD_TOO_LARGE": "A imagem é demasiado grande.",
+    "UPLOAD_TYPE": "Só dá para enviar imagens (PNG, JPEG, GIF ou WebP).",
+    "INTERNAL": "Algo correu mal no servidor.",
+    "TIMEOUT": "O servidor não respondeu a tempo.",
+    "OFFLINE": "Sem ligação ao servidor."
   }
 }

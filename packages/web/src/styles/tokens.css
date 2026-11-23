@@ -35,6 +35,17 @@
   --focus-ring-on-brand: 0 0 0 3px var(--n-mint); /* added: the blue ring is invisible on the blue header */
   --on-brand-divider: rgba(255, 255, 255, 0.45); /* added: decorative divider in the header */
   --mention-bg: rgba(0, 255, 148, 0.18); /* message that mentions me: mint wash + mint left bar */
+  --overlay: rgba(11, 18, 48, 0.55); /* added: dialog backdrop */
+  --highlight-bg: rgba(24, 75, 255, 0.12); /* added: message jumped to from a reply */
+  /* added: avatar fills, white initials ≥ 5.19:1 on each */
+  --avatar-1: #184bff;
+  --avatar-2: #132153;
+  --avatar-3: #5b6378;
+  --avatar-4: #0b7a5a;
+  --avatar-5: #7a3fe4;
+  --avatar-6: #b42318;
+  --avatar-7: #a15c00;
+  --avatar-8: #0e6e8c;
 
   --font-sans: 'Raleway', 'Segoe UI', system-ui, sans-serif;
   --font-mono: 'JetBrains Mono', 'Cascadia Code', Consolas, monospace;
@@ -75,4 +86,5 @@
   --danger: #ff6b6b;
   --border: #22306a;
   --mention-bg: rgba(0, 255, 148, 0.1);
+  --highlight-bg: rgba(138, 162, 255, 0.18);
 }

@@ -84,7 +84,9 @@ describe('revocation', () => {
     expect(Date.now() - started).toBeLessThan(2000);
 
     expect((await connectError(s.socket(rui))).message).toBe('UNAUTHORIZED');
-    expect((await s.http('/api/session', { user: rui })).status).toBe(401);
+    expect(await (await s.http('/api/session', { user: rui })).json()).toMatchObject({
+      user: null,
+    });
   });
 
   it('presence: online on connect, offline after the last socket closes', async () => {

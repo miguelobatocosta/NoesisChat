@@ -24,6 +24,7 @@ export function toSessionUser(row: UserRow): SessionUser {
 export function toMember(row: UserRow, presence: Presence): Member {
   return {
     ...toSessionUser(row),
+    active: row.revoked_at === null,
     online: row.revoked_at === null && presence.isOnline(row.id),
     joinedAt: row.created_at,
     lastSeenAt: row.last_seen_at,
@@ -31,8 +32,9 @@ export function toMember(row: UserRow, presence: Presence): Member {
 }
 
 export function listMembers(db: Db, presence: Presence): Member[] {
+  // Revoked users are included (active: false) so their old messages keep a name.
   const rows = db
-    .prepare('SELECT * FROM users WHERE revoked_at IS NULL ORDER BY display_name COLLATE NOCASE')
+    .prepare('SELECT * FROM users ORDER BY display_name COLLATE NOCASE')
     .all() as UserRow[];
   return rows.map((r) => toMember(r, presence));
 }

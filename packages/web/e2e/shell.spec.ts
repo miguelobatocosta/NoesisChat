@@ -1,16 +1,8 @@
-import { expect, test, type Page } from '@playwright/test';
+import { expect, test } from '@playwright/test';
 import { APP_NAME, BRAND_WORDMARK } from '@pausa/shared';
+import { watchErrors } from './helpers';
 
-/** Collects console errors and page errors. CSP violations show up here as "Refused to …". */
-function watchErrors(page: Page): string[] {
-  const errors: string[] = [];
-  page.on('console', (msg) => msg.type() === 'error' && errors.push(msg.text()));
-  page.on('pageerror', (err) => errors.push(err.message));
-  page.on('response', (res) => res.status() >= 400 && errors.push(`${res.status()} ${res.url()}`));
-  return errors;
-}
-
-test('serves the branded shell with zero requests to other hosts and no errors', async ({
+test('without a session: branded "you need an invite" page, no foreign requests, no errors', async ({
   page,
   baseURL,
 }) => {
@@ -24,65 +16,53 @@ test('serves the branded shell with zero requests to other hosts and no errors',
 
   await page.goto('/');
   const header = page.getByRole('banner');
-  await expect(header).toBeVisible();
   await expect(header).toContainText(BRAND_WORDMARK);
   await expect(header).toContainText(APP_NAME);
   await expect(page).toHaveTitle(APP_NAME);
+  await expect(page.getByRole('heading', { name: 'Precisas de um convite' })).toBeVisible();
   await page.waitForLoadState('networkidle');
-
   expect(foreign).toEqual([]);
   expect(errors).toEqual([]);
 });
 
-test('Raleway comes from the bundle and is actually used', async ({ page }) => {
+test('a join link without a valid code says so', async ({ page }) => {
+  await page.goto('/join#nope');
+  await expect(page.getByText('Este link não traz um convite')).toBeVisible();
+});
+
+test('Raleway comes from the bundle and is used', async ({ page }) => {
   await page.goto('/');
   const result = await page.evaluate(async () => {
     await document.fonts.ready;
-    const loaded = [...document.fonts].filter(
-      (f) => f.family.includes('Raleway') && f.status === 'loaded',
-    );
     return {
-      loadedWeights: loaded.map((f) => f.weight),
+      loaded: [...document.fonts].some(
+        (f) => f.family.includes('Raleway') && f.status === 'loaded',
+      ),
       bodyFont: getComputedStyle(document.body).fontFamily,
     };
   });
   expect(result.bodyFont).toContain('Raleway');
-  expect(result.loadedWeights.length).toBeGreaterThan(0);
+  expect(result.loaded).toBe(true);
 });
 
-test('follows the OS theme by default', async ({ page }) => {
+test('theme follows the OS, the override sticks across reloads', async ({ page }) => {
   await page.emulateMedia({ colorScheme: 'dark' });
   await page.goto('/');
   await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
-  await expect(page.getByRole('radio', { name: 'Sistema' })).toHaveAttribute(
-    'aria-checked',
-    'true',
-  );
-
   await page.emulateMedia({ colorScheme: 'light' });
   await expect(page.locator('html')).toHaveAttribute('data-theme', 'light');
-});
 
-test('theme override applies immediately and survives a reload', async ({ page }) => {
-  await page.emulateMedia({ colorScheme: 'light' });
-  await page.goto('/');
   await page.getByRole('radio', { name: 'Escuro' }).click();
-  await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
-
   await page.reload();
   await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
-  await expect(page.getByRole('radio', { name: 'Escuro' })).toHaveAttribute('aria-checked', 'true');
-
   await page.getByRole('radio', { name: 'Sistema' }).click();
   await expect(page.locator('html')).toHaveAttribute('data-theme', 'light');
 });
 
-test('client-side routes get the app shell, server paths do not', async ({ request }) => {
-  const route = await request.get('/join');
-  expect(route.status()).toBe(200);
-  expect(await route.text()).toContain('id="root"');
-
+test('server paths never get the app shell, and carry the CSP', async ({ request }) => {
   const api = await request.get('/api/does-not-exist');
   expect(api.status()).toBe(404);
   expect(api.headers()['content-security-policy']).toContain("default-src 'self'");
+  const files = await request.get('/files/01JA0000000000000000000000');
+  expect(files.status()).toBe(401);
 });

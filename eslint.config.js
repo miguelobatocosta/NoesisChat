@@ -48,7 +48,8 @@ export default defineConfig([
           message: 'User-facing text goes through t() and i18n/pt-PT.json (CLAUDE.md rule 7).',
         },
         {
-          selector: 'JSXAttribute[name.name=/^(aria-label|title|alt|placeholder)$/] > Literal',
+          selector:
+            'JSXAttribute[name.name=/^(aria-label|title|alt|placeholder)$/] > Literal[value=/\\S/]',
           message: 'User-facing attribute text goes through t() (CLAUDE.md rule 7).',
         },
         {
