@@ -1,3 +1,4 @@
+import { fileURLToPath } from 'node:url';
 import AxeBuilder from '@axe-core/playwright';
 import { expect, test } from '@playwright/test';
 import {
@@ -220,7 +221,8 @@ test.describe('images', () => {
 
     await ana.page
       .locator('input[type=file]')
-      .setInputFiles(new URL('./fixtures/gps.jpg', import.meta.url).pathname);
+      // fileURLToPath, not URL.pathname: on Windows .pathname is '/C:/...', not a usable path.
+      .setInputFiles(fileURLToPath(new URL('./fixtures/gps.jpg', import.meta.url)));
     await expect(ana.page.getByRole('button', { name: 'Enviar' })).toBeEnabled();
     await send(ana.page, 'a vista daqui');
 
