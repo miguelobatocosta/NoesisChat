@@ -70,7 +70,12 @@ const timeout = setTimeout(() => {
 }, 60_000);
 
 const onTunnelOutput = (chunk) => {
-  output += chunk.toString();
+  const text = chunk.toString();
+  output = (output + text).slice(-20_000);
+  // Show cloudflared's warnings and errors (e.g. why the email gate refused someone); hide the chatter.
+  for (const line of text.split(/\r?\n/)) {
+    if (/\s(WRN|ERR)\s/.test(line)) console.error(`[túnel] ${line.trim()}`);
+  }
   const url = !server && findTunnelUrl(output);
   if (url) {
     clearTimeout(timeout);
@@ -81,7 +86,10 @@ tunnel.stdout.on('data', onTunnelOutput);
 tunnel.stderr.on('data', onTunnelOutput);
 tunnel.on('exit', (code) => {
   if (!stopping) {
-    console.error(`\n✖ O cloudflared terminou (código ${code}). A desligar o servidor.`);
+    console.error(
+      `\n✖ O cloudflared terminou (código ${code}). A desligar o servidor.\n` +
+        `Últimas linhas do cloudflared:\n${output.slice(-1500)}`,
+    );
     stop(1);
   }
 });
