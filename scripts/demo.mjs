@@ -74,7 +74,8 @@ const onTunnelOutput = (chunk) => {
   output = (output + text).slice(-20_000);
   // Show cloudflared's warnings and errors (e.g. why the email gate refused someone); hide the chatter.
   for (const line of text.split(/\r?\n/)) {
-    if (/\s(WRN|ERR)\s/.test(line)) console.error(`[túnel] ${line.trim()}`);
+    if (/\s(WRN|ERR)\s|auth|mail|access|forbid|denied/i.test(line))
+      console.error(`[túnel] ${line.trim()}`);
   }
   const url = !server && findTunnelUrl(output);
   if (url) {

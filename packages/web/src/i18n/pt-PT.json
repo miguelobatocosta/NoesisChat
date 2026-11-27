@@ -29,7 +29,7 @@
     "accept": "Li as regras e a nota de privacidade",
     "submit": "Entrar",
     "submitting": "A entrar…",
-    "noCode": "Este link não traz um convite. Pede um link novo a quem gere a {app}."
+    "noCode": "Este link não trouxe o convite. Se acabaste de pôr o código do email, abre outra vez o mesmo link: o convite continua válido. Se não resultar, pede um link novo a quem gere a {app}."
   },
   "noAccess": {
     "title": "Precisas de um convite",

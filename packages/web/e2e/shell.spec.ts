@@ -27,7 +27,7 @@ test('without a session: branded "you need an invite" page, no foreign requests,
 
 test('a join link without a valid code says so', async ({ page }) => {
   await page.goto('/join#nope');
-  await expect(page.getByText('Este link não traz um convite')).toBeVisible();
+  await expect(page.getByText('Este link não trouxe o convite')).toBeVisible();
 });
 
 test('Raleway comes from the bundle and is used', async ({ page }) => {
