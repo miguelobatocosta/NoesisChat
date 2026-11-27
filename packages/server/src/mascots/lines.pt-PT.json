@@ -52,6 +52,18 @@
           "Feriado é o meu dia preferido: toda a gente na esplanada e eu a ouvir tudo. 🕊️"
         ]
       }
+    ],
+    "warn": [
+      "Ó {name}, outra vez {topic}? Olhe que eu tomo nota de tudo no meu caderninho… 📒",
+      "{name}, querido(a), já é muito {topic} para uma pessoa só. Mais um bocadinho e vai de castigo!"
+    ],
+    "label": [
+      "Ai {name}, já te ouvi falar de {topic} vezes demais… a partir de agora és o/a nosso/a **{label}**. 🕊️",
+      "Está decidido, e já contei a toda a gente: {name} é oficialmente **{label}**."
+    ],
+    "mute": [
+      "Pronto, {name}, chega de {topic}! Ficas {hours} h caladinho(a) nesta sala. Pode ler, mas não pode falar. 🤐",
+      "{name}, de castigo por {hours} h. Eu bem avisei… e já contei à vizinhança toda."
     ]
   },
   "bolacha": {
@@ -99,6 +111,18 @@
           "Um passeio faz bem ao corpo e às migalhas que se encontram pelo caminho."
         ]
       }
+    ],
+    "warn": [
+      "Au! {name}, tanto {topic} até me dá fome… e eu já tenho sempre fome. Cuidado! 🐶",
+      "{name}, mais {topic} e eu escondo-te o almoço. Último aviso!"
+    ],
+    "label": [
+      "{name} ganhou uma bolacha e um título: **{label}**! 🍪",
+      "Farejei, farejei e cheguei a uma conclusão: {name} é **{label}**. 🐶"
+    ],
+    "mute": [
+      "{name}, para a casota! {hours} h sem falar nesta sala. Podes ver, não podes ladrar. 🐶",
+      "Sentado, {name}! Quieto! Durante {hours} h. Bom menino(a)."
     ]
   },
   "faisca": {
@@ -137,6 +161,18 @@
           "Pressa é comigo! Já fiz, já entreguei, já esqueci o que era. 🐿️💨"
         ]
       }
+    ],
+    "warn": [
+      "{name}! {topic}-{topic}-{topic}! Até eu, que bebo 12 cafés, acho que é demais! ⚡",
+      "Ó {name}, abranda no {topic}, que até o meu rabo ficou eriçado! 🐿️"
+    ],
+    "label": [
+      "ALERTA! {name} desbloqueou a conquista **{label}**! ⚡🐿️",
+      "{name}, és oficialmente **{label}**! Isto merece um café. Mais um."
+    ],
+    "mute": [
+      "{name}, curto-circuito! {hours} h sem teclar nesta sala. Vai correr à volta de uma árvore. ⚡",
+      "Pausa forçada, {name}! {hours} h. Respira. Eu não consigo, mas tu consegues."
     ]
   },
   "ferreira": {
@@ -175,6 +211,18 @@
           "O trânsito é só o mundo a aprender a andar ao meu ritmo."
         ]
       }
+    ],
+    "warn": [
+      "Meu caro {name}… devagarinho. Tanto {topic} cansa até uma tartaruga. 🐢",
+      "{name}, na minha idade já vi muito {topic}. Mas tanto assim? Moderação, jovem."
+    ],
+    "label": [
+      "Com a sabedoria dos meus 120 anos, declaro {name} **{label}**. 🐢",
+      "Está escrito na minha carapaça: {name}, **{label}**."
+    ],
+    "mute": [
+      "{name}, vai pensar no que fizeste. {hours} h de silêncio nesta sala. Devagar se vai ao longe. 🐢",
+      "Recolhe-te à carapaça, {name}. {hours} h. Depois falamos, com calma."
     ]
   },
   "pixel": {
@@ -213,6 +261,18 @@
           "A impressora sente medo. É por isso que encrava. Fala-lhe com carinho, {name}."
         ]
       }
+    ],
+    "warn": [
+      "{name}: if (topic == '{topic}') warning++. Estás quase no overflow. 🐙",
+      "Aviso de sistema, {name}: demasiados pedidos sobre {topic}. Rate limit a aproximar-se."
+    ],
+    "label": [
+      "Deploy concluído: {name} agora tem a role **{label}**. 🐙",
+      "{name}.label = '**{label}**'; // não há rollback"
+    ],
+    "mute": [
+      "{name}: 429 Too Many Requests. Tenta outra vez daqui a {hours} h. 🐙",
+      "Permissões de escrita revogadas para {name} por {hours} h. Leitura continua ativa."
     ]
   },
   "nuvem": {
@@ -252,6 +312,18 @@
           "Frio? Ponham-me uma manta e não me chamem até à primavera."
         ]
       }
+    ],
+    "warn": [
+      "Ai, {name}… tanto {topic} já me está a dar sono. Mais e vou ter de fazer alguma coisa. 😾",
+      "{name}, estou a tentar dormir e só oiço {topic}. Última vez que mio."
+    ],
+    "label": [
+      "*abre um olho* {name}, és **{label}**. *fecha o olho* 😼",
+      "Decidi, da minha almofada: {name} é **{label}**. Agora deixem-me dormir."
+    ],
+    "mute": [
+      "{name}, silêncio. {hours} h. É a hora da minha sesta e da tua também. 😾",
+      "Shhh, {name}. Ficas {hours} h sem falar aqui. Eu fico a dormir em cima do teu teclado."
     ]
   }
 }

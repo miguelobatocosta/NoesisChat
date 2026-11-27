@@ -17,6 +17,7 @@ import { errorCode } from '../../api/errors';
 import { uploadImage } from '../../api/http';
 import { t } from '../../i18n';
 import { searchEmoji } from '../../lib/emoji';
+import { formatTime } from '../../lib/format';
 import { isAcceptedImage, prepareImage } from '../../lib/imageprep';
 import { findTrigger, fromWire, toWire, type Trigger } from '../../lib/mentions';
 import { plainText } from '../../lib/plaintext';
@@ -47,8 +48,15 @@ type Suggestion = { key: string; label: string; detail?: string; insert: string;
 
 export const Composer = forwardRef<
   ComposerHandle,
-  { roomId: string; roomName: string; disabled: boolean }
->(function Composer({ roomId, roomName, disabled }, ref) {
+  {
+    roomId: string;
+    roomName: string;
+    disabled: boolean;
+    /** A mascot muted me here (D-51): reading is fine, writing isn't. */
+    muted?: { until: number; topic: string } | null;
+  }
+>(function Composer({ roomId, roomName, disabled: archived, muted = null }, ref) {
+  const disabled = archived || muted !== null;
   const store = getStore();
   const members = useChat((s) => s.members);
   const me = useChat((s) => s.me);
@@ -297,9 +305,11 @@ export const Composer = forwardRef<
     });
   }
 
-  const placeholder = disabled
+  const placeholder = archived
     ? t('composer.placeholderArchived')
-    : t('composer.placeholder', { name: roomName });
+    : muted
+      ? t('composer.placeholderMuted', { time: formatTime(muted.until), topic: muted.topic })
+      : t('composer.placeholder', { name: roomName });
 
   return (
     <div className={styles.composer}>

@@ -1,4 +1,4 @@
-import { type DragEvent, useRef, useState } from 'react';
+import { type DragEvent, useEffect, useRef, useState } from 'react';
 import { Settings } from 'lucide-react';
 import { t } from '../../i18n';
 import { useChat } from '../../state/store';
@@ -17,6 +17,7 @@ export function RoomView({
   onOpenSettings: () => void;
 }) {
   const room = useChat((s) => s.rooms[roomId]);
+  const muted = useMyMute(roomId);
   const composer = useRef<ComposerHandle>(null);
   const [dragging, setDragging] = useState(false);
 
@@ -68,7 +69,29 @@ export function RoomView({
 
       <MessageList roomId={roomId} />
       <TypingIndicator roomId={roomId} />
-      <Composer ref={composer} roomId={roomId} roomName={room.name} disabled={archived} />
+      <Composer
+        ref={composer}
+        roomId={roomId}
+        roomName={room.name}
+        disabled={archived}
+        muted={muted}
+      />
     </section>
   );
+}
+
+/** My active mute in this room (D-51); clears itself when the time is up. */
+function useMyMute(roomId: string): { until: number; topic: string } | null {
+  const myId = useChat((s) => s.me.id);
+  const standing = useChat((s) => s.standings[roomId]?.[myId]);
+  const until = standing?.mutedUntil ?? null;
+  const [now, setNow] = useState(() => Date.now());
+  useEffect(() => {
+    if (until === null) return;
+    const left = until - Date.now();
+    if (left <= 0) return;
+    const timer = setTimeout(() => setNow(Date.now()), Math.min(left + 500, 2 ** 31 - 1));
+    return () => clearTimeout(timer);
+  }, [until]);
+  return until !== null && until > now ? { until, topic: standing?.mutedTopic ?? '' } : null;
 }

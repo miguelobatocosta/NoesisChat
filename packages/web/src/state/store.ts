@@ -12,6 +12,7 @@ import {
   type Room,
   type RoomView,
   type SessionUser,
+  type Standing,
 } from '@pausa/shared';
 import { type ClientErrorCode, errorCode, RequestError } from '../api/errors';
 import { logout as httpLogout } from '../api/http';
@@ -51,6 +52,8 @@ export interface ChatState {
   timelines: Record<string, Timeline>;
   pending: PendingMessage[];
   members: Record<string, Member>;
+  /** Labels and mutes per room, then per user (D-51). Only people with either are listed. */
+  standings: Record<string, Record<string, Standing>>;
   typing: Record<string, Record<string, number>>;
   replyTo: Record<string, Message | null>;
   editingId: string | null;
@@ -128,6 +131,7 @@ export class ChatStore {
       timelines: {},
       pending: [],
       members: {},
+      standings: {},
       typing: {},
       replyTo: {},
       editingId: null,
@@ -210,6 +214,7 @@ export class ChatStore {
           }));
       }
     });
+    s.on('moderation:updated', ({ standing }) => this.applyStanding(standing));
     s.on('typing', ({ roomId, userId }) => {
       if (userId === this.state.me.id) return;
       this.set((st) => ({
@@ -265,7 +270,7 @@ export class ChatStore {
         await Promise.all(
           Object.entries(this.state.timelines)
             .filter(([, tl]) => tl.loaded)
-            .map(([roomId]) => this.syncRoom(roomId)),
+            .flatMap(([roomId]) => [this.syncRoom(roomId), this.loadStandings(roomId)]),
         );
       }
       this.updateBadge();
@@ -283,6 +288,33 @@ export class ChatStore {
     this.set({ activeRoomId: roomId, editingId: null });
     if (!opts.replaceUrl) this.navigate(room);
     if (!this.state.timelines[roomId]?.loaded) void this.loadLatest(roomId);
+    void this.loadStandings(roomId);
+  }
+
+  // --- topic moderation (D-51) -------------------------------------------------------------------------
+
+  private async loadStandings(roomId: string): Promise<void> {
+    try {
+      const { standings } = await this.req('moderation:standings', { roomId });
+      this.set((st) => ({
+        standings: {
+          ...st.standings,
+          [roomId]: Object.fromEntries(standings.map((x) => [x.userId, x])),
+        },
+      }));
+    } catch {
+      /* labels are decoration; the next room switch or reconnect retries */
+    }
+  }
+
+  private applyStanding(standing: Standing): void {
+    this.set((st) => {
+      const room = { ...st.standings[standing.roomId] };
+      if (standing.labels.length === 0 && standing.mutedUntil === null)
+        delete room[standing.userId];
+      else room[standing.userId] = standing;
+      return { standings: { ...st.standings, [standing.roomId]: room } };
+    });
   }
 
   async createRoom(input: ClientEventInput<'rooms:create'>): Promise<void> {

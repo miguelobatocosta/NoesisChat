@@ -30,6 +30,8 @@ export const MessageItem = memo(function MessageItem({
   const me = useChat((s) => s.me);
   const members = useChat((s) => s.members);
   const archived = useChat((s) => s.rooms[message.roomId]?.archivedAt != null);
+  // Labels the room's mascot gave this person here (D-51), e.g. "nerd".
+  const labels = useChat((s) => s.standings[message.roomId]?.[message.userId]?.labels);
   const [picker, setPicker] = useState(false);
   const store = getStore();
   const nameOf = (id: string) => members[id]?.displayName ?? store.nameOf(id);
@@ -66,6 +68,11 @@ export const MessageItem = memo(function MessageItem({
             {mascot && <Mascot mascot={mascot.key} size={22} className={styles.mascot} />}
             <span className={styles.author}>{author}</span>
             {mascot && <span className={styles.tag}>{t('mascots.tag')}</span>}
+            {labels && labels.length > 0 && (
+              <span className={styles.label} title={t('moderation.labelTitle')}>
+                {labels.join(' · ')}
+              </span>
+            )}
             <time
               className={`${styles.time} num`}
               dateTime={new Date(message.createdAt).toISOString()}

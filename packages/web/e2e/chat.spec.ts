@@ -314,6 +314,62 @@ test.describe('admin', () => {
   });
 });
 
+test.describe('moderation (D-51)', () => {
+  test('a mascot labels and mutes someone who keeps talking about one topic; the host lifts it', async ({
+    browser,
+  }) => {
+    const host = await join(browser, hostLink(), 'Costa');
+    const roomName = `sesta ${Date.now().toString(36).slice(-4)}`;
+    await host.page.getByRole('button', { name: 'Nova sala' }).click();
+    const create = host.page.getByRole('dialog', { name: 'Nova sala' });
+    await create.getByLabel('Nome').fill(roomName);
+    await create.getByRole('button', { name: 'Criar sala' }).click();
+
+    // Small thresholds on "Sono" so two messages are enough.
+    await host.page.getByRole('button', { name: 'Menu' }).click();
+    await host.page.getByRole('menuitem', { name: 'Administração' }).click();
+    const panel = host.page.getByRole('dialog', { name: 'Administração' });
+    await panel.getByRole('tab', { name: 'Tópicos' }).click();
+    const sono = panel.getByRole('listitem').filter({ hasText: 'zombie' });
+    await sono.getByRole('button', { name: 'Editar' }).click();
+    await sono.getByLabel('Rótulo aos').fill('1');
+    await sono.getByLabel('Castigo aos').fill('2');
+    await sono.getByRole('button', { name: 'Guardar' }).click();
+    await expect(sono.getByText(/rótulo aos 1 · castigo aos 2/)).toBeVisible();
+    await host.page.keyboard.press('Escape');
+
+    const ana = await join(browser, memberInvite(), uniqueName('Ana'));
+    await ana.page
+      .locator('nav')
+      .getByRole('button', { name: new RegExp(`^${roomName}`) })
+      .click();
+    await expect(ana.page.getByRole('heading', { name: roomName })).toBeVisible();
+
+    await send(ana.page, 'hoje tenho olheiras');
+    await expect(message(ana.page, 'hoje tenho olheiras').getByText('zombie')).toBeVisible();
+    await expect(message(host.page, 'hoje tenho olheiras').getByText('zombie')).toBeVisible();
+
+    await send(ana.page, 'mesmo muitas olheiras');
+    // Muted: the composer is disabled and says why (its name changes with it).
+    await expect(ana.page.getByRole('textbox', { name: /^De castigo até às/ })).toBeDisabled();
+
+    await host.page.getByRole('button', { name: 'Menu' }).click();
+    await host.page.getByRole('menuitem', { name: 'Administração' }).click();
+    await panel.getByRole('tab', { name: 'Castigos' }).click();
+    await panel
+      .getByRole('listitem')
+      .filter({ hasText: ana.name })
+      .getByRole('button', { name: 'Levantar' })
+      .first()
+      .click();
+    await expect(ana.page.getByRole('textbox', { name: /^Escreve para/ })).toBeEnabled();
+
+    expect(ana.errors).toEqual([]);
+    await host.context.close();
+    await ana.context.close();
+  });
+});
+
 test.describe('accessibility and brand', () => {
   for (const scheme of ['light', 'dark'] as const) {
     test(`no contrast failures in the chat (${scheme})`, async ({ browser }) => {

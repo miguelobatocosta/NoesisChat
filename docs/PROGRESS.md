@@ -15,8 +15,9 @@ Update at the end of every phase: status, date, commit, and anything deferred.
 | 8 | Room mascots that talk (owner request, D-49) | ✅ done | 2026-11-23 | phase/08-mascotes | Six original mascots, scripted pt-PT lines, migration 0002; mentions are plain text now (no box) |
 | 8b | Fixed address + one-click invites (D-50) | ✅ done | 2026-11-27 | phase/08-mascotes | Named tunnel on the owner's domain, Cloudflare Access (One-time PIN) with a bypass for `/join`; demo refuses to run ungated |
 | 9 | Clean-up: deps, dead exports, docs | ✅ done | 2026-11-27 | phase/09-limpeza | Minor bumps + `@fastify/static` 11 (dotfiles now ignored). TS 6 (D-39) and `@types/node` 22 kept on purpose |
+| 10 | Mascots moderate topics (owner request, D-51) | ✅ done | 2026-11-27 | phase/10-moderacao | 15 topics in the admin portal, labels + 24 h room mutes (never in #geral), migration 0003 |
 
-**Test totals:** 27 shared + 125 server + 229 web unit/integration, 18 Playwright E2E (incl. axe contrast in light and dark).
+**Test totals:** 27 shared + 135 server + 231 web unit/integration, 20 Playwright E2E (incl. axe contrast in light and dark).
 
 **Owner to-dos:** D-01 brand approval before showing it beyond the team. D-00 is moot on the fixed address
 (an ordinary domain), but still worth one check from an office laptop.

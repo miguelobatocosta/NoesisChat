@@ -1,0 +1,211 @@
+[
+  {
+    "name": "Trabalho",
+    "label": "nerd",
+    "keywords": [
+      "reunião",
+      "reuniões",
+      "deadline",
+      "jira",
+      "sprint",
+      "cliente",
+      "clientes",
+      "entrega",
+      "excel",
+      "powerpoint",
+      "relatório",
+      "teams",
+      "projeto",
+      "email do chefe"
+    ]
+  },
+  {
+    "name": "Comida",
+    "label": "lambão",
+    "keywords": [
+      "almoço",
+      "almoçar",
+      "jantar",
+      "fome",
+      "bifana",
+      "francesinha",
+      "pizza",
+      "sobremesa",
+      "petisco",
+      "petiscos",
+      "hambúrguer",
+      "bacalhau"
+    ]
+  },
+  {
+    "name": "Café",
+    "label": "cafeinado",
+    "keywords": [
+      "café",
+      "cafés",
+      "bica",
+      "expresso",
+      "cimbalino",
+      "cafezinho",
+      "galão",
+      "meia de leite"
+    ]
+  },
+  {
+    "name": "Futebol",
+    "label": "doente da bola",
+    "keywords": [
+      "futebol",
+      "benfica",
+      "porto",
+      "sporting",
+      "braga",
+      "golo",
+      "árbitro",
+      "penálti",
+      "fora de jogo",
+      "liga",
+      "champions"
+    ]
+  },
+  {
+    "name": "Segundas",
+    "label": "resmungão",
+    "keywords": ["segunda", "segunda-feira", "segundas", "odeio segundas"]
+  },
+  {
+    "name": "Fim de semana",
+    "label": "sexta-feirista",
+    "keywords": ["sexta", "sexta-feira", "fim de semana", "fds", "sábado", "domingo"]
+  },
+  {
+    "name": "Meteorologia",
+    "label": "meteorologista",
+    "keywords": ["chuva", "calor", "frio", "nevoeiro", "ipma", "trovoada", "vento", "humidade"]
+  },
+  {
+    "name": "Trânsito",
+    "label": "rei do IC19",
+    "keywords": [
+      "trânsito",
+      "fila",
+      "filas",
+      "ic19",
+      "a5",
+      "a1",
+      "segunda circular",
+      "ponte",
+      "portagem",
+      "estacionamento"
+    ]
+  },
+  {
+    "name": "Ginásio",
+    "label": "ginasista",
+    "keywords": [
+      "ginásio",
+      "treino",
+      "treinar",
+      "crossfit",
+      "proteína",
+      "corrida",
+      "maratona",
+      "pesos",
+      "padel"
+    ]
+  },
+  {
+    "name": "Séries e filmes",
+    "label": "spoilerista",
+    "keywords": [
+      "série",
+      "séries",
+      "netflix",
+      "hbo",
+      "temporada",
+      "episódio",
+      "filme",
+      "filmes",
+      "spoiler",
+      "cinema"
+    ]
+  },
+  {
+    "name": "Jogos",
+    "label": "gamer",
+    "keywords": [
+      "playstation",
+      "ps5",
+      "xbox",
+      "nintendo",
+      "switch",
+      "steam",
+      "fortnite",
+      "fifa",
+      "videojogo",
+      "videojogos",
+      "gaming"
+    ]
+  },
+  {
+    "name": "Férias",
+    "label": "turista",
+    "keywords": [
+      "férias",
+      "praia",
+      "viagem",
+      "viajar",
+      "voo",
+      "hotel",
+      "algarve",
+      "aeroporto",
+      "mala",
+      "ryanair"
+    ]
+  },
+  {
+    "name": "Política",
+    "label": "comentador",
+    "keywords": [
+      "governo",
+      "eleições",
+      "ministro",
+      "parlamento",
+      "partido",
+      "deputado",
+      "orçamento",
+      "primeiro-ministro"
+    ]
+  },
+  {
+    "name": "Dinheiro",
+    "label": "investidor",
+    "keywords": [
+      "ações",
+      "bitcoin",
+      "cripto",
+      "juros",
+      "euribor",
+      "salário",
+      "aumento",
+      "investir",
+      "poupança",
+      "irs"
+    ]
+  },
+  {
+    "name": "Sono",
+    "label": "zombie",
+    "keywords": [
+      "sono",
+      "cansado",
+      "cansada",
+      "dormir",
+      "dormi",
+      "sesta",
+      "olheiras",
+      "insónia",
+      "bocejo"
+    ]
+  }
+]

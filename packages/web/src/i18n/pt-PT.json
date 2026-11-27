@@ -49,7 +49,8 @@
     "privacy2": "Quem aloja consegue ler tudo.",
     "privacy3": "Mensagens apagadas são mesmo apagadas. Para apagar a tua conta, pede a quem aloja.",
     "privacy4": "Sem publicidade, sem rastreio. O tráfego passa pela Cloudflare até ao servidor.",
-    "close": "Fechar"
+    "close": "Fechar",
+    "rule4": "As mascotes contam os temas de conversa. Quem fala demais do mesmo tema ganha uma alcunha pública e, fora do #geral, pode ficar 24 h sem escrever nessa sala."
   },
   "sidebar": {
     "rooms": "Salas",
@@ -120,7 +121,8 @@
     "uploadFailed": "Falhou",
     "tooMany": "No máximo {max} imagens por mensagem.",
     "notImage": "Só dá para enviar imagens (PNG, JPEG, GIF ou WebP).",
-    "tooLarge": "Esta imagem é demasiado grande (máximo {max} MB)."
+    "tooLarge": "Esta imagem é demasiado grande (máximo {max} MB).",
+    "placeholderMuted": "De castigo até às {time} por falares demais de {topic}. Podes continuar a ler."
   },
   "typing": {
     "one": "{a} está a escrever…",
@@ -230,9 +232,21 @@
         "host-invite": "criou o convite de anfitrião (terminal)",
         "host-device-link": "criou um link de entrada do anfitrião (terminal)",
         "member-invite": "criou um convite (terminal)"
+      },
+      "mascot": {
+        "mute": "pôs {target} de castigo ({topic})"
+      },
+      "moderation": {
+        "lift": "levantou o castigo de {target}",
+        "reset": "pôs a zero os strikes de {target}"
+      },
+      "topic": {
+        "update": "editou o tópico {name}"
       }
     },
-    "system": "Terminal"
+    "system": "Terminal",
+    "topics": "Tópicos",
+    "punishments": "Castigos"
   },
   "notifications": {
     "image": "📷 Imagem",
@@ -255,7 +269,8 @@
     "UPLOAD_TYPE": "Só dá para enviar imagens (PNG, JPEG, GIF ou WebP).",
     "INTERNAL": "Algo correu mal no servidor.",
     "TIMEOUT": "O servidor não respondeu a tempo.",
-    "OFFLINE": "Sem ligação ao servidor."
+    "OFFLINE": "Sem ligação ao servidor.",
+    "MUTED": "Estás de castigo nesta sala. Podes ler, mas ainda não podes escrever."
   },
   "mascots": {
     "label": "Mascotes",
@@ -299,5 +314,35 @@
     },
     "sayHi": "Dizer olá",
     "hello": "Olá"
+  },
+  "moderation": {
+    "labelTitle": "Alcunha dada pela mascote desta sala",
+    "topicsIntro": "As mascotes contam quantas vezes cada pessoa fala de cada tópico, sala a sala (no máximo um strike por mensagem). Ao chegar ao rótulo, a pessoa ganha a alcunha; ao chegar ao castigo, fica sem escrever nessa sala durante as horas indicadas. No #geral nunca há castigo.",
+    "enabled": "{name} ativo",
+    "thresholds": "rótulo aos {label} · castigo aos {mute} · {hours} h · {words} palavras",
+    "edit": "Editar",
+    "name": "Tópico",
+    "label": "Rótulo",
+    "labelAt": "Rótulo aos",
+    "muteAt": "Castigo aos",
+    "muteHours": "Horas de castigo",
+    "keywords": "Palavras-chave",
+    "keywordsHint": "Uma por linha (ou separadas por vírgulas). Contam palavras inteiras, sem ligar a acentos nem maiúsculas.",
+    "line": {
+      "warn": "O que a mascote diz no aviso (5 antes do castigo)",
+      "label": "O que diz ao dar o rótulo",
+      "mute": "O que diz ao pôr de castigo"
+    },
+    "linePlaceholder": "Vazio: a mascote usa as falas dela.",
+    "lineHint": "Marcadores: {name} pessoa, {label} rótulo, {topic} tópico, {room} sala, {hours} horas.",
+    "save": "Guardar",
+    "activeMutes": "Castigos ativos",
+    "noMutes": "Ninguém está de castigo.",
+    "muteMeta": "{topic} · até {date}",
+    "lift": "Levantar",
+    "strikes": "Strikes",
+    "noStrikes": "Ainda ninguém tem strikes.",
+    "strikeMeta": "{topic} · {count} (rótulo aos {label}, castigo aos {mute})",
+    "reset": "Pôr a zero"
   }
 }

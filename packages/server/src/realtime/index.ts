@@ -53,6 +53,9 @@ import {
 import { RATE_LIMITS } from '../rateLimit';
 import { archiveRoom, createRoom, listRoomsFor, updatePrefs, updateRoom } from '../rooms/service';
 import { Mascots } from '../mascots/service';
+import { listModeration, Moderator, standingsFor } from '../moderation/service';
+import { listTopicRows, toTopic, updateTopic } from '../moderation/topics';
+import { requireRoom } from '../rooms/service';
 
 type PausaSocket = Socket<
   ClientToServerEvents,
@@ -74,8 +77,8 @@ type Handler<K extends ClientEventName> = (
 
 export function createRealtime(
   app: FastifyInstance,
-  ctx: Omit<AppContext, 'io' | 'mascots'>,
-): { io: PausaIo; mascots: Mascots } {
+  ctx: Omit<AppContext, 'io' | 'mascots' | 'moderator'>,
+): { io: PausaIo; mascots: Mascots; moderator: Moderator } {
   const io: PausaIo = new Server(app.server, {
     serveClient: false,
     // Origin check on every handshake and polling request (CLAUDE.md rule 3, SPEC §7.5).
@@ -99,8 +102,9 @@ export function createRealtime(
 
   const full = { ...ctx, io } as AppContext;
   full.mascots = new Mascots(full);
+  full.moderator = new Moderator(full);
   io.on('connection', (socket) => onConnection(full, socket));
-  return { io, mascots: full.mascots };
+  return { io, mascots: full.mascots, moderator: full.moderator };
 }
 
 function onConnection(ctx: AppContext, socket: PausaSocket): void {
@@ -154,6 +158,7 @@ function onConnection(ctx: AppContext, socket: PausaSocket): void {
     if (created) {
       ctx.io.to(ROOM_MEMBERS).emit('message:new', { message });
       ctx.mascots.onMessage(message, actor);
+      ctx.moderator.onMessage(message, actor);
     }
     return { message };
   });
@@ -234,6 +239,41 @@ function onConnection(ctx: AppContext, socket: PausaSocket): void {
   on('admin:log:list', (input, { actor }) => {
     requireRole(actor, ['host', 'admin']);
     return listAdminLog(ctx.db, input.before);
+  });
+
+  // --- topic moderation (D-51) ---
+  on('moderation:standings', (input) => {
+    requireRoom(ctx.db, input.roomId);
+    return { standings: standingsFor(ctx.db, input.roomId) };
+  });
+
+  on('admin:topics:list', (_input, { actor }) => {
+    requireRole(actor, ['host', 'admin']);
+    return { topics: listTopicRows(ctx.db).map(toTopic) };
+  });
+
+  on('admin:topics:update', (input, { actor }) => {
+    requireRole(actor, ['host', 'admin']);
+    const topic = updateTopic(ctx.db, input);
+    logAdmin(ctx.db, actor.id, 'topic.update', 'topic', topic.id, { name: topic.name });
+    return { topic };
+  });
+
+  on('admin:moderation:list', (_input, { actor }) => {
+    requireRole(actor, ['host', 'admin']);
+    return listModeration(ctx.db);
+  });
+
+  on('admin:moderation:lift', (input, { actor }) => {
+    requireRole(actor, ['host', 'admin']);
+    return { standing: ctx.moderator.lift(input.muteId, actor) };
+  });
+
+  on('admin:moderation:reset', (input, { actor }) => {
+    requireRole(actor, ['host', 'admin']);
+    return {
+      standing: ctx.moderator.reset(input.userId, input.roomId, input.topicId, actor),
+    };
   });
 }
 

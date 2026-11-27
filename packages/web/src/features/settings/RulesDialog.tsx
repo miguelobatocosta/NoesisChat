@@ -12,6 +12,7 @@ export function RulesContent() {
         <li>{t('rules.rule1')}</li>
         <li>{t('rules.rule2')}</li>
         <li>{t('rules.rule3')}</li>
+        <li>{t('rules.rule4')}</li>
       </ul>
       <h3 className={styles.heading}>{t('rules.privacyTitle')}</h3>
       <ul>

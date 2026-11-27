@@ -101,6 +101,54 @@ export interface InviteView {
   redemptions: { userId: string; displayName: string; at: number }[];
 }
 
+/** A conversation topic the mascots moderate (D-51). Always 15, edited in the admin portal. */
+export interface Topic {
+  id: string;
+  position: number;
+  name: string;
+  /** Whole words or phrases; matched without accents or case. */
+  keywords: string[];
+  /** Shown next to the name in a room once someone reaches `labelAt` strikes there. */
+  label: string;
+  labelAt: number;
+  /** Mute in that room at this many strikes (never in the main room). */
+  muteAt: number;
+  muteHours: number;
+  enabled: boolean;
+  /** What the mascot says; empty = the mascot's own default line. */
+  lines: { warn: string; label: string; mute: string };
+}
+
+/** Someone's public standing in a room: their labels and whether they're muted there. */
+export interface Standing {
+  roomId: string;
+  userId: string;
+  labels: string[];
+  mutedUntil: number | null;
+  /** Topic name of the active mute. */
+  mutedTopic: string | null;
+}
+
+export interface MuteView {
+  id: string;
+  userId: string;
+  roomId: string;
+  topicId: string;
+  topicName: string;
+  until: number;
+  createdAt: number;
+}
+
+export interface StrikeView {
+  userId: string;
+  roomId: string;
+  topicId: string;
+  topicName: string;
+  count: number;
+  labelAt: number;
+  muteAt: number;
+}
+
 export interface AdminLogEntry {
   id: string;
   actorId: string | null;

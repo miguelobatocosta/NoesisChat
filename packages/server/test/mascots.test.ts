@@ -18,7 +18,14 @@ const lurdes = mascotByKey('lurdes');
 const lurdesLines = MASCOT_LINES.lurdes;
 const allLines = (key: keyof typeof MASCOT_LINES) => {
   const l = MASCOT_LINES[key];
-  return [...l.intro, ...l.mention, ...l.triggers.flatMap((t) => t.lines)];
+  return [
+    ...l.intro,
+    ...l.mention,
+    ...l.triggers.flatMap((t) => t.lines),
+    ...l.warn,
+    ...l.label,
+    ...l.mute,
+  ];
 };
 /** Lines are templates; compare without the {name}/{room} placeholders' values. */
 const matchesOneOf = (body: string | null, lines: string[]) =>
@@ -254,6 +261,8 @@ describe('lines', () => {
       expect(l.intro.length).toBeGreaterThan(0);
       expect(l.mention.length).toBeGreaterThan(2);
       expect(l.triggers.length).toBeGreaterThan(0);
+      for (const kind of ['warn', 'label', 'mute'] as const)
+        expect(l[kind].length).toBeGreaterThan(1);
       for (const line of allLines(m.key)) expect(line.length).toBeLessThan(400);
     }
   });

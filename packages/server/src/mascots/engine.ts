@@ -12,7 +12,7 @@ export function normalize(text: string): string {
 const escapeRegExp = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 
 /** Whole-word (or whole-phrase) match on normalized text. */
-function hasWord(normalizedText: string, word: string): boolean {
+export function hasWord(normalizedText: string, word: string): boolean {
   const w = escapeRegExp(normalize(word));
   return new RegExp(`(^|[^\\p{L}\\p{N}])${w}($|[^\\p{L}\\p{N}])`, 'u').test(normalizedText);
 }
@@ -27,8 +27,13 @@ export function triggeredLines(script: MascotScript, normalizedText: string): st
   );
 }
 
-export function fill(line: string, vars: { name?: string; room?: string }): string {
-  return line.replace(/\{(name|room)\}/g, (_, k: 'name' | 'room') => vars[k] ?? '');
+export type LineVars = Partial<Record<'name' | 'room' | 'topic' | 'label' | 'hours', string>>;
+
+export function fill(line: string, vars: LineVars): string {
+  return line.replace(
+    /\{(name|room|topic|label|hours)\}/g,
+    (_, k: keyof LineVars) => vars[k] ?? '',
+  );
 }
 
 /** Picks a line, avoiding the one used last time when there's a choice. */

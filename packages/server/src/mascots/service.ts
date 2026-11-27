@@ -15,7 +15,7 @@ import { newId } from '../ids';
 import { getUser, type UserRow } from '../members/service';
 import { sendMessage } from '../messages/service';
 import { getRoomRow, nextMascot, type RoomRow } from '../rooms/service';
-import { callsByName, fill, normalize, pick, triggeredLines } from './engine';
+import { callsByName, fill, type LineVars, normalize, pick, triggeredLines } from './engine';
 import { MASCOT_LINES } from './lines';
 
 /** A keyword reaction at most once a minute per room; a mention answer once per 10 s per person. */
@@ -51,7 +51,7 @@ export function ensureMascots(db: Db): void {
   })();
 }
 
-type Vars = { name?: string; room?: string };
+type Vars = LineVars;
 
 /** Reacts to what people write, after a short delay, through the same send path as everyone. */
 export class Mascots {
@@ -105,6 +105,22 @@ export class Mascots {
     if (!room) return;
     const key = room.mascot_key as MascotKey;
     this.later(key, room.id, MASCOT_LINES[key].intro, { room: `#${room.slug}` });
+  }
+
+  /**
+   * The room's mascot says one of `lines` (moderation announcements, D-51), as a reply when given.
+   * Same delay, room checks and send path as everything else it says.
+   */
+  announce(roomId: string, lines: string[], vars: Vars, replyToId?: string): void {
+    const room = this.talkativeRoom(roomId);
+    if (!room || lines.length === 0) return;
+    this.later(
+      room.mascot_key as MascotKey,
+      room.id,
+      lines,
+      { room: `#${room.slug}`, ...vars },
+      replyToId,
+    );
   }
 
   dispose(): void {

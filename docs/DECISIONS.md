@@ -175,3 +175,17 @@ Nuvem (lazy cat). Original SVG drawings in `features/mascots/Mascot.tsx`, colour
   cleared when the tab closes. It holds an invite (single use, expiring), never a device token (rule 2 holds).
 - The bypassed paths serve only the static app shell and the script; every API, socket and file route stays
   behind the gate. The app was already safe with the outer wall removed (SPEC §7.1).
+
+### D-51 · Mascots moderate conversation topics: SETTLED (2026-11-27, owner)
+- 15 topics (seeded from `packages/server/src/moderation/topics.pt-PT.json`, then owned by the admin portal:
+  edit and switch off, never add or delete). Each has keywords, a label, `labelAt` (default 15), `muteAt`
+  (default 30) and `muteHours` (default 24), plus optional custom lines for warning, label and mute.
+- At most one strike per topic per message, counted per person × room × topic, same matching as the mascots
+  (whole words, accent- and case-insensitive). Mascots never count; rooms with the mascot off or archived don't count.
+- Label: public, shown as plain text next to the name in that room (no pill, D-48), announced by the room's mascot.
+  Warning 5 strikes before the mute. Mute: can read, can't send or edit there (`MUTED`); reactions allowed.
+  **Never a mute in #geral** (D-17): labels only. Same rules for everyone, admins included.
+- A mute ends after its hours or when an admin lifts it; either way that topic's strikes in that room reset,
+  so its label goes too. Admins can also reset strikes. Mascot mutes, lifts, resets and topic edits are in `admin_log`.
+- Stated in the house rules shown at join (`rules.rule4`).
+

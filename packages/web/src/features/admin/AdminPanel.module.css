@@ -104,3 +104,36 @@
   padding: var(--space-4) 0;
   color: var(--fg-muted);
 }
+
+.sectionTitle {
+  margin: var(--space-4) 0 var(--space-1);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: var(--fg-muted);
+}
+
+.topic {
+  border-bottom: 1px solid var(--separator);
+}
+
+.topic > .row {
+  border-bottom: none;
+}
+
+.topicForm {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: 0 0 var(--space-4);
+}
+
+.topicGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: var(--space-3);
+}
+
+.topicForm > button {
+  align-self: flex-start;
+}

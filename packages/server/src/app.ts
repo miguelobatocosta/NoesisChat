@@ -10,6 +10,7 @@ import type { Config } from './config';
 import type { AppContext } from './context';
 import { openDatabase } from './db';
 import { ensureMascots } from './mascots/service';
+import { ensureTopics } from './moderation/topics';
 import { Presence } from './members/presence';
 import { RateLimiter } from './rateLimit';
 import { createRealtime } from './realtime';
@@ -50,6 +51,7 @@ export async function buildApp(
   mkdirSync(uploadsDir, { recursive: true });
   const db = openDatabase(join(config.dataDir, 'db.sqlite'));
   ensureMascots(db);
+  ensureTopics(db);
 
   const base = {
     config,
@@ -60,8 +62,8 @@ export async function buildApp(
     presence: new Presence(),
     uploadsDir,
   };
-  const { io, mascots } = createRealtime(app, base);
-  const ctx: AppContext = { ...base, io, mascots };
+  const { io, mascots, moderator } = createRealtime(app, base);
+  const ctx: AppContext = { ...base, io, mascots, moderator };
   app.decorate('pausa', ctx);
 
   await app.register(fastifyMultipart);
@@ -108,6 +110,7 @@ export async function buildApp(
   app.addHook('onClose', async () => {
     clearInterval(cleanup);
     mascots.dispose();
+    moderator.dispose();
     await new Promise<void>((resolve) => void io.close(() => resolve()));
     db.close();
   });

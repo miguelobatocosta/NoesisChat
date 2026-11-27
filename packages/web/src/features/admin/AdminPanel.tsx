@@ -1,6 +1,13 @@
 import { type FormEvent, useCallback, useEffect, useMemo, useState } from 'react';
 import { Copy } from 'lucide-react';
-import type { AdminLogEntry, InviteExpiry, InviteView, Member } from '@pausa/shared';
+import {
+  type AdminLogEntry,
+  type InviteExpiry,
+  type InviteView,
+  type Member,
+  mascotByKey,
+  MASCOT_KEYS,
+} from '@pausa/shared';
 import { errorCode } from '../../api/errors';
 import { t } from '../../i18n';
 import { formatFull, formatRelative } from '../../lib/format';
@@ -9,8 +16,9 @@ import buttons from '../../ui/buttons.module.css';
 import { Dialog } from '../../ui/Dialog';
 import forms from '../../ui/forms.module.css';
 import styles from './AdminPanel.module.css';
+import { Punishments, Topics } from './Moderation';
 
-type Tab = 'invites' | 'members' | 'log';
+type Tab = 'invites' | 'members' | 'topics' | 'punishments' | 'log';
 
 export function AdminPanel({ onClose }: { onClose: () => void }) {
   const [tab, setTab] = useState<Tab>('invites');
@@ -20,7 +28,7 @@ export function AdminPanel({ onClose }: { onClose: () => void }) {
   return (
     <Dialog open onClose={onClose} title={t('admin.title')} closeLabel={t('admin.close')} size="lg">
       <div className={styles.tabs} role="tablist">
-        {(['invites', 'members', 'log'] as const).map((name) => (
+        {(['invites', 'members', 'topics', 'punishments', 'log'] as const).map((name) => (
           <button
             key={name}
             type="button"
@@ -44,6 +52,8 @@ export function AdminPanel({ onClose }: { onClose: () => void }) {
       <div role="tabpanel">
         {tab === 'invites' && <Invites onError={report} />}
         {tab === 'members' && <Members onError={report} />}
+        {tab === 'topics' && <Topics onError={report} />}
+        {tab === 'punishments' && <Punishments onError={report} />}
         {tab === 'log' && <Log onError={report} />}
       </div>
     </Dialog>
@@ -308,8 +318,19 @@ function Log({ onError }: { onError: (e: unknown) => void }) {
       typeof e.detail?.['to'] === 'string'
         ? t(`roles.${e.detail['to'] as 'admin' | 'member'}`)
         : '';
-    const text = t(key as Parameters<typeof t>[0], { target, role });
+    const topic = typeof e.detail?.['topic'] === 'string' ? e.detail['topic'] : '';
+    const name = typeof e.detail?.['name'] === 'string' ? e.detail['name'] : '';
+    const text = t(key as Parameters<typeof t>[0], { target, role, topic, name });
     return text === key ? e.action : text;
+  }
+
+  /** Who did it: a person, a mascot (D-51), or the terminal. */
+  function actor(e: AdminLogEntry): string {
+    if (e.actorName) return e.actorName;
+    const key = e.detail?.['mascot'];
+    if (typeof key === 'string' && (MASCOT_KEYS as readonly string[]).includes(key))
+      return mascotByKey(key as (typeof MASCOT_KEYS)[number]).name;
+    return t('admin.system');
   }
 
   return (
@@ -320,7 +341,7 @@ function Log({ onError }: { onError: (e: unknown) => void }) {
           <li key={e.id} className={styles.row}>
             <div className={styles.rowMain}>
               <span className={styles.rowTitle}>
-                {e.actorName ?? t('admin.system')} {describe(e)}
+                {actor(e)} {describe(e)}
               </span>
               <span className={`${styles.rowMeta} num`}>{formatFull(e.createdAt)}</span>
             </div>

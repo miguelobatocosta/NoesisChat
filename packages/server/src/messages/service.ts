@@ -11,6 +11,7 @@ import { currentSeq, type Db, nextSeq, placeholders } from '../db';
 import { AppError } from '../errors';
 import { newId } from '../ids';
 import { isStaff, type UserRow } from '../members/service';
+import { requireNotMuted } from '../moderation/service';
 import { requireRoom, requireWritableRoom } from '../rooms/service';
 
 interface MessageRow {
@@ -206,6 +207,7 @@ export function sendMessage(
     if (existing) return { message: hydrate(db, [existing])[0]!, created: false };
 
     requireWritableRoom(db, input.roomId);
+    requireNotMuted(db, actor.id, input.roomId);
     const body = input.body.trim();
     const attachmentIds = [...new Set(input.attachmentIds)];
 
@@ -262,6 +264,7 @@ export function editMessage(
     if (row.deleted_at !== null) throw new AppError('NOT_FOUND', 'Message deleted');
     if (row.user_id !== actor.id) throw new AppError('FORBIDDEN', 'Only the author can edit');
     requireWritableRoom(db, row.room_id);
+    requireNotMuted(db, actor.id, row.room_id);
 
     const body = input.body.trim();
     const hasAttachments = !!db

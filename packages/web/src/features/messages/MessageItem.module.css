@@ -68,6 +68,14 @@
   flex-shrink: 0;
 }
 
+.label {
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 600;
+  font-style: italic;
+  color: var(--fg-muted);
+}
+
 .tag {
   font-size: 11px;
   line-height: 16px;

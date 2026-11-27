@@ -5,6 +5,7 @@ import type { Config } from './config';
 import type { Db } from './db';
 import type { Mascots } from './mascots/service';
 import type { Presence } from './members/presence';
+import type { Moderator } from './moderation/service';
 import type { RateLimiter } from './rateLimit';
 
 export interface SocketData {
@@ -31,6 +32,8 @@ export interface AppContext {
   uploadsDir: string;
   /** Room mascots (D-49). */
   mascots: Mascots;
+  /** Mascots moderating topics (D-51). */
+  moderator: Moderator;
 }
 
 /** Socket.IO rooms. */
