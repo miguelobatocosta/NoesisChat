@@ -148,6 +148,18 @@ async function checkGate(url) {
   }
 }
 
+/** Waits until the server answers locally, so the checks below don't race its startup. */
+async function serverReady() {
+  for (let i = 0; i < 60; i++) {
+    try {
+      if ((await fetch(`${origin}/health`, { signal: AbortSignal.timeout(1000) })).ok) return;
+    } catch {
+      /* not listening yet */
+    }
+    await new Promise((r) => setTimeout(r, 500));
+  }
+}
+
 function startServer(url) {
   const serverEnv = { ...env, PUBLIC_URL: url, NODE_ENV: 'production' };
   server = spawn(process.execPath, [join(root, 'packages/server/dist/main.js')], {
@@ -162,7 +174,8 @@ function startServer(url) {
     }
   });
 
-  setTimeout(async () => {
+  void (async () => {
+    await serverReady();
     if (tunnelName) {
       const problem = await checkGate(url);
       if (problem) {
@@ -192,7 +205,7 @@ function startServer(url) {
         : '  Ctrl+C para desligar. Atenção: ao voltar a ligar, o endereço muda.',
     );
     console.log('──────────────────────────────────────────────────────────────\n');
-  }, 1500);
+  })();
 }
 
 let stopping = false;
