@@ -55,7 +55,7 @@ pnpm test:e2e         # Playwright against the production build
 pnpm lint && pnpm typecheck && pnpm format:check
 ```
 Config keys (env > `.env` > `pausa.config.json`): `PORT`, `BIND`, `DATA_DIR`, `PUBLIC_URL`, `UPLOAD_MAX_MB`,
-`JOIN_RATE_PER_MIN`, `MASCOT_DELAY_MS`, `MASCOT_CHANCE` (tests only), `WEB_DIST`; `ALLOWED_MAIL` is read by `scripts/demo.mjs`.
+`JOIN_RATE_PER_MIN`, `MASCOT_DELAY_MS`, `MASCOT_CHANCE` (tests only), `WEB_DIST`; `ALLOWED_MAIL`, `TUNNEL_NAME` and `TUNNEL_URL` are read by `scripts/demo.mjs`.
 Scripts that need logic (tunnel, backup) are Node scripts in `scripts/`, not shell one-liners:
 the host runs Windows.
 

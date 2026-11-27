@@ -9,6 +9,8 @@
     <link rel="manifest" href="/manifest.webmanifest" />
     <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
     <meta name="theme-color" content="#184BFF" />
+    <!-- On /join#<code>: keeps the invite past the email gate (D-50). Must stay the first script. -->
+    <script src="/invite-handoff.js"></script>
     <!-- Sets data-theme before first paint (no flash). External file because the CSP forbids inline scripts. -->
     <script src="/theme-init.js"></script>
   </head>

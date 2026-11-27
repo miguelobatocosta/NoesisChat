@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import type { SessionUser } from '@pausa/shared';
 import { fetchSession } from '../api/http';
+import { clearInvite, pendingInvite } from '../features/onboarding/invite';
 import { JoinPage } from '../features/onboarding/JoinPage';
 import { NoAccess } from '../features/onboarding/NoAccess';
 import { t } from '../i18n';
@@ -12,7 +13,7 @@ import { ChatApp } from './ChatApp';
 type Boot =
   | { kind: 'loading' }
   | { kind: 'error' }
-  | { kind: 'join' }
+  | { kind: 'join'; code: string | null }
   | { kind: 'none' }
   | { kind: 'chat'; me: SessionUser };
 
@@ -23,10 +24,13 @@ export function App() {
   const load = useCallback(() => {
     fetchSession()
       .then((me) => {
+        const code = pendingInvite();
         if (me) {
+          clearInvite();
           if (window.location.pathname === '/join') window.history.replaceState(null, '', '/');
           setBoot({ kind: 'chat', me });
-        } else setBoot({ kind: window.location.pathname === '/join' ? 'join' : 'none' });
+        } else if (code || window.location.pathname === '/join') setBoot({ kind: 'join', code });
+        else setBoot({ kind: 'none' });
       })
       .catch(() => setBoot({ kind: 'error' }));
   }, []);
@@ -55,7 +59,9 @@ export function App() {
             </button>
           </section>
         )}
-        {boot.kind === 'join' && <JoinPage onJoined={(me) => setBoot({ kind: 'chat', me })} />}
+        {boot.kind === 'join' && (
+          <JoinPage code={boot.code} onJoined={(me) => setBoot({ kind: 'chat', me })} />
+        )}
         {boot.kind === 'none' && <NoAccess />}
       </main>
     </div>

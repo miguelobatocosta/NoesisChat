@@ -1,6 +1,6 @@
 import { expect, test } from '@playwright/test';
 import { APP_NAME, BRAND_WORDMARK } from '@pausa/shared';
-import { watchErrors } from './helpers';
+import { memberInvite, watchErrors } from './helpers';
 
 test('without a session: branded "you need an invite" page, no foreign requests, no errors', async ({
   page,
@@ -28,6 +28,23 @@ test('without a session: branded "you need an invite" page, no foreign requests,
 test('a join link without a valid code says so', async ({ page }) => {
   await page.goto('/join#nope');
   await expect(page.getByText('Este link não trouxe o convite')).toBeVisible();
+});
+
+test('the invite survives the email gate: /join hands the code to "/" in this tab (D-50)', async ({
+  page,
+}) => {
+  await page.goto(memberInvite());
+  // The hand-off moved on to "/" (where the gate would ask for the email), without the code in the URL.
+  await expect(page).toHaveURL(/\/$/);
+  await expect(page.getByRole('heading', { name: /^Bem-vindo/ })).toBeVisible();
+  // Coming back from the gate's login page is a fresh load of "/": the invite is still there.
+  await page.reload();
+  await page.getByLabel('Como te chamamos?').fill('Hand Off');
+  await page.getByLabel('Li as regras e a nota de privacidade').check();
+  await page.getByRole('button', { name: 'Entrar' }).click();
+  await expect(page.getByRole('heading', { name: 'geral', exact: true })).toBeVisible();
+  // Used up: gone from the tab, so a later visit doesn't offer it again.
+  expect(await page.evaluate(() => sessionStorage.getItem('pausa.invite'))).toBeNull();
 });
 
 test('Raleway comes from the bundle and is used', async ({ page }) => {

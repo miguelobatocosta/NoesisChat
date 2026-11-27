@@ -84,27 +84,37 @@ Keep it plugged in. Windows Update restarts will also take it down: pause update
   Then take a fresh backup and delete older backups that still contain their data.
 - Every admin action is in Administração → Registo.
 
-## 8. Going past the demo: stable URL
+## 8. Fixed address (`pnpm demo` with a named tunnel, D-50)
 
-Needed for any pilot longer than a day, or if the office filter blocks `trycloudflare.com`.
+Same address after every restart, so nobody has to rejoin. Needs a domain on a free Cloudflare account.
 
-1. Buy a cheap domain and add it to a free Cloudflare account.
-2. `cloudflared tunnel login`, then `cloudflared tunnel create pausa`.
-3. Route a hostname: `cloudflared tunnel route dns pausa chat.yourdomain.pt`.
-4. Config file `%USERPROFILE%\.cloudflared\config.yml`:
-   ```yaml
-   tunnel: pausa
-   credentials-file: C:\Users\<you>\.cloudflared\<tunnel-id>.json
-   ingress:
-     - hostname: chat.yourdomain.pt
-       service: http://127.0.0.1:4747
-     - service: http_status:404
+1. Once, on the host PC:
    ```
-5. Install as a Windows service: `cloudflared service install`.
-6. Zero Trust dashboard → Access → Applications → add `chat.yourdomain.pt` with a policy
-   "Emails ending in @empresa.pt" (One-time PIN login). Same gate as the demo, permanent.
-7. In `.env`: `PUBLIC_URL=https://chat.yourdomain.pt`, then run the server with `pnpm start`.
-   Run it at logon with Task Scheduler, or move the whole folder to a small VPS: no code changes.
+   cloudflared tunnel login                                # pick the domain in the browser
+   cloudflared tunnel create pausa
+   cloudflared tunnel route dns pausa pausa.yourdomain.com
+   ```
+   This touches only the `pausa` record; the rest of the domain is left alone. Keep
+   `%USERPROFILE%\.cloudflared\` private: `cert.pem` can create tunnels and DNS records on that domain.
+2. In `.env`: `TUNNEL_NAME=pausa` and `TUNNEL_URL=https://pausa.yourdomain.com`.
+   Don't set `PUBLIC_URL` there: `pnpm demo` passes it to the server, and `pnpm start` stays local.
+3. The email gate, in the Cloudflare dashboard → **Zero Trust** (free plan; the first visit asks you to
+   pick a team name and the free plan) → **Access → Applications → Add →
+   Self-hosted**. Two applications on the same hostname:
+   - **"Pausa"**: domain `pausa.yourdomain.com`, path empty. Policy action **Allow**, include
+     **Emails ending in** `@empresa.pt`. Login method: **One-time PIN**. Session duration: 1 month.
+   - **"Pausa convite"**: domain `pausa.yourdomain.com`, path `join`, then add a second destination with
+     path `invite-handoff.js`. Policy action **Bypass**, include **Everyone**.
+     This lets an invite link load its first page before the email login so the code isn't lost
+     (SPEC §7.3). Those two paths hold no data: just the app shell and a 15-line script.
+4. `pnpm demo`. Before printing anything it checks that `/api/session` bounces to Cloudflare's login
+   and **shuts down if it doesn't**, so a missing or broken Access rule never leaves Pausa open.
+
+Without the "Pausa convite" bypass everything still works, but invitees have to open the link twice
+(the script warns about it).
+
+To run it without a window: `cloudflared service install` with a `config.yml`, plus the server at logon
+via Task Scheduler. Or move the folder to a small VPS: no code changes.
 
 ## 9. Moving to a VPS or Raspberry Pi
 

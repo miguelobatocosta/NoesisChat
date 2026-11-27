@@ -1,4 +1,4 @@
-import { type FormEvent, useMemo, useState } from 'react';
+import { type FormEvent, useState } from 'react';
 import { APP_NAME, InviteCode, LIMITS, type SessionUser } from '@pausa/shared';
 import { errorCode } from '../../api/errors';
 import { join } from '../../api/http';
@@ -6,12 +6,19 @@ import { t } from '../../i18n';
 import buttons from '../../ui/buttons.module.css';
 import forms from '../../ui/forms.module.css';
 import { RulesContent } from '../settings/RulesDialog';
+import { clearInvite } from './invite';
 import styles from './Onboarding.module.css';
 
 /** /join#<code>: house rules + privacy note, pick a name, get a session cookie (SPEC §3.1). */
-export function JoinPage({ onJoined }: { onJoined: (me: SessionUser) => void }) {
-  const code = useMemo(() => window.location.hash.slice(1), []);
-  const validCode = InviteCode.safeParse(code).success;
+export function JoinPage({
+  code,
+  onJoined,
+}: {
+  /** From the address or the email-gate hand-off (invite.ts). */
+  code: string | null;
+  onJoined: (me: SessionUser) => void;
+}) {
+  const validCode = code !== null && InviteCode.safeParse(code).success;
   const [name, setName] = useState('');
   const [accepted, setAccepted] = useState(false);
   const [busy, setBusy] = useState(false);
@@ -22,7 +29,8 @@ export function JoinPage({ onJoined }: { onJoined: (me: SessionUser) => void }) 
     setBusy(true);
     setError(null);
     try {
-      const me = await join(code, name.trim());
+      const me = await join(code!, name.trim());
+      clearInvite();
       // The code has done its job: remove it from the address bar and history.
       window.history.replaceState(null, '', '/');
       onJoined(me);

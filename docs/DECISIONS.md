@@ -163,3 +163,15 @@ Nuvem (lazy cat). Original SVG drawings in `features/mascots/Mascot.tsx`, colour
 - `MASCOT_DELAY_MS` (default 1200) and `MASCOT_CHANCE` (default 0.35) exist for tests, like D-47.
 - BRAND.md §5's "no stock illustrations" still holds: these are the app's own characters, used in the room
   header, the empty state, next to their messages and in room settings.
+
+### D-50 · Fixed address on the owner's domain, invite survives the email gate: SETTLED (2026-11-27, owner)
+- `pnpm demo` runs the named tunnel `pausa` → `https://pausa.sw-league.com` when `TUNNEL_NAME`/`TUNNEL_URL`
+  are in `.env`; otherwise the quick tunnel as before. This is backlog item 1 for the demo, without a Windows
+  service yet. The email gate is a Cloudflare Access application (One-time PIN, `@noesis.pt`). The script
+  refuses to stay up if `/api/session` doesn't bounce to Cloudflare's login.
+- Cloudflare's login round trip drops the `#code`, so invitees had to open their link twice. Fix:
+  `/join` + `/invite-handoff.js` bypass Access, and the script hands the code to `/` through that tab's
+  `sessionStorage`. The code still never reaches a server or Cloudflare log. `sessionStorage` is per tab and
+  cleared when the tab closes. It holds an invite (single use, expiring), never a device token (rule 2 holds).
+- The bypassed paths serve only the static app shell and the script; every API, socket and file route stays
+  behind the gate. The app was already safe with the outer wall removed (SPEC §7.1).

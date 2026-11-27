@@ -30,6 +30,7 @@ copy .env.example .env          # then set ALLOWED_MAIL
 pnpm start                      # local only → http://localhost:4747
 pnpm server:init --name "Costa" # your one-time host link (local)
 pnpm demo                       # reachable by colleagues through the email-gated tunnel
+                                # (fixed address on your own domain: docs/OPERATIONS.md §8)
 ```
 
 Full instructions: `docs/OPERATIONS.md`. Before showing anyone: the office network check (D-00) and

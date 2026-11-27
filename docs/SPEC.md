@@ -266,6 +266,10 @@ message with its new `seq`, D-45); `room:created`, `room:updated`, `presence {us
 3. **Invites:** 128-bit random code, stored hashed, expiry required (default 24h), single use by default.
    Link format `<PUBLIC_URL>/join#<base64url code>`: the code sits in the URL fragment, so it never reaches
    server logs, Cloudflare logs or a Referer header. The join page reads it and POSTs it.
+   An email gate's login round trip drops the fragment, so `/join` first runs `invite-handoff.js`, which keeps
+   the code in that tab's `sessionStorage` and moves to `/`; the app reads it from there and removes it once
+   used. With a named tunnel, `/join` and `/invite-handoff.js` bypass Cloudflare Access so this runs before the
+   email login (DECISIONS D-50).
 4. **Device tokens:** 256-bit random, stored hashed, delivered only as the HttpOnly cookie (CLAUDE.md rule 2).
    Revocation → `session:revoked`, sockets disconnected within 2s, cookie rejected on every later request.
 5. **Cross-site protection:** SameSite=Strict cookie + Origin check on the handshake and every POST
