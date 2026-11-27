@@ -321,8 +321,8 @@ one there are no stale cached versions and nothing cached at all.
 
 ## 11. Backlog (after the demo, in order)
 
-1. ~~**Stable URL**~~: done (D-50, `pnpm demo` with a named tunnel + Cloudflare Access). Left: start it
-   at logon (Task Scheduler or a Windows service) so it survives reboots without anyone at the PC.
+1. ~~**Stable URL**~~: done (D-50, `pnpm demo` with a named tunnel + Cloudflare Access), and it starts at
+   sign-in with `pnpm autostart` (Phase 14). Starting before anyone signs in would need a service account.
 2. **Second device:** a signed-in device generates a one-time link code (10 min) to sign in another browser.
 3. ~~**Narrow/mobile layout**~~: done (Phase 11). Sidebar is a drawer below 768px.
 4. ~~**Search**~~: done (Phase 12, migration 0004). FTS5 `unicode61 remove_diacritics 2`, prefix match, filters room/author, `search:messages`.

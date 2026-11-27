@@ -10,10 +10,18 @@
 //
 // Both: builds the app, starts the server with PUBLIC_URL, prints the host link if needed. Ctrl+C stops all.
 import { spawn, spawnSync } from 'node:child_process';
-import { existsSync, readFileSync } from 'node:fs';
-import { dirname, join } from 'node:path';
+import {
+  createWriteStream,
+  existsSync,
+  mkdirSync,
+  readdirSync,
+  readFileSync,
+  rmSync,
+  statSync,
+} from 'node:fs';
+import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { parseEnv } from 'node:util';
+import { format, parseEnv } from 'node:util';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const env = { ...readDotenv(join(root, '.env')), ...process.env };
@@ -21,6 +29,30 @@ const port = Number(env.PORT || 4747);
 const allowed = (env.ALLOWED_MAIL || '').trim();
 const tunnelName = (env.TUNNEL_NAME || '').trim();
 const fixedUrl = tunnelName ? (env.TUNNEL_URL || '').trim().replace(/\/+$/, '') : '';
+
+// Everything this script and the server print also goes to DATA_DIR/logs/demo-YYYY-MM-DD.log
+// (UTF-8), so a minimized or auto-started window can be read afterwards. Kept 14 days.
+const LOG_DAYS = 14;
+const logDir = join(resolve(root, env.DATA_DIR || 'data'), 'logs');
+mkdirSync(logDir, { recursive: true });
+for (const name of readdirSync(logDir)) {
+  const file = join(logDir, name);
+  if (/^demo-.*\.log$/.test(name) && Date.now() - statSync(file).mtimeMs > LOG_DAYS * 86_400_000)
+    rmSync(file, { force: true });
+}
+const logStream = createWriteStream(
+  join(logDir, `demo-${new Date().toISOString().slice(0, 10)}.log`),
+  {
+    flags: 'a',
+  },
+);
+for (const level of ['log', 'warn', 'error']) {
+  const original = console[level].bind(console);
+  console[level] = (...args) => {
+    original(...args);
+    logStream.write(`${new Date().toISOString()} ${format(...args)}\n`);
+  };
+}
 
 function readDotenv(path) {
   return existsSync(path) ? parseEnv(readFileSync(path, 'utf8')) : {};
@@ -163,7 +195,15 @@ function startServer(url) {
   server = spawn(process.execPath, [join(root, 'packages/server/dist/main.js')], {
     cwd: root,
     env: serverEnv,
-    stdio: 'inherit',
+    stdio: ['ignore', 'pipe', 'pipe'],
+  });
+  server.stdout.on('data', (chunk) => {
+    process.stdout.write(chunk);
+    logStream.write(chunk);
+  });
+  server.stderr.on('data', (chunk) => {
+    process.stderr.write(chunk);
+    logStream.write(chunk);
   });
   server.on('exit', (code) => {
     if (!stopping) {

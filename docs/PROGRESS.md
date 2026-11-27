@@ -19,12 +19,13 @@ Update at the end of every phase: status, date, commit, and anything deferred.
 | 11 | Phone layout | ✅ done | 2026-11-27 | phase/11-telemovel | Drawer sidebar below 768px, 16px fields, near-full-screen dialogs, tap shows message actions; E2E at 390×844 |
 | 12 | Message search | ✅ done | 2026-11-27 | phase/12-pesquisa | FTS5 (accent-insensitive, prefix), filters room/person, Ctrl+Shift+F or the header magnifier; jumps to and highlights the message |
 | 13 | Do not disturb / quiet hours | ✅ done | 2026-11-27 | phase/13-nao-incomodar | Per device (localStorage, a preference, not a token); silences all notifications incl. mentions; unread count keeps working |
+| 14 | Start with Windows + daily backup | ✅ done | 2026-11-27 | phase/14-arranque-automatico | `pnpm autostart`: Task Scheduler at sign-in (no admin, no stored password) + daily 13:00 backup; demo logs to data/logs |
 
 **Test totals:** 27 shared + 135 server + 231 web unit/integration, 20 Playwright E2E (incl. axe contrast in light and dark).
 
 **Owner to-dos:** D-01 brand approval before showing it beyond the team. D-00 is moot on the fixed address
 (an ordinary domain), but still worth one check from an office laptop.
 
-**Next (SPEC §11):** start at logon (Task Scheduler), second device, narrow layout, search.
+**Next:** cake tracking and office days (owner request, being planned), mascot personality pass, then SPEC §11: second device, non-image files.
 
 Status values: ⬜ todo · 🟦 in progress · ✅ done · ⏸ blocked (say by what)

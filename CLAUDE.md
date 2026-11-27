@@ -44,7 +44,8 @@ pnpm install
 pnpm dev              # server (watch) + Vite dev server with proxy → http://localhost:5173
 pnpm build            # web (Vite) + server and CLIs (esbuild → packages/server/dist)
 pnpm start            # build + run server on http://localhost:4747
-pnpm demo             # build, quick tunnel with email gate, server with PUBLIC_URL, host link
+pnpm demo             # build, tunnel (named or quick) with email gate, server, host link; logs in data/logs
+pnpm autostart        # Task Scheduler: start at sign-in + daily backup (-- --status, -- --remove)
 pnpm server:init      # host invite link (or, once a host exists, a host sign-in link for another browser)
 pnpm server:invite    # member invite link from the terminal (--name, --expires 24h|7d, --json)
 pnpm backup           # db + uploads → data/backups/<timestamp>/, keeps 14
@@ -55,7 +56,7 @@ pnpm test:e2e         # Playwright against the production build
 pnpm lint && pnpm typecheck && pnpm format:check
 ```
 Config keys (env > `.env` > `pausa.config.json`): `PORT`, `BIND`, `DATA_DIR`, `PUBLIC_URL`, `UPLOAD_MAX_MB`,
-`JOIN_RATE_PER_MIN`, `MASCOT_DELAY_MS`, `MASCOT_CHANCE` (tests only), `WEB_DIST`; `ALLOWED_MAIL`, `TUNNEL_NAME` and `TUNNEL_URL` are read by `scripts/demo.mjs`.
+`JOIN_RATE_PER_MIN`, `MASCOT_DELAY_MS`, `MASCOT_CHANCE` (tests only), `WEB_DIST`; `ALLOWED_MAIL`, `TUNNEL_NAME`, `TUNNEL_URL` and `CLOUDFLARED_BIN` are read by `scripts/demo.mjs`.
 Scripts that need logic (tunnel, backup) are Node scripts in `scripts/`, not shell one-liners:
 the host runs Windows.
 

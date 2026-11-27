@@ -23,8 +23,15 @@ Everything here runs from a terminal in the repo folder (`C:\_Dev\NoesisChat`).
 | First host sign-in link (local) | `pnpm server:init --name "Costa"` |
 | Sign the host in on another browser | `pnpm server:init` (once a host exists, it prints a device link) |
 | Member invite from the terminal | `pnpm server:invite --name "Marta" --expires 7d` |
+| Start with Windows + daily backup (once) | `pnpm autostart` · `pnpm autostart -- --status` · `pnpm autostart -- --remove` |
 | Backup now | `pnpm backup` |
 | Restore a backup | stop the server, then `pnpm restore data\backups\2026-11-23-180000` |
+
+**Start with Windows (`pnpm autostart`):** two Task Scheduler tasks for your user, no admin rights, no
+stored password. "Pausa" runs `pnpm demo` 30 s after you sign in, in a minimized window titled
+"Pausa (fecha esta janela para desligar)", and retries up to 3 times if it fails. It starts when you
+**sign in**, not when the PC merely boots. "Pausa backup" is the daily backup (§6). Logs from every run
+are in `data\logs\demo-<date>.log` (kept 14 days). `CLOUDFLARED_BIN` in `.env` says where cloudflared is.
 
 **Stopping:** `Ctrl+C` in the terminal. Connected people see "O servidor foi desligado" and reconnect
 by themselves when it comes back (with the same URL).
@@ -61,8 +68,8 @@ Keep it plugged in. Windows Update restarts will also take it down: pause update
 - `pnpm backup` writes `data\backups\<date-time>\` with a consistent copy of `db.sqlite` (SQLite online
   backup, safe while running), every uploaded image and a small manifest. The newest 14 are kept.
 - **A backup on the same disk is not a backup.** Copy the folder to OneDrive or a USB disk.
-- Automate it: Task Scheduler → Create Basic Task → Daily → Start a program:
-  `cmd.exe` with arguments `/c cd /d C:\_Dev\NoesisChat && pnpm backup`.
+- Automated by `pnpm autostart`: task "Pausa backup", every day at 13:00, or as soon as the PC is on
+  if it was off at that time.
 - Restore: stop the server, run `pnpm restore <folder>`. The current data is moved to
   `data\pre-restore-<timestamp>\`, never deleted.
 
