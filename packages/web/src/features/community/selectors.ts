@@ -86,3 +86,69 @@ export const REASON_KEYS = [
   'justBecause',
 ] as const;
 export type ReasonKey = (typeof REASON_KEYS)[number];
+
+// --- office days (D-54) -----------------------------------------------------------------------------
+
+/** Mon = 1 … Fri = 5 for an ISO date. */
+export function weekdayOf(iso: string): number {
+  const [y, m, d] = iso.split('-').map(Number) as [number, number, number];
+  return ((new Date(y, m - 1, d).getDay() + 6) % 7) + 1;
+}
+
+/** ISO date of a weekday (1..5) in the week starting on `monday`. */
+export function dateInWeek(monday: string, weekday: number): string {
+  const [y, m, d] = monday.split('-').map(Number) as [number, number, number];
+  const date = new Date(y, m - 1, d + weekday - 1);
+  const p = (n: number) => String(n).padStart(2, '0');
+  return `${date.getFullYear()}-${p(date.getMonth() + 1)}-${p(date.getDate())}`;
+}
+
+/** Who's expected on a day: said "Vou", or voted for that weekday and didn't say "Não vou". */
+export function goingIds(c: CommunityState, date: string): string[] {
+  const week = c.weeks.find((w) => w.weekStart === weekStartOf(date));
+  const wd = weekdayOf(date);
+  return c.people
+    .filter((p) => p.inTeam)
+    .filter((p) => {
+      const a = c.attendance.find((x) => x.date === date && x.personId === p.id);
+      if (a?.plan === 'going') return true;
+      if (a?.plan === 'not_going') return false;
+      return !!week?.votes.some((v) => v.personId === p.id && v.weekday === wd);
+    })
+    .map((p) => p.id);
+}
+
+/** The Monday of the week containing this date. */
+export function weekStartOf(iso: string): string {
+  // dateInWeek counts from its first argument, so going back (weekday − 1) days lands on Monday.
+  return dateInWeek(iso, 2 - weekdayOf(iso));
+}
+
+/** Per person: presence over closed days, unjustified absences, and how many count towards N. */
+export function attendanceStats(c: CommunityState) {
+  const closed = new Set(c.days.filter((d) => d.closed).map((d) => d.date));
+  return c.people
+    .filter((p) => p.inTeam)
+    .map((person) => {
+      const rows = c.attendance.filter((a) => a.personId === person.id && closed.has(a.date));
+      const present = rows.filter((a) => a.status === 'present').length;
+      const unjustified = rows.filter((a) => a.judgement === 'unjustified').length;
+      const towards = rows.filter((a) => a.judgement === 'unjustified' && !a.counted).length;
+      return {
+        person,
+        present,
+        total: rows.length,
+        unjustified,
+        towards,
+      };
+    })
+    .sort((a, b) => b.towards - a.towards || a.person.name.localeCompare(b.person.name, 'pt-PT'));
+}
+
+/** Excuses and "Não vou" reasons, newest first: the Livro de desculpas. */
+export function excuses(c: CommunityState) {
+  return c.attendance
+    .filter((a) => a.excuse || a.planReason)
+    .map((a) => ({ ...a, text: (a.excuse ?? a.planReason)! }))
+    .sort((a, b) => b.date.localeCompare(a.date));
+}

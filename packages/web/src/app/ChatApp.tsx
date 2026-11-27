@@ -12,6 +12,7 @@ import { Sidebar } from '../features/rooms/Sidebar';
 import { visibleRooms } from '../features/rooms/roomOrder';
 import { RulesDialog } from '../features/settings/RulesDialog';
 import { CakesPage } from '../features/community/CakesPage';
+import { OfficePage } from '../features/community/OfficePage';
 import { ChatStore, getStore, pageFromPath, setStore, useChat } from '../state/store';
 import { BrandHeader } from '../ui/BrandHeader';
 import { ConnectionPill } from '../ui/ConnectionPill';
@@ -139,6 +140,7 @@ function ChatLayout() {
           aria-hidden="true"
         />
         {page === 'cakes' && <CakesPage onOpenRooms={() => setDrawer(true)} />}
+        {page === 'office' && <OfficePage onOpenRooms={() => setDrawer(true)} />}
         {page === 'room' && hasRooms && (
           <RoomView
             key={activeRoomId}

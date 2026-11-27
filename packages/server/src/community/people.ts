@@ -98,16 +98,20 @@ export function mergeGuest(db: Db, guestId: string, userId: string): void {
     if (guest.userId) throw new AppError('VALIDATION', 'Not a guest');
     const member = personOfUser(db, userId);
     if (!member) throw new AppError('NOT_FOUND', 'Member not found');
-    for (const table of ['cake_debts', ...MERGE_TABLES])
-      db.prepare(`UPDATE ${table} SET person_id = ? WHERE person_id = ?`).run(member.id, guest.id);
+    db.prepare('UPDATE cake_debts SET person_id = ? WHERE person_id = ?').run(member.id, guest.id);
+    // Office rows are keyed by person: keep the member's own row when both exist for a day/week.
+    for (const table of ['office_votes', 'attendance']) {
+      db.prepare(`UPDATE OR IGNORE ${table} SET person_id = ? WHERE person_id = ?`).run(
+        member.id,
+        guest.id,
+      );
+      db.prepare(`DELETE FROM ${table} WHERE person_id = ?`).run(guest.id);
+    }
     if (!member.birthday && guest.birthday)
       db.prepare('UPDATE people SET birthday_md = ? WHERE id = ?').run(guest.birthday, member.id);
     db.prepare('DELETE FROM people WHERE id = ?').run(guest.id);
   })();
 }
-
-/** Other tables that reference people (office days add theirs). */
-export const MERGE_TABLES: string[] = [];
 
 export function setBirthday(db: Db, personId: string, md: string | null): void {
   requirePerson(db, personId);

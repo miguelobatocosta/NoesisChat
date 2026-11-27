@@ -199,8 +199,10 @@ describe('birthdays', () => {
     expect(debts).toEqual([
       expect.objectContaining({ kind: 'birthday', occurredOn: '2026-11-27', status: 'owed' }),
     ]);
-    expect(mascotSaid(events)).toHaveLength(1);
-    expect(mascotSaid(events)[0]!.mentions).toContain(me.userId);
+    // (Friday afternoon also opens the office vote; only the birthday card matters here.)
+    const congrats = mascotSaid(events).filter((m) => m.card?.type === 'birthday');
+    expect(congrats).toHaveLength(1);
+    expect(congrats[0]!.mentions).toContain(me.userId);
 
     s.ctx.community.tick(new Date(2027, 10, 27, 10, 0).getTime());
     expect((await state(ana)).debts).toHaveLength(2);

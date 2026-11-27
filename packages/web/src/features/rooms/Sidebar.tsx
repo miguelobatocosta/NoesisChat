@@ -46,6 +46,7 @@ export function Sidebar({
       <div className={styles.scroll}>
         <ul className={`${styles.list} ${styles.pages}`}>
           <PageRow page="cakes" icon="🎂" />
+          <PageRow page="office" icon="🏢" />
         </ul>
         <div className={styles.section}>
           <h2 className={styles.label}>{t('sidebar.rooms')}</h2>

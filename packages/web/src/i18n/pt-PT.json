@@ -447,11 +447,13 @@
       "paid": "pago 🎉",
       "cancelled": "anulado"
     },
-    "openCakes": "Ver bolos"
+    "openCakes": "Ver bolos",
+    "openOffice": "Ver escritório",
+    "officeOver": "Este dia já passou."
   },
   "communityAdmin": {
     "importTitle": "Importar do Excel",
-    "importHint": "No Excel, seleciona as linhas da folha (com ou sem o cabeçalho), copia e cola aqui. Bolos: Data, Réu, Motivo, Estado. Aniversários: Data, Aniversariante, Estado. \"Ok\" = pago. Importar duas vezes não duplica.",
+    "importHint": "No Excel, seleciona as linhas da folha (com ou sem o cabeçalho), copia e cola aqui. Bolos: Data, Réu, Motivo, Estado. Aniversários: Data, Aniversariante, Estado. \"Ok\" = pago. Importar duas vezes não duplica. Presenças: Data, Nome, Presença, Desculpa, Bolo, Aviso Prévio, Justificação (o histórico nunca conta para bolos de faltas).",
     "sheet": "Folha",
     "sheetCakes": "Bolos Outros",
     "sheetBirthdays": "Aniversários",
@@ -474,6 +476,53 @@
     "teamTitle": "Equipa do escritório",
     "teamHint": "Quem conta para as idas ao escritório (presenças e faltas).",
     "limitTitle": "Faltas",
-    "limit": "Faltas sem aviso até dever um bolo"
+    "limit": "Faltas sem aviso até dever um bolo",
+    "sheetAttendance": "Presenças",
+    "rowAttendance": "{reason} · {date}"
+  },
+  "office": {
+    "title": "Escritório",
+    "noWeek": "A votação da próxima semana abre na sexta às 12:00.",
+    "weekOf": "Semana de {date}",
+    "voteHint": "Escolhe todos os dias em que podes ir. Fecha segunda às 10:00; ganha o dia com mais votos (empate: quarta).",
+    "votes": "{count} votos",
+    "dayLabel": "{weekday}, {date}",
+    "weekdays": {
+      "1": "segunda",
+      "2": "terça",
+      "3": "quarta",
+      "4": "quinta",
+      "5": "sexta"
+    },
+    "chosen": "Dia de escritório: {day}",
+    "going": "{count} vão",
+    "notGoing": "Não vão: {names}",
+    "cake": "Bolo: {names}",
+    "noCake": "Bolo: ninguém se ofereceu ainda. Na véspera às 12:00 a dívida mais antiga é nomeada.",
+    "changeDay": "Mudar o dia (admin)",
+    "imGoing": "Vou",
+    "notGoingButton": "Não vou",
+    "why": "Porquê? (opcional)",
+    "today": "Hoje: {day}",
+    "checkin": "Estou cá",
+    "present": "presente",
+    "absent": "ausente",
+    "markAbsent": "Marcar ausente",
+    "markPresent": "Marcar presente",
+    "cakeToday": "Bolo de hoje: {name} ({reason})",
+    "myExcuse": "Não vieste? Explica",
+    "sendExcuse": "Enviar desculpa",
+    "statsTitle": "Presenças",
+    "statsHint": "Faltas sem aviso nem desculpa contam; à {limit}.ª há bolo.",
+    "statsRow": "{present}/{total} presenças · {towards}/{limit} faltas para bolo",
+    "toJudge": "Desculpas por julgar",
+    "justify": "Justificada",
+    "unjustify": "Não justificada",
+    "excusesTitle": "Livro de desculpas 📖",
+    "noExcuses": "Ainda ninguém precisou de desculpas.",
+    "quote": "«{text}»",
+    "extraTitle": "Dia extra (admin)",
+    "extraDate": "Data",
+    "extraAdd": "Acrescentar"
   }
 }

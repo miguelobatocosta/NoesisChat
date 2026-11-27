@@ -212,3 +212,17 @@ Nuvem (lazy cat). Original SVG drawings in `features/mascots/Mascot.tsx`, colour
   members (browser notification), with interactive cards (`messages.card`) rendered from live state.
 - Import: the admin pastes the Excel sheets ("Bolos Outros", "Aniversários"); names match by `nameKey`,
   others become guests; "Ok" = paid. Importing twice doesn't duplicate. Visible to every member (D-16).
+
+### D-54 · Office days: weekly vote, check-in, no-shows: SETTLED (2026-11-27, owner)
+- Vote for next week opens **Friday 12:00** (Mon–Fri, several choices) and closes **Monday 10:00**: most votes
+  wins; a tie goes to Wednesday if it's among the tied days, else the earliest; no votes → Wednesday. Only weeks
+  whose vote was opened are decided (a first start mid-week never invents a day). Admins can move the day or
+  add an extra one.
+- People say "Vou" / "Não vou (porquê)"; "Não vou" said before the day is **advance notice**. On the day,
+  "Estou cá"; someone who's there (or an admin) marks others; the absent explain themselves.
+- At the end of the day: notice → justified, an excuse → pending (an admin judges), nothing → unjustified.
+  **N unjustified absences (default 3, admin setting) = one cake**, then the count starts again.
+- Day before at 12:00, if nobody promised a cake, the oldest debt among those going is **nominated**; 17:00
+  reminder; 08:00 card with "Estou cá". All posted by the #geral mascot as live cards. Promised cakes that
+  didn't arrive go back to the queue.
+- Imported "Presenças" history is closed and never counts towards a no-show cake. Guests can be in the team.

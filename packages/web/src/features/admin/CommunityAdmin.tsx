@@ -44,6 +44,7 @@ function Import({ onError }: { onError: OnError }) {
         >
           <option value="cakes">{t('communityAdmin.sheetCakes')}</option>
           <option value="birthdays">{t('communityAdmin.sheetBirthdays')}</option>
+          <option value="attendance">{t('communityAdmin.sheetAttendance')}</option>
         </select>
       </label>
       <label className={forms.field}>
@@ -109,11 +110,16 @@ function Import({ onError }: { onError: OnError }) {
                 <span className={`${styles.rowMeta} num`}>
                   {r.error
                     ? t('communityAdmin.rowError', { line: r.line, error: r.error })
-                    : t('communityAdmin.rowOk', {
-                        reason: r.reason,
-                        date: r.date ? showDate(r.date) : '',
-                        status: t(`cards.status.${r.status === 'paid' ? 'paid' : 'owed'}`),
-                      })}
+                    : sheet === 'attendance'
+                      ? t('communityAdmin.rowAttendance', {
+                          reason: r.reason,
+                          date: r.date ? showDate(r.date) : '',
+                        })
+                      : t('communityAdmin.rowOk', {
+                          reason: r.reason,
+                          date: r.date ? showDate(r.date) : '',
+                          status: t(`cards.status.${r.status === 'paid' ? 'paid' : 'owed'}`),
+                        })}
                 </span>
               </div>
             </li>

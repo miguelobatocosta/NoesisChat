@@ -72,7 +72,7 @@ export interface ReplyPreview {
 }
 
 /** An interactive card a mascot posts (D-53/D-54); rendered from live community state. */
-export type CardType = 'milestone' | 'birthday' | 'paid' | 'cakeCall';
+export type CardType = 'milestone' | 'birthday' | 'paid' | 'cakeCall' | 'officePoll' | 'officeDay';
 export interface MessageCard {
   type: CardType;
   /** A debt id, or a date for office-day cards. */
@@ -193,15 +193,54 @@ export interface CakeDebt {
   createdAt: number;
 }
 
+// --- office days (D-54) ------------------------------------------------------------------------------
+
+export interface OfficeWeek {
+  /** Monday, 'YYYY-MM-DD'. */
+  weekStart: string;
+  status: 'voting' | 'decided';
+  chosenOn: string | null;
+  /** Votes per weekday, Mon..Fri. */
+  votes: { personId: string; weekday: number }[];
+}
+
+export interface OfficeDay {
+  date: string;
+  weekStart: string;
+  source: 'vote' | 'admin' | 'import';
+  closed: boolean;
+}
+
+export type Judgement = 'justified' | 'unjustified' | 'pending';
+
+export interface Attendance {
+  date: string;
+  personId: string;
+  plan: 'going' | 'not_going' | null;
+  planReason: string | null;
+  /** Said before the day: advance notice. */
+  noticeGiven: boolean;
+  status: 'present' | 'absent' | null;
+  excuse: string | null;
+  judgement: Judgement | null;
+  /** Counted towards a no-show cake (or imported history, which never counts). */
+  counted: boolean;
+}
+
 export interface CommunityState {
   people: Person[];
   debts: CakeDebt[];
+  /** This week and next (when open), newest last. */
+  weeks: OfficeWeek[];
+  /** The last 12 office days and any upcoming ones. */
+  days: OfficeDay[];
+  attendance: Attendance[];
   settings: { noshowLimit: number };
   /** The server's local date, 'YYYY-MM-DD'. */
   today: string;
 }
 
-export type ImportSheet = 'cakes' | 'birthdays';
+export type ImportSheet = 'cakes' | 'birthdays' | 'attendance';
 export interface ImportRow {
   line: number;
   name: string;

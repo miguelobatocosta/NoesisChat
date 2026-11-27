@@ -141,12 +141,32 @@ export const ClientEventSchemas = {
   'admin:people:merge': z.object({ guestId: Id, userId: Id }),
   'admin:people:setTeam': z.object({ personId: Id, inTeam: z.boolean() }),
   'admin:settings:update': z.object({ noshowLimit: z.number().int().min(1).max(20) }),
+  // --- office days (D-54) ---
+  'office:vote': z.object({
+    weekStart: IsoDate,
+    weekdays: z.array(z.number().int().min(1).max(5)).max(5),
+  }),
+  'office:plan': z.object({
+    date: IsoDate,
+    plan: z.enum(['going', 'not_going']),
+    reason: z.string().trim().max(120).optional(),
+  }),
+  'office:checkin': z.object({ date: IsoDate }),
+  'office:mark': z.object({ date: IsoDate, personId: Id, status: z.enum(['present', 'absent']) }),
+  'office:excuse': z.object({ date: IsoDate, excuse: z.string().trim().min(2).max(160) }),
+  'admin:office:judge': z.object({
+    date: IsoDate,
+    personId: Id,
+    judgement: z.enum(['justified', 'unjustified']),
+  }),
+  'admin:office:setDay': z.object({ weekStart: IsoDate, date: IsoDate }),
+  'admin:office:addDay': z.object({ date: IsoDate }),
   'admin:import:preview': z.object({
-    sheet: z.enum(['cakes', 'birthdays']),
+    sheet: z.enum(['cakes', 'birthdays', 'attendance']),
     text: z.string().max(200_000),
   }),
   'admin:import:commit': z.object({
-    sheet: z.enum(['cakes', 'birthdays']),
+    sheet: z.enum(['cakes', 'birthdays', 'attendance']),
     text: z.string().max(200_000),
   }),
 } as const;
@@ -197,6 +217,14 @@ export interface ClientEventResults {
   'admin:people:merge': Ok;
   'admin:people:setTeam': Ok;
   'admin:settings:update': Ok;
+  'office:vote': Ok;
+  'office:plan': Ok;
+  'office:checkin': Ok;
+  'office:mark': Ok;
+  'office:excuse': Ok;
+  'admin:office:judge': Ok;
+  'admin:office:setDay': Ok;
+  'admin:office:addDay': Ok;
   'admin:import:preview': { rows: ImportRow[] };
   'admin:import:commit': { created: number; skipped: number; guests: number };
 }

@@ -25,5 +25,29 @@
   "pledge": [
     "🙋 {name} vai trazer bolo no dia {date} (**{reason}**). Vou estar atenta!",
     "🙋 Promessa registada: {name} leva bolo dia {date}. Não me desiluda!"
+  ],
+  "poll": [
+    "🗳️ Meus queridos, votação aberta para a semana de {date}: que dia vamos ao escritório? Votem até segunda às 10h, que eu quero saber tudo!",
+    "🗳️ Está aberta a votação da semana de {date}. Escolham os dias em que podem ir. Quem não vota não se pode queixar!"
+  ],
+  "decided": [
+    "📅 Está decidido: escritório na **{date}**! Digam se vão ou não, que eu tomo nota.",
+    "📅 A malta escolheu **{date}**. Vemo-nos lá? Marquem \"Vou\" ou \"Não vou\" no cartão."
+  ],
+  "nominated": [
+    "🎂 Ninguém se ofereceu para o bolo de {date}… por isso, {name}, és tu! A dívida de **{reason}** já tem idade. 😏",
+    "🎂 {name}, amanhã ({date}) o bolo é teu: **{reason}** está à espera. Eu cá não esqueço nada!"
+  ],
+  "reminder": [
+    "⏰ Amanhã ({date}) é dia de escritório! Vão {count} pessoas. Bolo: {cake}.",
+    "⏰ Lembrete: escritório amanhã, {date}. {count} confirmados. Quanto ao bolo: {cake}."
+  ],
+  "dayStart": [
+    "☀️ Bom dia! Hoje é dia de escritório. Quem já chegou carrega em \"Estou cá\"!",
+    "☀️ Dia de escritório! Marquem \"Estou cá\" quando chegarem, que eu estou a contar cabeças."
+  ],
+  "noshow": [
+    "🙈 {name} faltou {count} vezes sem avisar… a tradição é clara: deve um bolo. Eu não inventei as regras!",
+    "🙈 {count} faltas sem aviso, {name}. Já sabes: bolo! Fica registado no meu caderninho."
   ]
 }

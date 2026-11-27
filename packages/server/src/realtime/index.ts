@@ -59,6 +59,7 @@ import {
   unpledge,
 } from '../community/cakes';
 import { commitSheet, parseSheet } from '../community/import';
+import { addDay, checkIn, excuse, judge, mark, plan, setDay, vote } from '../community/office';
 import { addGuest, mergeGuest, personOfUser, setBirthday, setTeam } from '../community/people';
 import { Community } from '../community/service';
 import { searchMessages } from '../messages/search';
@@ -331,6 +332,50 @@ function onConnection(ctx: AppContext, socket: PausaSocket): void {
     community.setNoshowLimit(input.noshowLimit);
     return done();
   });
+  // --- office days (D-54) ---
+  on('office:vote', (input, { actor }) => {
+    vote(ctx.db, actor, input);
+    return done();
+  });
+  on('office:plan', (input, { actor }) => {
+    plan(ctx.db, actor, input, Date.now(), community.today());
+    return done();
+  });
+  on('office:checkin', (input, { actor }) => {
+    checkIn(ctx.db, actor, input.date, community.today());
+    return done();
+  });
+  on('office:mark', (input, { actor }) => {
+    mark(ctx.db, actor, input, community.today());
+    return done();
+  });
+  on('office:excuse', (input, { actor }) => {
+    excuse(ctx.db, actor, input);
+    return done();
+  });
+  on('admin:office:judge', (input, { actor }) => {
+    staff(actor);
+    judge(ctx.db, input);
+    logAdmin(ctx.db, actor.id, 'office.judge', 'day', input.date, {
+      personId: input.personId,
+      judgement: input.judgement,
+    });
+    community.settleNoShows();
+    return done();
+  });
+  on('admin:office:setDay', (input, { actor }) => {
+    staff(actor);
+    setDay(ctx.db, actor, input.weekStart, input.date, Date.now());
+    logAdmin(ctx.db, actor.id, 'office.setDay', 'day', input.date);
+    return done();
+  });
+  on('admin:office:addDay', (input, { actor }) => {
+    staff(actor);
+    addDay(ctx.db, input.date);
+    logAdmin(ctx.db, actor.id, 'office.addDay', 'day', input.date);
+    return done();
+  });
+
   on('admin:import:preview', (input, { actor }) => {
     staff(actor);
     return { rows: parseSheet(ctx.db, input.sheet, input.text) };

@@ -379,6 +379,56 @@ test.describe('cakes (D-53)', () => {
   });
 });
 
+test.describe('office days (D-54)', () => {
+  test('an extra day today: check in, mark a colleague absent, they send an excuse for the book', async ({
+    browser,
+  }) => {
+    const host = await join(browser, hostLink(), 'Costa');
+    const ruiName = uniqueName('Rui');
+    const rui = await join(browser, memberInvite(), ruiName);
+    const ana = await join(browser, memberInvite(), uniqueName('Ana'));
+
+    await host.page
+      .locator('nav')
+      .getByRole('button', { name: /^Escritório/ })
+      .click();
+    await expect(host.page).toHaveURL(/\/escritorio$/);
+    await host.page
+      .getByRole('region', { name: 'Dia extra (admin)' })
+      .getByRole('button', { name: 'Acrescentar' })
+      .click();
+
+    await ana.page
+      .locator('nav')
+      .getByRole('button', { name: /^Escritório/ })
+      .click();
+    const today = ana.page.getByRole('region', { name: /^Hoje:/ });
+    await today.getByRole('button', { name: 'Estou cá' }).click();
+    const ruiRow = today.getByRole('listitem').filter({ hasText: ruiName });
+    await ruiRow.getByRole('button', { name: 'Marcar presente' }).click();
+    await ruiRow.getByRole('button', { name: 'Marcar ausente' }).click();
+    await expect(ruiRow.getByText('ausente')).toBeVisible();
+
+    await rui.page
+      .locator('nav')
+      .getByRole('button', { name: /^Escritório/ })
+      .click();
+    const ruiToday = rui.page.getByRole('region', { name: /^Hoje:/ });
+    await ruiToday.getByLabel('Não vieste? Explica').fill('O gato comeu-me as chaves');
+    await ruiToday.getByRole('button', { name: 'Enviar desculpa' }).click();
+    await expect(
+      ana.page
+        .getByRole('region', { name: 'Livro de desculpas 📖' })
+        .getByText('«O gato comeu-me as chaves»'),
+    ).toBeVisible();
+
+    for (const p of [host, rui, ana]) {
+      expect(p.errors).toEqual([]);
+      await p.context.close();
+    }
+  });
+});
+
 test.describe('do not disturb', () => {
   test('one hour of silence shows in the sidebar and survives a reload; switching off clears it', async ({
     browser,
