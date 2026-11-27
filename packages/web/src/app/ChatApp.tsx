@@ -5,6 +5,7 @@ import { RoomView } from '../features/messages/RoomView';
 import { NoAccess } from '../features/onboarding/NoAccess';
 import { NewRoomDialog } from '../features/rooms/NewRoomDialog';
 import { QuickSwitcher } from '../features/rooms/QuickSwitcher';
+import { SearchDialog } from '../features/search/SearchDialog';
 import { RoomSettingsDialog } from '../features/rooms/RoomSettingsDialog';
 import { Sidebar } from '../features/rooms/Sidebar';
 import { visibleRooms } from '../features/rooms/roomOrder';
@@ -15,7 +16,8 @@ import { ConnectionPill } from '../ui/ConnectionPill';
 import { Toast } from '../ui/Toast';
 import styles from './ChatApp.module.css';
 
-export type DialogName = 'newRoom' | 'roomSettings' | 'admin' | 'rules' | 'switcher' | null;
+export type DialogName =
+  'newRoom' | 'roomSettings' | 'admin' | 'rules' | 'switcher' | 'search' | null;
 
 function pathFor(room: RoomViewType): string {
   return room.isMain ? '/' : `/r/${room.slug}`;
@@ -80,7 +82,10 @@ function ChatLayout() {
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
-      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
+      if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key.toLowerCase() === 'f') {
+        e.preventDefault();
+        setDialog('search');
+      } else if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
         e.preventDefault();
         setDialog('switcher');
       } else if (e.altKey && (e.key === 'ArrowUp' || e.key === 'ArrowDown')) {
@@ -133,6 +138,7 @@ function ChatLayout() {
             roomId={activeRoomId}
             onOpenSettings={() => setDialog('roomSettings')}
             onOpenRooms={() => setDrawer(true)}
+            onOpenSearch={() => setDialog('search')}
           />
         )}
       </div>
@@ -143,6 +149,7 @@ function ChatLayout() {
       {dialog === 'admin' && <AdminPanel onClose={() => setDialog(null)} />}
       <RulesDialog open={dialog === 'rules'} onClose={() => setDialog(null)} />
       {dialog === 'switcher' && <QuickSwitcher onClose={() => setDialog(null)} />}
+      {dialog === 'search' && <SearchDialog onClose={() => setDialog(null)} />}
       <Toast />
     </div>
   );

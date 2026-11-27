@@ -99,6 +99,12 @@ export const ClientEventSchemas = {
   'admin:members:revoke': z.object({ userId: Id }),
   'admin:members:setRole': z.object({ userId: Id, role: z.enum(['admin', 'member']) }),
   'admin:log:list': z.object({ before: Id.optional() }),
+  'search:messages': z.object({
+    query: z.string().trim().min(2).max(100),
+    roomId: Id.optional(),
+    userId: Id.optional(),
+    before: Id.optional(),
+  }),
   'moderation:standings': z.object({ roomId: Id }),
   'admin:topics:list': z.object({}),
   'admin:topics:update': TopicUpdate,
@@ -134,6 +140,7 @@ export interface ClientEventResults {
   'admin:members:revoke': { member: Member };
   'admin:members:setRole': { member: Member };
   'admin:log:list': { entries: AdminLogEntry[]; hasMore: boolean };
+  'search:messages': { messages: Message[]; hasMore: boolean };
   'moderation:standings': { standings: Standing[] };
   'admin:topics:list': { topics: Topic[] };
   'admin:topics:update': { topic: Topic };

@@ -203,7 +203,7 @@ settings     (key PK, value JSON)          -- includes 'change_seq' (see below)
 - Seed migration creates `#geral` with `is_main = 1`.
 - Indexes: `messages(room_id, id)`, `messages(room_id, seq)`, `messages(user_id)`, `devices(token_hash)`,
   `attachments(message_id)`.
-- No FTS table in v1. Search arrives later as a new migration.
+- Search: `messages_fts` (FTS5, migration 0004), kept in sync by triggers; deleted messages leave the index.
 
 ---
 
@@ -325,7 +325,7 @@ one there are no stale cached versions and nothing cached at all.
    at logon (Task Scheduler or a Windows service) so it survives reboots without anyone at the PC.
 2. **Second device:** a signed-in device generates a one-time link code (10 min) to sign in another browser.
 3. ~~**Narrow/mobile layout**~~: done (Phase 11). Sidebar is a drawer below 768px.
-4. **Search:** FTS5 with `unicode61 remove_diacritics 2` ("café" matches "cafe"), filters room/author.
+4. ~~**Search**~~: done (Phase 12, migration 0004). FTS5 `unicode61 remove_diacritics 2`, prefix match, filters room/author, `search:messages`.
 5. **Non-image files**, with an executable/script blocklist and `Content-Disposition: attachment`.
 6. **Thumbnails** generated in the browser.
 7. **Link previews:** server-side unfurl with the SSRF rules in `_archive/2026-11-23-electron-plan/docs/SPEC.md` §7.6.

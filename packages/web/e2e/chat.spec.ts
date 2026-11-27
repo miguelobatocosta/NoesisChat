@@ -314,6 +314,39 @@ test.describe('admin', () => {
   });
 });
 
+test.describe('search', () => {
+  test('finds a message in another room ignoring accents, and jumps to it', async ({ browser }) => {
+    const ana = await join(browser, memberInvite(), uniqueName('Ana'));
+    const word = `pastelaria${Date.now().toString(36)}`;
+    const roomName = `procura ${Date.now().toString(36).slice(-4)}`;
+    await ana.page.getByRole('button', { name: 'Nova sala' }).click();
+    const create = ana.page.getByRole('dialog', { name: 'Nova sala' });
+    await create.getByLabel('Nome').fill(roomName);
+    await create.getByRole('button', { name: 'Criar sala' }).click();
+    await expect(ana.page.getByRole('heading', { name: roomName })).toBeVisible();
+    await send(ana.page, `a melhor ${word} é a da esquina, café incluído`);
+    await expect(message(ana.page, word)).toBeVisible();
+
+    await ana.page
+      .locator('nav')
+      .getByRole('button', { name: /^geral/ })
+      .click();
+    await expect(ana.page.getByRole('heading', { name: 'geral', exact: true })).toBeVisible();
+
+    await ana.page.keyboard.press('Control+Shift+F');
+    const dialog = ana.page.getByRole('dialog', { name: 'Pesquisar mensagens' });
+    await dialog.getByLabel('O que procuras?').fill(`${word} cafe`);
+    const result = dialog.getByRole('button', { name: new RegExp(word) });
+    await expect(result).toBeVisible();
+    await result.click();
+
+    await expect(ana.page.getByRole('heading', { name: roomName })).toBeVisible();
+    await expect(message(ana.page, word)).toHaveAttribute('data-highlight', 'true');
+    expect(ana.errors).toEqual([]);
+    await ana.context.close();
+  });
+});
+
 test.describe('moderation (D-51)', () => {
   test('a mascot labels and mutes someone who keeps talking about one topic; the host lifts it', async ({
     browser,

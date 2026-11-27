@@ -17,6 +17,7 @@ Update at the end of every phase: status, date, commit, and anything deferred.
 | 9 | Clean-up: deps, dead exports, docs | ✅ done | 2026-11-27 | phase/09-limpeza | Minor bumps + `@fastify/static` 11 (dotfiles now ignored). TS 6 (D-39) and `@types/node` 22 kept on purpose |
 | 10 | Mascots moderate topics (owner request, D-51) | ✅ done | 2026-11-27 | phase/10-moderacao | 15 topics in the admin portal, labels + 24 h room mutes (never in #geral), migration 0003 |
 | 11 | Phone layout | ✅ done | 2026-11-27 | phase/11-telemovel | Drawer sidebar below 768px, 16px fields, near-full-screen dialogs, tap shows message actions; E2E at 390×844 |
+| 12 | Message search | ✅ done | 2026-11-27 | phase/12-pesquisa | FTS5 (accent-insensitive, prefix), filters room/person, Ctrl+Shift+F or the header magnifier; jumps to and highlights the message |
 
 **Test totals:** 27 shared + 135 server + 231 web unit/integration, 20 Playwright E2E (incl. axe contrast in light and dark).
 

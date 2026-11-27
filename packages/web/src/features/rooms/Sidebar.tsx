@@ -214,6 +214,9 @@ function MeFooter({ onOpen }: { onOpen: (d: DialogName) => void }) {
               {t('sidebar.admin')}
             </button>
           )}
+          <button type="button" role="menuitem" onClick={pick(() => onOpen('search'))}>
+            {t('search.open')}
+          </button>
           <button type="button" role="menuitem" onClick={pick(() => onOpen('rules'))}>
             {t('sidebar.rules')}
           </button>

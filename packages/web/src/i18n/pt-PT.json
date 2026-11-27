@@ -345,5 +345,19 @@
     "noStrikes": "Ainda ninguém tem strikes.",
     "strikeMeta": "{topic} · {count} (rótulo aos {label}, castigo aos {mute})",
     "reset": "Pôr a zero"
+  },
+  "search": {
+    "open": "Pesquisar",
+    "title": "Pesquisar mensagens",
+    "placeholder": "O que procuras?",
+    "where": "Onde",
+    "allRooms": "Todas as salas",
+    "thisRoom": "Só em #{room}",
+    "who": "Quem escreveu",
+    "anyone": "Qualquer pessoa",
+    "results": "Resultados",
+    "hint": "Escreve pelo menos 2 letras. Acentos e maiúsculas não contam.",
+    "none": "Nada encontrado.",
+    "more": "Ver mais"
   }
 }

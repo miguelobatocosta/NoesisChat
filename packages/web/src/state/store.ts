@@ -633,6 +633,13 @@ export class ChatStore {
   }
 
   /** Scrolls to a message, loading older pages if needed (up to 10). Returns false if not found. */
+  /** Opens a room and scrolls to (and highlights) a message there, loading history as needed. */
+  async jumpTo(roomId: string, messageId: string): Promise<boolean> {
+    this.selectRoom(roomId);
+    if (!this.state.timelines[roomId]?.loaded) await this.loadLatest(roomId);
+    return this.reveal(roomId, messageId);
+  }
+
   async reveal(roomId: string, messageId: string): Promise<boolean> {
     for (let i = 0; i < 10; i++) {
       const tl = this.state.timelines[roomId];

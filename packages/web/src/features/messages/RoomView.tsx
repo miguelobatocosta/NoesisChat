@@ -1,5 +1,5 @@
 import { type DragEvent, useEffect, useRef, useState } from 'react';
-import { Menu, Settings } from 'lucide-react';
+import { Menu, Search, Settings } from 'lucide-react';
 import { t } from '../../i18n';
 import { useChat } from '../../state/store';
 import buttons from '../../ui/buttons.module.css';
@@ -13,11 +13,13 @@ export function RoomView({
   roomId,
   onOpenSettings,
   onOpenRooms,
+  onOpenSearch,
 }: {
   roomId: string;
   onOpenSettings: () => void;
   /** Phone layout: pull out the rooms drawer. */
   onOpenRooms?: () => void;
+  onOpenSearch?: () => void;
 }) {
   const room = useChat((s) => s.rooms[roomId]);
   const muted = useMyMute(roomId);
@@ -66,6 +68,15 @@ export function RoomView({
         )}
         <h1 className={styles.name}>{room.name}</h1>
         {room.description && <p className={styles.description}>{room.description}</p>}
+        <button
+          type="button"
+          className={buttons.icon}
+          aria-label={t('search.open')}
+          title={t('search.open')}
+          onClick={onOpenSearch}
+        >
+          <Search size={18} strokeWidth={1.75} aria-hidden />
+        </button>
         <button
           type="button"
           className={buttons.icon}

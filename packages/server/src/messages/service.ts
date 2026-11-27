@@ -14,7 +14,7 @@ import { isStaff, type UserRow } from '../members/service';
 import { requireNotMuted } from '../moderation/service';
 import { requireRoom, requireWritableRoom } from '../rooms/service';
 
-interface MessageRow {
+export interface MessageRow {
   id: string;
   room_id: string;
   user_id: string;
@@ -53,7 +53,7 @@ export function toAttachment(
 }
 
 /** Turns rows into wire messages with attachments, reactions, mentions and reply previews (5 queries total). */
-function hydrate(db: Db, rows: MessageRow[]): Message[] {
+export function hydrate(db: Db, rows: MessageRow[]): Message[] {
   if (rows.length === 0) return [];
   const ids = rows.map((r) => r.id);
   const inIds = placeholders(ids.length);

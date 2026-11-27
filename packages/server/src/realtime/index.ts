@@ -50,6 +50,7 @@ import {
   sync,
   toggleReaction,
 } from '../messages/service';
+import { searchMessages } from '../messages/search';
 import { RATE_LIMITS } from '../rateLimit';
 import { archiveRoom, createRoom, listRoomsFor, updatePrefs, updateRoom } from '../rooms/service';
 import { Mascots } from '../mascots/service';
@@ -152,6 +153,7 @@ function onConnection(ctx: AppContext, socket: PausaSocket): void {
   // --- messages ---
   on('messages:history', (input) => history(ctx.db, input));
   on('messages:sync', (input) => sync(ctx.db, input));
+  on('search:messages', (input) => searchMessages(ctx.db, input));
 
   on('messages:send', (input, { actor }) => {
     const { message, created } = sendMessage(ctx.db, actor, input);
