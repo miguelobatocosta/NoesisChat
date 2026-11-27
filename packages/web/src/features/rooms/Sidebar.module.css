@@ -273,3 +273,9 @@ summary.label {
     transition: transform 240ms var(--ease-spring);
   }
 }
+
+.quiet {
+  font-size: 12px;
+  line-height: 16px;
+  color: var(--sidebar-muted);
+}

@@ -7,6 +7,8 @@ export interface NotifyInput {
   isOwn: boolean;
   roomActive: boolean;
   windowFocused: boolean;
+  /** Do not disturb is on for this device (lib/dnd.ts). */
+  quiet?: boolean;
 }
 
 /**
@@ -14,7 +16,7 @@ export interface NotifyInput {
  * "Nothing" means nothing, mentions included.
  */
 export function shouldNotify(i: NotifyInput): boolean {
-  if (i.isOwn) return false;
+  if (i.isOwn || i.quiet) return false;
   if (i.roomActive && i.windowFocused) return false;
   if (i.level === 'none') return false;
   if (i.level === 'all') return true;

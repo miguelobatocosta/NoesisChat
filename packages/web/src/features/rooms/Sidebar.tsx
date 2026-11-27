@@ -4,6 +4,8 @@ import { type Member, mascotByUserId, type RoomView } from '@pausa/shared';
 import type { DialogName } from '../../app/ChatApp';
 import { t } from '../../i18n';
 import { getStore, useChat } from '../../state/store';
+import { formatTime } from '../../lib/format';
+import { quietUntil, useDnd } from '../../lib/dnd';
 import { Mascot } from '../mascots/Mascot';
 import { archivedRooms, hiddenRooms, visibleRooms } from './roomOrder';
 import styles from './Sidebar.module.css';
@@ -196,6 +198,7 @@ function MeFooter({ onOpen }: { onOpen: (d: DialogName) => void }) {
       <div className={styles.meText}>
         <span className={styles.meName}>{me.displayName}</span>
         <span className={styles.meRole}>{t(`roles.${me.role}`)}</span>
+        <QuietNote />
       </div>
       <button
         type="button"
@@ -214,6 +217,9 @@ function MeFooter({ onOpen }: { onOpen: (d: DialogName) => void }) {
               {t('sidebar.admin')}
             </button>
           )}
+          <button type="button" role="menuitem" onClick={pick(() => onOpen('dnd'))}>
+            {t('dnd.title')}
+          </button>
           <button type="button" role="menuitem" onClick={pick(() => onOpen('search'))}>
             {t('search.open')}
           </button>
@@ -227,4 +233,17 @@ function MeFooter({ onOpen }: { onOpen: (d: DialogName) => void }) {
       )}
     </div>
   );
+}
+
+/** "Em silêncio até 14:00" while do not disturb is on (re-checked every minute). */
+function QuietNote() {
+  const dnd = useDnd();
+  const [now, setNow] = useState(() => Date.now());
+  useEffect(() => {
+    const timer = setInterval(() => setNow(Date.now()), 60_000);
+    return () => clearInterval(timer);
+  }, []);
+  const until = quietUntil(dnd, now);
+  if (until === null) return null;
+  return <span className={styles.quiet}>{t('dnd.active', { time: formatTime(until) })}</span>;
 }

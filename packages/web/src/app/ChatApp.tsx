@@ -6,6 +6,7 @@ import { NoAccess } from '../features/onboarding/NoAccess';
 import { NewRoomDialog } from '../features/rooms/NewRoomDialog';
 import { QuickSwitcher } from '../features/rooms/QuickSwitcher';
 import { SearchDialog } from '../features/search/SearchDialog';
+import { DndDialog } from '../features/settings/DndDialog';
 import { RoomSettingsDialog } from '../features/rooms/RoomSettingsDialog';
 import { Sidebar } from '../features/rooms/Sidebar';
 import { visibleRooms } from '../features/rooms/roomOrder';
@@ -17,7 +18,7 @@ import { Toast } from '../ui/Toast';
 import styles from './ChatApp.module.css';
 
 export type DialogName =
-  'newRoom' | 'roomSettings' | 'admin' | 'rules' | 'switcher' | 'search' | null;
+  'newRoom' | 'roomSettings' | 'admin' | 'rules' | 'switcher' | 'search' | 'dnd' | null;
 
 function pathFor(room: RoomViewType): string {
   return room.isMain ? '/' : `/r/${room.slug}`;
@@ -150,6 +151,7 @@ function ChatLayout() {
       <RulesDialog open={dialog === 'rules'} onClose={() => setDialog(null)} />
       {dialog === 'switcher' && <QuickSwitcher onClose={() => setDialog(null)} />}
       {dialog === 'search' && <SearchDialog onClose={() => setDialog(null)} />}
+      <DndDialog open={dialog === 'dnd'} onClose={() => setDialog(null)} />
       <Toast />
     </div>
   );

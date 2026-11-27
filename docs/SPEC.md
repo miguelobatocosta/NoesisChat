@@ -330,5 +330,5 @@ one there are no stale cached versions and nothing cached at all.
 6. **Thumbnails** generated in the browser.
 7. **Link previews:** server-side unfurl with the SSRF rules in `_archive/2026-11-23-electron-plan/docs/SPEC.md` §7.6.
 8. **Self-service "delete my account"** (anonymize to "Antigo membro", delete devices).
-9. **Do Not Disturb** and quiet hours.
+9. ~~**Do Not Disturb** and quiet hours~~: done (Phase 13), per device: pause 1 h / until 9:00, daily hours, weekends.
 10. **English locale** (`en.json`).

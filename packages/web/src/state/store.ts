@@ -18,6 +18,7 @@ import { type ClientErrorCode, errorCode, RequestError } from '../api/errors';
 import { logout as httpLogout } from '../api/http';
 import { createSocket, type PausaSocket, request } from '../api/socket';
 import { t } from '../i18n';
+import { isQuiet, loadDnd } from '../lib/dnd';
 import { newClientId } from '../lib/ids';
 import { askPermissionOnce, setBadge, shouldNotify, showNotification } from '../lib/notify';
 import { plainText } from '../lib/plaintext';
@@ -468,6 +469,7 @@ export class ChatStore {
         isOwn,
         roomActive,
         windowFocused: st.focused,
+        quiet: isQuiet(loadDnd(), Date.now()),
       })
     ) {
       const author = this.nameOf(message.userId);

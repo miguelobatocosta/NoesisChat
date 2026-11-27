@@ -314,6 +314,34 @@ test.describe('admin', () => {
   });
 });
 
+test.describe('do not disturb', () => {
+  test('one hour of silence shows in the sidebar and survives a reload; switching off clears it', async ({
+    browser,
+  }) => {
+    const ana = await join(browser, memberInvite(), uniqueName('Ana'));
+    await ana.page.getByRole('button', { name: 'Menu' }).click();
+    await ana.page.getByRole('menuitem', { name: 'Não incomodar' }).click();
+    const dialog = ana.page.getByRole('dialog', { name: 'Não incomodar' });
+    await dialog.getByRole('button', { name: '1 hora' }).click();
+    await ana.page.keyboard.press('Escape');
+
+    const note = ana.page.locator('nav').getByText(/^Em silêncio até às \d\d:\d\d$/);
+    await expect(note).toBeVisible();
+    await ana.page.reload();
+    await expect(note).toBeVisible();
+
+    await ana.page.getByRole('button', { name: 'Menu' }).click();
+    await ana.page.getByRole('menuitem', { name: 'Não incomodar' }).click();
+    await ana.page
+      .getByRole('dialog', { name: 'Não incomodar' })
+      .getByRole('button', { name: 'Desligar' })
+      .click();
+    await expect(note).toBeHidden();
+    expect(ana.errors).toEqual([]);
+    await ana.context.close();
+  });
+});
+
 test.describe('search', () => {
   test('finds a message in another room ignoring accents, and jumps to it', async ({ browser }) => {
     const ana = await join(browser, memberInvite(), uniqueName('Ana'));

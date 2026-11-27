@@ -359,5 +359,17 @@
     "hint": "Escreve pelo menos 2 letras. Acentos e maiúsculas não contam.",
     "none": "Nada encontrado.",
     "more": "Ver mais"
+  },
+  "dnd": {
+    "title": "Não incomodar",
+    "intro": "Neste dispositivo. Em silêncio não aparecem notificações, nem de menções. O número de mensagens por ler continua a contar.",
+    "hour": "1 hora",
+    "tomorrow": "Até amanhã às 9h",
+    "off": "Desligar",
+    "schedule": "Horário de silêncio todos os dias",
+    "from": "Das",
+    "to": "Às",
+    "weekends": "Fins de semana em silêncio",
+    "active": "Em silêncio até às {time}"
   }
 }
