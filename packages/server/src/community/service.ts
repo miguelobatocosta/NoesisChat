@@ -40,7 +40,9 @@ const REMINDER_HOUR = 17; // day before
 const DAY_CARD_HOUR = 8; // on the day
 const TICK_MS = 60_000;
 
-type LineKey = keyof typeof lines;
+type LineKey = keyof (typeof lines)['lurdes'];
+/** Each mascot's voice; any line a mascot lacks falls back to Dona Lurdes (the #geral default). */
+const VOICES = lines as Record<string, Partial<Record<LineKey, string[]>>>;
 type Vars = Partial<Record<'name' | 'reason' | 'who' | 'date' | 'count' | 'cake', string>>;
 
 /**
@@ -124,7 +126,8 @@ export class Community {
     const mascot = (room.mascot_key ?? MAIN_MASCOT) as MascotKey;
     const bot = getUser(this.ctx.db, mascotByKey(mascot).userId);
     if (!bot) return;
-    const line = pick(lines[key], this.rng, this.lastLine.get(key));
+    const pool = VOICES[mascot]?.[key] ?? lines.lurdes[key];
+    const line = pick(pool, this.rng, this.lastLine.get(key));
     this.lastLine.set(key, line);
     try {
       const { message } = sendMessage(

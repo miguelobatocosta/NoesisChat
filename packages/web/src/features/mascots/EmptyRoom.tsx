@@ -27,7 +27,7 @@ export function EmptyRoom({ roomId }: { roomId: string }) {
   return (
     <div className={styles.empty}>
       <Mascot mascot={key} size={128} className={styles.art} />
-      <p className={styles.line}>{t(`mascots.${key}.${welcome}`, { room: room.slug })}</p>
+      <p className={styles.line}>{t(`mascots.${key}.${welcome}`, { room: room.slug, name })}</p>
       <p className={styles.who}>
         {name} · {t(`mascots.${key}.species`)}
       </p>

@@ -18,6 +18,7 @@ const LEVEL_LABEL = {
 } as const;
 
 export function RoomSettingsDialog({ roomId, onClose }: { roomId: string; onClose: () => void }) {
+  const members = useChat((s) => s.members);
   const room = useChat((s) => s.rooms[roomId]);
   const me = useChat((s) => s.me);
   const [name, setName] = useState(room?.name ?? '');
@@ -143,7 +144,7 @@ export function RoomSettingsDialog({ roomId, onClose }: { roomId: string; onClos
               onClick={() => void run(() => store.updateRoom({ roomId, mascotKey: m.key }))}
             >
               <Mascot mascot={m.key} size={48} />
-              <span className={styles.mascotName}>{m.name}</span>
+              <span className={styles.mascotName}>{members[m.userId]?.displayName ?? m.name}</span>
               <span className={styles.mascotSpecies}>{t(`mascots.${m.key}.species`)}</span>
             </button>
           ))}

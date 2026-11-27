@@ -65,7 +65,7 @@ import { Community } from '../community/service';
 import { searchMessages } from '../messages/search';
 import { RATE_LIMITS } from '../rateLimit';
 import { archiveRoom, createRoom, listRoomsFor, updatePrefs, updateRoom } from '../rooms/service';
-import { Mascots } from '../mascots/service';
+import { Mascots, renameMascot } from '../mascots/service';
 import { listModeration, Moderator, standingsFor } from '../moderation/service';
 import { listTopicRows, toTopic, updateTopic } from '../moderation/topics';
 import { requireRoom } from '../rooms/service';
@@ -332,6 +332,16 @@ function onConnection(ctx: AppContext, socket: PausaSocket): void {
     community.setNoshowLimit(input.noshowLimit);
     return done();
   });
+  // --- mascot names: the host only (Phase 18) ---
+  on('admin:mascots:rename', (input, { actor }) => {
+    requireRole(actor, ['host']);
+    const target = renameMascot(ctx.db, input.key, input.name);
+    logAdmin(ctx.db, actor.id, 'mascot.rename', 'user', target.id, { name: target.display_name });
+    const member = toMember(target, ctx.presence);
+    ctx.io.to(ROOM_MEMBERS).emit('member:updated', { member });
+    return { member };
+  });
+
   // --- office days (D-54) ---
   on('office:vote', (input, { actor }) => {
     vote(ctx.db, actor, input);

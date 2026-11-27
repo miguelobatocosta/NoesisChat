@@ -44,8 +44,8 @@ export const MASCOTS = [
   { key: 'lurdes', userId: '0000000000000000000000MA01', name: 'Dona Lurdes' },
   { key: 'bolacha', userId: '0000000000000000000000MA02', name: 'Bolacha' },
   { key: 'faisca', userId: '0000000000000000000000MA03', name: 'Faísca' },
-  { key: 'ferreira', userId: '0000000000000000000000MA04', name: 'Sr. Ferreira' },
-  { key: 'pixel', userId: '0000000000000000000000MA05', name: 'Pixel' },
+  { key: 'ferreira', userId: '0000000000000000000000MA04', name: 'Avó Dores' },
+  { key: 'pixel', userId: '0000000000000000000000MA05', name: 'Tio Pixel' },
   { key: 'nuvem', userId: '0000000000000000000000MA06', name: 'Nuvem' },
 ] as const;
 export type MascotKey = (typeof MASCOTS)[number]['key'];

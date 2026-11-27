@@ -141,6 +141,7 @@ export const ClientEventSchemas = {
   'admin:people:merge': z.object({ guestId: Id, userId: Id }),
   'admin:people:setTeam': z.object({ personId: Id, inTeam: z.boolean() }),
   'admin:settings:update': z.object({ noshowLimit: z.number().int().min(1).max(20) }),
+  'admin:mascots:rename': z.object({ key: z.enum(MASCOT_KEYS), name: DisplayName }),
   // --- office days (D-54) ---
   'office:vote': z.object({
     weekStart: IsoDate,
@@ -217,6 +218,7 @@ export interface ClientEventResults {
   'admin:people:merge': Ok;
   'admin:people:setTeam': Ok;
   'admin:settings:update': Ok;
+  'admin:mascots:rename': { member: Member };
   'office:vote': Ok;
   'office:plan': Ok;
   'office:checkin': Ok;

@@ -17,35 +17,46 @@ import { Dialog } from '../../ui/Dialog';
 import forms from '../../ui/forms.module.css';
 import styles from './AdminPanel.module.css';
 import { CommunityAdmin } from './CommunityAdmin';
+import { MascotsAdmin } from './MascotsAdmin';
 import { Punishments, Topics } from './Moderation';
 
-type Tab = 'invites' | 'members' | 'community' | 'topics' | 'punishments' | 'log';
+type Tab = 'invites' | 'members' | 'community' | 'topics' | 'punishments' | 'mascots' | 'log';
 
 export function AdminPanel({ onClose }: { onClose: () => void }) {
   const [tab, setTab] = useState<Tab>('invites');
+  // Renaming the mascots is the host's alone (Phase 18).
+  const isHost = useChat((s) => s.me.role === 'host');
   const [error, setError] = useState<string | null>(null);
   const report = useCallback((err: unknown) => setError(t(`errors.${errorCode(err)}`)), []);
 
   return (
     <Dialog open onClose={onClose} title={t('admin.title')} closeLabel={t('admin.close')} size="lg">
       <div className={styles.tabs} role="tablist">
-        {(['invites', 'members', 'community', 'topics', 'punishments', 'log'] as const).map(
-          (name) => (
-            <button
-              key={name}
-              type="button"
-              role="tab"
-              aria-selected={tab === name}
-              className={styles.tab}
-              onClick={() => {
-                setTab(name);
-                setError(null);
-              }}
-            >
-              {t(`admin.${name}`)}
-            </button>
-          ),
-        )}
+        {(
+          [
+            'invites',
+            'members',
+            'community',
+            'topics',
+            'punishments',
+            ...(isHost ? (['mascots'] as const) : []),
+            'log',
+          ] as const
+        ).map((name) => (
+          <button
+            key={name}
+            type="button"
+            role="tab"
+            aria-selected={tab === name}
+            className={styles.tab}
+            onClick={() => {
+              setTab(name);
+              setError(null);
+            }}
+          >
+            {t(`admin.${name}`)}
+          </button>
+        ))}
       </div>
       {error && (
         <p className={forms.error} role="alert">
@@ -57,6 +68,7 @@ export function AdminPanel({ onClose }: { onClose: () => void }) {
         {tab === 'members' && <Members onError={report} />}
         {tab === 'community' && <CommunityAdmin onError={report} />}
         {tab === 'topics' && <Topics onError={report} />}
+        {tab === 'mascots' && isHost && <MascotsAdmin onError={report} />}
         {tab === 'punishments' && <Punishments onError={report} />}
         {tab === 'log' && <Log onError={report} />}
       </div>
@@ -333,7 +345,7 @@ function Log({ onError }: { onError: (e: unknown) => void }) {
     if (e.actorName) return e.actorName;
     const key = e.detail?.['mascot'];
     if (typeof key === 'string' && (MASCOT_KEYS as readonly string[]).includes(key))
-      return mascotByKey(key as (typeof MASCOT_KEYS)[number]).name;
+      return store.nameOf(mascotByKey(key as (typeof MASCOT_KEYS)[number]).userId);
     return t('admin.system');
   }
 

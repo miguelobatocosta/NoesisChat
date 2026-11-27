@@ -226,3 +226,15 @@ Nuvem (lazy cat). Original SVG drawings in `features/mascots/Mascot.tsx`, colour
   reminder; 08:00 card with "Estou cá". All posted by the #geral mascot as live cards. Promised cakes that
   didn't arrive go back to the queue.
 - Imported "Presenças" history is closed and never counts towards a no-show cake. Guests can be in the team.
+
+### D-55 · Mascot personalities and names: SETTLED (2026-11-27, owner)
+- Six archetypes, same drawings: **Dona Lurdes** (pomba, mãe implicativa, voice of #geral), **Avó Dores**
+  (tartaruga, avó fofinha), **Nuvem** (gato, resmungão), **Faísca** (esquilo, alegre e hiperentusiasta),
+  **Bolacha** (cão, contente bonacheirão), **Tio Pixel** (polvo, tio das piadas secas).
+- Behaviour, not just lines (`packages/server/src/mascots/personalities.ts`): keyword chance multiplier, typing
+  delay, the cat may ignore a mention (or just "…"), and an in-character emoji reaction at most once per
+  10 min per room (off when `MASCOT_CHANCE=0`).
+- #geral announcements (cakes, office) speak in the voice of #geral's current mascot; missing lines fall back
+  to Dona Lurdes.
+- **Only the host renames mascots** (Admin → Mascotes). A renamed mascot answers to its new name; names stay
+  unique like people's. Migration 0008 moves only untouched defaults (Sr. Ferreira → Avó Dores, Pixel → Tio Pixel).

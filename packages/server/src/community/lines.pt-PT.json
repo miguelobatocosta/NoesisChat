@@ -1,53 +1,306 @@
 {
-  "milestone": [
-    "🎂 Ora bem, ora bem… {who} diz que {name} tem um marco: **{reason}**. Isso cheira-me a bolo! Alguém confirma?",
-    "🎂 Novidades fresquinhas: **{reason}** para {name}, segundo {who}. Quem confirma ganha o direito a uma fatia.",
-    "🎂 Ai que eu sabia! {name}: **{reason}**. Falta só alguém confirmar para entrar na lista dos bolos."
-  ],
-  "selfMilestone": [
-    "🎂 Que bonito, {name} confessa: **{reason}**. Já está na lista. Para quando o bolo?",
-    "🎂 {name} veio declarar **{reason}** de livre vontade. Honestidade assim merece… que tragas bolo!"
-  ],
-  "confirmed": [
-    "✅ Confirmado: {name} deve um bolo por **{reason}**. A contagem começa hoje.",
-    "✅ Está oficial, {name}: **{reason}** = 1 bolo. Eu já anotei no meu caderninho."
-  ],
-  "birthday": [
-    "🎉 Parabéns, {name}! Muitos anos de vida… e um bolo para a equipa, que a tradição é a tradição. 🎂",
-    "🎉 Hoje é dia de {name}! Parabéns! Já sabes o que isso quer dizer: bolo no próximo dia de escritório. 🎂",
-    "🎉 Um passarinho contou-me que {name} faz anos hoje. Parabéns! O bolo fica por tua conta. 🎂"
-  ],
-  "paid": [
-    "🎉 Bolo entregue! {name} pagou **{reason}**. Estava bom? Contem-me tudo.",
-    "🎉 {name} cumpriu: **{reason}** está pago. Menos uma dívida no meu caderninho.",
-    "🎉 Que delícia! {name} trouxe o bolo de **{reason}**. A equipa agradece."
-  ],
-  "pledge": [
-    "🙋 {name} vai trazer bolo no dia {date} (**{reason}**). Vou estar atenta!",
-    "🙋 Promessa registada: {name} leva bolo dia {date}. Não me desiluda!"
-  ],
-  "poll": [
-    "🗳️ Meus queridos, votação aberta para a semana de {date}: que dia vamos ao escritório? Votem até segunda às 10h, que eu quero saber tudo!",
-    "🗳️ Está aberta a votação da semana de {date}. Escolham os dias em que podem ir. Quem não vota não se pode queixar!"
-  ],
-  "decided": [
-    "📅 Está decidido: escritório na **{date}**! Digam se vão ou não, que eu tomo nota.",
-    "📅 A malta escolheu **{date}**. Vemo-nos lá? Marquem \"Vou\" ou \"Não vou\" no cartão."
-  ],
-  "nominated": [
-    "🎂 Ninguém se ofereceu para o bolo de {date}… por isso, {name}, és tu! A dívida de **{reason}** já tem idade. 😏",
-    "🎂 {name}, amanhã ({date}) o bolo é teu: **{reason}** está à espera. Eu cá não esqueço nada!"
-  ],
-  "reminder": [
-    "⏰ Amanhã ({date}) é dia de escritório! Vão {count} pessoas. Bolo: {cake}.",
-    "⏰ Lembrete: escritório amanhã, {date}. {count} confirmados. Quanto ao bolo: {cake}."
-  ],
-  "dayStart": [
-    "☀️ Bom dia! Hoje é dia de escritório. Quem já chegou carrega em \"Estou cá\"!",
-    "☀️ Dia de escritório! Marquem \"Estou cá\" quando chegarem, que eu estou a contar cabeças."
-  ],
-  "noshow": [
-    "🙈 {name} faltou {count} vezes sem avisar… a tradição é clara: deve um bolo. Eu não inventei as regras!",
-    "🙈 {count} faltas sem aviso, {name}. Já sabes: bolo! Fica registado no meu caderninho."
-  ]
+  "lurdes": {
+    "milestone": [
+      "🎂 Ora, ora. {who} diz que {name} teve **{reason}**. E eu a saber disto pelos outros… Alguém confirma?",
+      "🎂 {name}, **{reason}**? E não disseste nada à mãe? Fico a saber por {who}. Confirmem lá isso.",
+      "🎂 Notícia fresca de {who}: {name} — **{reason}**. Eu não digo nada, mas isso cheira a bolo. Quem confirma?"
+    ],
+    "selfMilestone": [
+      "🎂 {name} veio confessar **{reason}**. Muito bem, assim é que é. Agora o bolo, que a honestidade não se come.",
+      "🎂 {name}: **{reason}**. Fico contente que me contes as coisas. Já está na lista. Bolo para quando?"
+    ],
+    "confirmed": [
+      "✅ Confirmado: {name} deve um bolo por **{reason}**. A contar a partir de hoje. E eu conto bem.",
+      "✅ Está registado, {name}: **{reason}** = 1 bolo. Não me faças ir lembrar daqui a 150 dias."
+    ],
+    "birthday": [
+      "🎉 Parabéns, {name}! Mais um ano e ainda não arrumas a secretária. Bolo no próximo dia de escritório, sim? 🎂",
+      "🎉 {name}, parabéns, meu querido(a)! Já ligaste à tua mãe hoje? A verdadeira. E traz bolo. 🎂",
+      "🎉 Hoje é o dia de {name}! Muitos anos de vida… e o bolo, já sabes, é tradição. Eu não inventei as regras. 🎂"
+    ],
+    "paid": [
+      "🎉 Finalmente! {name} trouxe o bolo de **{reason}**. Estava bom? Alguém guardou uma fatia para a mãe?",
+      "🎉 {name} pagou **{reason}**. Estou orgulhosa. Só demorou um bocadinho. Muito bocadinho.",
+      "🎉 Bolo entregue, {name}. **{reason}** riscado da lista. Vês como não custa?"
+    ],
+    "pledge": [
+      "🙋 {name} promete bolo para {date} (**{reason}**). Vou cobrar. Tu sabes que vou.",
+      "🙋 Anotado: {name} leva bolo dia {date}. Não me desiludas, que eu já não tenho idade para desilusões."
+    ],
+    "poll": [
+      "🗳️ Votação da semana de {date}: que dia vão ao escritório? Votem até segunda às 10h. Quem não vota não se queixa, ouviram?",
+      "🗳️ Está aberta a votação para a semana de {date}. Escolham os dias. E desta vez apareçam, sim?"
+    ],
+    "decided": [
+      "📅 Decidido: escritório na **{date}**. Digam se vão. E levem casaco.",
+      "📅 A malta escolheu **{date}**. Marquem \"Vou\" ou \"Não vou\", que eu tenho de saber quantos somos."
+    ],
+    "nominated": [
+      "🎂 Ninguém se ofereceu para o bolo de {date}… então és tu, {name}. A dívida de **{reason}** já tem barbas. Eu não digo nada.",
+      "🎂 {name}, amanhã ({date}) o bolo é teu. **{reason}**, lembras-te? Eu lembro-me. Eu lembro-me de tudo."
+    ],
+    "reminder": [
+      "⏰ Amanhã ({date}) é dia de escritório! Vão {count}. Bolo: {cake}. Deitem-se cedo.",
+      "⏰ Lembrete da mãe: escritório amanhã, {date}. {count} pessoas. Bolo: {cake}. Não se atrasem."
+    ],
+    "dayStart": [
+      "☀️ Bom dia! Hoje é dia de escritório. Quem chegar carrega em \"Estou cá\". E tomem o pequeno-almoço!",
+      "☀️ Dia de escritório. Estou a contar cabeças. Carreguem em \"Estou cá\" quando chegarem."
+    ],
+    "noshow": [
+      "🙈 {name}, faltaste {count} vezes sem avisar. Sem avisar! A mãe ficou à espera. Agora deves um bolo.",
+      "🙈 {count} faltas sem aviso, {name}. Eu não digo nada… mas o bolo diz."
+    ]
+  },
+  "ferreira": {
+    "milestone": [
+      "🎂 Ai que notícia tão bonita! {who} contou-me que {name} teve **{reason}**. Alguém confirma, para a avó fazer a festa? 💕",
+      "🎂 {name}, meu amor, **{reason}**?! A avó está tão contente! Diz {who}. Confirmem, confirmem."
+    ],
+    "selfMilestone": [
+      "🎂 Ai, {name} contou à avó: **{reason}**! Que orgulho, meu tesouro. Um bolinho para celebrar, sim? 💕",
+      "🎂 **{reason}**! {name}, a avó vai já fazer um casaquinho. E tu trazes o bolo, está bem?"
+    ],
+    "confirmed": [
+      "✅ Está confirmado, meus amores: {name} vai trazer bolinho por **{reason}**. A avó já tem a colher pronta.",
+      "✅ {name}, **{reason}** confirmado. Sem pressa, meu querido(a). Mas não te esqueças da avó."
+    ],
+    "birthday": [
+      "🎉 Parabéns, meu amorzinho {name}! Estás tão crescido(a)! A avó deseja-te tudo de bom. E um bolinho, claro. 🎂💕",
+      "🎉 Faz anos o/a {name}! Ai, lembro-me como se fosse ontem… não me lembro de nada, mas parabéns! 🎂",
+      "🎉 {name}, parabéns, meu tesouro! Muitos anos de vida e muita saúde. 🎂"
+    ],
+    "paid": [
+      "🎉 Ai que delícia! {name} trouxe o bolo de **{reason}**. A avó comeu duas fatias. Não digam ao médico.",
+      "🎉 {name} cumpriu, **{reason}** está pago. Que menino(a) tão bem-educado(a)! 💕"
+    ],
+    "pledge": [
+      "🙋 {name} vai trazer bolinho dia {date} (**{reason}**). A avó vai pôr os óculos para ver bem.",
+      "🙋 Que querido(a)! {name} promete bolo para {date}. A avó já está a salivar."
+    ],
+    "poll": [
+      "🗳️ Meus queridos, que dia vão ao escritório na semana de {date}? Votem até segunda às 10h, que a avó gosta de vos ver juntinhos.",
+      "🗳️ Votação aberta para a semana de {date}. Escolham, meus amores. Sem pressa… mas até segunda."
+    ],
+    "decided": [
+      "📅 Ficou decidido: **{date}**. A avó vai levar bolachinhas. Digam se vão, sim?",
+      "📅 **{date}** é o dia, meus netinhos. Agasalhem-se e marquem se vão."
+    ],
+    "nominated": [
+      "🎂 Ai, {name}, ninguém se ofereceu para o bolinho de {date}… a avó escolheu-te a ti, que deves **{reason}**. Não ficas zangado(a), pois não? 💕",
+      "🎂 {name}, meu amor, amanhã ({date}) trazes tu o bolo, sim? É pelo **{reason}**. A avó agradece."
+    ],
+    "reminder": [
+      "⏰ Amanhã ({date}) é dia de escritório, meus queridos! Vão {count}. Bolinho: {cake}. Durmam bem.",
+      "⏰ A avó lembra: amanhã, {date}, escritório. {count} pessoas. Bolo: {cake}."
+    ],
+    "dayStart": [
+      "☀️ Bom dia, meus amores! Hoje é dia de escritório. Carreguem em \"Estou cá\" para a avó saber que chegaram bem.",
+      "☀️ Dia de escritório! A avó quer saber quem chegou. \"Estou cá\", meus queridos."
+    ],
+    "noshow": [
+      "🙈 Ai, {name}, faltaste {count} vezes sem avisar a avó… fiquei preocupada! Agora tens de trazer um bolinho, sim?",
+      "🙈 {count} faltas, {name}. A avó perdoa tudo, mas a tradição é a tradição: bolo. 💕"
+    ]
+  },
+  "nuvem": {
+    "milestone": [
+      "🎂 {who} diz que {name} teve **{reason}**. Fantástico. Alguém confirma? Eu não. Estou a dormir.",
+      "🎂 Mais um marco. {name}: **{reason}**. Segundo {who}. Confirmem se quiserem. Ou não."
+    ],
+    "selfMilestone": [
+      "🎂 {name} anunciou **{reason}**. Muito bem. Traz bolo. É a única parte que me interessa.",
+      "🎂 **{reason}**, {name}? Ok. Bolo. Não te esqueças."
+    ],
+    "confirmed": [
+      "✅ Confirmado. {name} deve bolo por **{reason}**. Que emoção. *boceja*",
+      "✅ {name}, **{reason}**. Registado. Agora deixem-me dormir."
+    ],
+    "birthday": [
+      "🎉 Parabéns, {name}. Mais um ano mais perto de seres tão ranzinza como eu. Bolo. 🎂",
+      "🎉 {name} faz anos. Yay. Traz bolo e não cantem alto. 🎂"
+    ],
+    "paid": [
+      "🎉 {name} trouxe bolo (**{reason}**). Finalmente uma boa notícia hoje.",
+      "🎉 Bolo pago por {name}. **{reason}**. Ok, admito: estava bom."
+    ],
+    "pledge": [
+      "🙋 {name} diz que traz bolo dia {date}. Vamos ver.",
+      "🙋 Promessa de {name}: bolo a {date}. Já ouvi muitas promessas."
+    ],
+    "poll": [
+      "🗳️ Votação para a semana de {date}. Escolham o dia de ir ao escritório. Eu voto em nenhum.",
+      "🗳️ Semana de {date}: votem. Até segunda às 10h. Depois não se queixem. Bom, vão queixar-se."
+    ],
+    "decided": [
+      "📅 **{date}**. É esse o dia. Boa sorte.",
+      "📅 Ganhou **{date}**. Digam se vão. Eu não vou."
+    ],
+    "nominated": [
+      "🎂 Ninguém se ofereceu para o bolo de {date}. Então és tu, {name}. **{reason}**. Não me olhes assim.",
+      "🎂 {name}. Amanhã. {date}. Bolo. **{reason}**. Fim."
+    ],
+    "reminder": [
+      "⏰ Amanhã, {date}, escritório. {count} pessoas. Bolo: {cake}. Que alegria.",
+      "⏰ Lembrete: amanhã ({date}). {count} vão. Bolo: {cake}. Eu fico em casa."
+    ],
+    "dayStart": [
+      "☀️ Dia de escritório. Carreguem em \"Estou cá\". Eu carrego em \"Estou a dormir\".",
+      "☀️ Hoje é o dia. \"Estou cá\" quando chegarem. Sem entusiasmo, por favor."
+    ],
+    "noshow": [
+      "🙈 {name}, {count} faltas sem avisar. Eu respeito. Mas a regra diz bolo.",
+      "🙈 {count} faltas, {name}. Admiro a dedicação ao sofá. Bolo."
+    ]
+  },
+  "faisca": {
+    "milestone": [
+      "🎂 NOVIDADES!!! {who} diz que {name} teve **{reason}**!!! ISTO É ENORME!!! Alguém confirma?! 🎉⚡",
+      "🎂 UAU!!! {name}: **{reason}**!!! Segundo {who}!!! Confirmem para celebrarmos!!! 🐿️"
+    ],
+    "selfMilestone": [
+      "🎂 {name} anunciou **{reason}**!!! PARABÉNS!!! Isto merece o MAIOR bolo de sempre!!! 🎉",
+      "🎂 **{reason}**!!! {name}, és INCRÍVEL!!! Bolo, bolo, bolo!!! ⚡"
+    ],
+    "confirmed": [
+      "✅ CONFIRMADO!!! {name} traz bolo por **{reason}**!!! Mal posso esperar!!! 🎂",
+      "✅ Está oficial!!! {name}, **{reason}** = BOLO!!! Que dia FANTÁSTICO!!!"
+    ],
+    "birthday": [
+      "🎉 PARABÉNS {name}!!! HOJE É O TEU DIA!!! Mais um ano de PURA ENERGIA!!! 🎂⚡🎊",
+      "🎉 {name} faz anos!!! TODOS A CANTAR!!! Parabéns a você!!! E traz BOLO!!! 🎂"
+    ],
+    "paid": [
+      "🎉 BOLO!!! {name} trouxe o bolo de **{reason}**!!! És uma LENDA!!! 🏆",
+      "🎉 {name} pagou **{reason}**!!! Que delícia!!! Que energia!!! Que tudo!!! ⚡"
+    ],
+    "pledge": [
+      "🙋 {name} traz bolo dia {date}!!! Já estou a contar os minutos!!! (são muitos!!!)",
+      "🙋 PROMESSA!!! {name} leva bolo a {date} (**{reason}**)!!! Vai ser ÉPICO!!!"
+    ],
+    "poll": [
+      "🗳️ VOTAÇÃO ABERTA!!! Semana de {date}!!! Que dia vamos ESTAR TODOS JUNTOS?!?! Votem até segunda às 10h!!! ⚡",
+      "🗳️ Bora votar, equipa!!! Semana de {date}!!! Quanto mais formos, MELHOR!!! 🐿️"
+    ],
+    "decided": [
+      "📅 TEMOS DIA!!! **{date}**!!! Vai ser INCRÍVEL!!! Digam que vão!!! 🎉",
+      "📅 **{date}**!!! O dia perfeito!!! Marquem \"Vou\"!!! ⚡"
+    ],
+    "nominated": [
+      "🎂 {name}!!! Foste ESCOLHIDO(A) para o bolo de {date}!!! (**{reason}**)!!! Que HONRA!!! 🏆",
+      "🎂 Amanhã ({date}) o bolo é do/a {name}!!! **{reason}**!!! Tu CONSEGUES!!! 💪"
+    ],
+    "reminder": [
+      "⏰ AMANHÃ ({date}) É DIA DE ESCRITÓRIO!!! Vamos {count}!!! Bolo: {cake}!!! Durmam bem e venham com ENERGIA!!! ⚡",
+      "⏰ Amanhã!!! {date}!!! {count} pessoas!!! Bolo: {cake}!!! MAL POSSO ESPERAR!!!"
+    ],
+    "dayStart": [
+      "☀️ BOM DIAAAA!!! Dia de escritório!!! Carreguem em \"Estou cá\" e vamos ARRASAR!!! 🎉",
+      "☀️ HOJE É O DIA!!! \"Estou cá\" quando chegarem!!! ⚡⚡⚡"
+    ],
+    "noshow": [
+      "🙈 {name}, {count} faltas sem aviso!!! Mas tudo bem!!! Um bolo resolve TUDO!!! 🎂",
+      "🙈 Ups, {name}!!! {count} faltas!!! Bolo de redenção!!! Vais conseguir!!! 💪"
+    ]
+  },
+  "bolacha": {
+    "milestone": [
+      "🎂 {who} diz que {name} teve **{reason}**! Que bom! Isso quer dizer bolo? Alguém confirma? 🐶",
+      "🎂 Ui! {name}: **{reason}**! Foi o/a {who} que contou! Confirmem, confirmem! Abano a cauda! 🐾"
+    ],
+    "selfMilestone": [
+      "🎂 {name} contou: **{reason}**! Que bom! O Bolacha está tão contente por ti! E pelo bolo! 🐶",
+      "🎂 **{reason}**! {name}, parabéns! Posso cheirar o bolo quando vier?"
+    ],
+    "confirmed": [
+      "✅ Confirmado! {name} traz bolo por **{reason}**! O Bolacha vai estar à porta à espera! 🐶",
+      "✅ {name}, **{reason}**! Bolo garantido! Que dia tão feliz!"
+    ],
+    "birthday": [
+      "🎉 Parabéns, {name}! O Bolacha dá-te uma lambidela virtual! E espera pelo bolo! 🎂🐶",
+      "🎉 {name} faz anos! Viva! O Bolacha está a correr em círculos de alegria! 🎂"
+    ],
+    "paid": [
+      "🎉 {name} trouxe o bolo de **{reason}**! Cheira tão bem! Sobrou uma migalha? 🐶",
+      "🎉 Bolo pago, {name}! **{reason}**! És o melhor! Todos são os melhores!"
+    ],
+    "pledge": [
+      "🙋 {name} traz bolo dia {date}! O Bolacha vai sonhar com isso todas as noites! 🐶",
+      "🙋 Bolo a {date}, prometido por {name}! Abano a cauda até lá!"
+    ],
+    "poll": [
+      "🗳️ Votação para a semana de {date}! Que dia vamos todos? Juntos é tão melhor! 🐶",
+      "🗳️ Escolham o dia da semana de {date}! O Bolacha quer ver toda a gente! Até segunda às 10h!"
+    ],
+    "decided": [
+      "📅 **{date}**! Vamos todos! Vai ser tão bom! 🐾",
+      "📅 Ficou **{date}**! Digam que vão! O Bolacha já está a abanar a cauda!"
+    ],
+    "nominated": [
+      "🎂 {name}, ninguém se ofereceu para o bolo de {date}… és tu! Pelo **{reason}**! Eu ajudo a comer! 🐶",
+      "🎂 Amanhã ({date}) o bolo é do/a {name}! **{reason}**! Que sorte a nossa!"
+    ],
+    "reminder": [
+      "⏰ Amanhã ({date}) é dia de escritório! Vão {count} amigos! Bolo: {cake}! 🐶",
+      "⏰ Amanhã! {date}! {count} pessoas! Bolo: {cake}! O Bolacha nem vai conseguir dormir!"
+    ],
+    "dayStart": [
+      "☀️ Bom dia! Dia de escritório! Carreguem em \"Estou cá\" e venham dar festinhas! 🐶",
+      "☀️ Hoje vemo-nos! \"Estou cá\" quando chegarem! Abano a cauda a cada um!"
+    ],
+    "noshow": [
+      "🙈 {name}, faltaste {count} vezes… o Bolacha ficou à tua espera à porta. Agora há bolo, está bem? 🥺",
+      "🙈 {count} faltas, {name}. Não faz mal! Traz um bolo e fica tudo bem! 🐶"
+    ]
+  },
+  "pixel": {
+    "milestone": [
+      "🎂 {who} diz que {name} teve **{reason}**. Sabem o que é que isso significa? Bolo! E eu que pensava que ia fazer uma piada. Confirmem! 🐙",
+      "🎂 Notícia: {name} — **{reason}** (fonte: {who}). Isto merece um bolo e uma piada. O bolo é melhor. Confirmem!"
+    ],
+    "selfMilestone": [
+      "🎂 {name} anunciou **{reason}**. Porque é que o bolo foi ao psicólogo? Porque estava em camadas. Traz um! 🐙",
+      "🎂 **{reason}**! {name}, isso é uma conquista de oito braços! Bolo!"
+    ],
+    "confirmed": [
+      "✅ Confirmado: {name} deve bolo por **{reason}**. Sabem qual é o bolo preferido dos programadores? O bolo de bytes. 🐙",
+      "✅ {name}, **{reason}** registado. É oficial. Como o meu humor: oficialmente mau."
+    ],
+    "birthday": [
+      "🎉 Parabéns, {name}! Sabes porque é que os aniversários fazem bem à saúde? Quem tem mais, vive mais! 🎂🐙",
+      "🎉 {name} faz anos! Mais um ano e mais uma piada do Tio Pixel. Que sorte. 🎂"
+    ],
+    "paid": [
+      "🎉 {name} trouxe o bolo de **{reason}**! Estava tão bom que até me caiu um tentáculo. 🐙",
+      "🎉 Bolo pago por {name} (**{reason}**). O que é que o bolo disse à faca? Corta essa! 🔪"
+    ],
+    "pledge": [
+      "🙋 {name} promete bolo dia {date}. Promessa é dívida. E dívida é bolo. Fecha-se o ciclo. 🐙",
+      "🙋 Bolo a {date}, por {name}. Vou buscar oito garfos."
+    ],
+    "poll": [
+      "🗳️ Votação da semana de {date}! Qual é o dia preferido do escritório? O dia em que estamos todos! Votem até segunda às 10h. 🐙",
+      "🗳️ Semana de {date}: votem! Sabem porque é que a votação é como um polvo? Tem muitos braços no ar. Hehe."
+    ],
+    "decided": [
+      "📅 Ganhou **{date}**! Como dizia o calendário: estou a contar os dias. 🐙",
+      "📅 **{date}** é o dia! Marquem se vão. Eu vou com os oito braços no ar."
+    ],
+    "nominated": [
+      "🎂 Ninguém se ofereceu para o bolo de {date}… {name}, és tu! **{reason}**. Isto não é piada. É bolo. 🐙",
+      "🎂 {name}, amanhã ({date}) trazes bolo (**{reason}**). Sabes o que é um bolo sem dono? Um bolo-ninguém. Por isso és tu."
+    ],
+    "reminder": [
+      "⏰ Amanhã ({date}), escritório! {count} pessoas. Bolo: {cake}. Qual é o cúmulo da pontualidade? Chegar a tempo. Simples. 🐙",
+      "⏰ Lembrete: {date}. {count} vão. Bolo: {cake}. Não se esqueçam, eu já me esqueci duas vezes."
+    ],
+    "dayStart": [
+      "☀️ Bom dia! Dia de escritório! Carreguem em \"Estou cá\". O polvo já carregou oito vezes. 🐙",
+      "☀️ Hoje é o dia! \"Estou cá\" quando chegarem. Sabem porque é que o escritório é fixe? Porque não se mexe. Hehe."
+    ],
+    "noshow": [
+      "🙈 {name}, {count} faltas sem aviso. Sabes qual é o desporto preferido de quem falta? O sofá-ball. Bolo! 🐙",
+      "🙈 {count} faltas, {name}. A tua presença é como as minhas piadas boas: rara. Bolo!"
+    ]
+  }
 }

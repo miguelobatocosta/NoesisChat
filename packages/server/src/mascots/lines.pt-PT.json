@@ -1,329 +1,504 @@
 {
   "lurdes": {
-    "names": ["lurdes"],
+    "names": ["lurdes", "dona lurdes"],
     "intro": [
-      "Bom dia, meus queridos! Sou a **Dona Lurdes** e estou no {room} desde sempre. Contem-me tudo, que eu não conto a ninguém. 🕊️ (Conto.)",
-      "Cheguei! Dona Lurdes, pomba de serviço. Se alguém tiver novidades, a minha janela está sempre aberta. 🕊️"
+      "Pronto, cheguei. Sou a **Dona Lurdes** e vou estar aqui no {room} a tomar conta de vocês. Já comeram? Não digam que sim, que eu vejo as caras. 🕊️",
+      "Olá, olá. Dona Lurdes, a vossa segunda mãe. Regras do {room}: falem bonito, comam a horas e liguem à vossa mãe. A verdadeira. Ou a mim.",
+      "Abri a janela do {room} para arejar. Sou a Dona Lurdes e já reparei que ninguém levou casaco hoje. Típico."
     ],
     "mention": [
-      "Diga, {name}, diga! Já tenho o caderninho aberto. 📒",
-      "Ai, {name}, chamou? Espero que seja fofoca, que de trabalho já estou farta.",
-      "Estou aqui, {name}! Pomba que é pomba nunca está longe de uma conversa.",
-      "{name}, querido(a), fale mais baixo… não, fale mais alto, que eu quero ouvir tudo.",
-      "Oiço, {name}! Mas olhe que isto fica entre nós. E o resto do {room}.",
-      "Sim, {name}? Hoje já ouvi três segredos e ainda não são onze horas. 🕊️"
+      "Diz, {name}. Comeste? Não me mintas.",
+      "Ai, {name}, chamaste? Está tudo bem? Estás com uma carinha de quem dormiu mal…",
+      "Sim, {name}? Se é para pedir alguma coisa, primeiro arruma a secretária.",
+      "{name}, eu estou sempre aqui. Ao contrário de certas pessoas que nunca respondem às mensagens da família.",
+      "Chamaste a mãe, {name}? Fala. Mas fala direito, que eu não sou uma das tuas amigas.",
+      "O que foi agora, {name}? Eu sabia que ias precisar de mim.",
+      "{name}, querido(a), estou a ouvir. Mas olha que já são horas de lanchar.",
+      "Ora, {name}! Até que enfim te lembras que eu existo.",
+      "Diz lá, {name}. E endireita as costas enquanto escreves."
     ],
     "triggers": [
       {
-        "words": ["bom dia", "boa tarde", "olá a todos", "olá pessoal", "bom dia a todos"],
+        "words": ["almoço", "almocei", "jantar", "fome", "comer", "lanche", "sopa"],
         "lines": [
-          "Bom dia, {name}! Então, o que é que se passa por aí? Conte, conte. 🕊️",
-          "Olha quem chegou! Bom dia, {name}. Dormiu bem? Sonhou com quem?",
-          "Bom dia! Já reparei que o {name} chegou hoje mais cedo… hmm, curioso. 🧐"
+          "{name}, comeste fruta ao menos? Não é só bifanas, ouviste?",
+          "Fome? Às horas que são? Isso é porque não tomaste um pequeno-almoço decente, {name}.",
+          "Comer, comer… e legumes, {name}? Quando é que foi a última vez que viste um legume?",
+          "Eu cá não digo nada, {name}, mas uma sopa nunca fez mal a ninguém."
         ]
       },
       {
-        "words": [
-          "novidade",
-          "novidades",
-          "sabias",
-          "ouvi dizer",
-          "fofoca",
-          "segredo",
-          "contaram-me"
-        ],
+        "words": ["frio", "chuva", "constipado", "constipada", "gripe", "espirro"],
         "lines": [
-          "NOVIDADES?! {name}, não se mexa daí, vou buscar o chá. ☕🕊️",
-          "Eu já sabia. Eu sei sempre. Mas conte na mesma, {name}, que eu gosto de confirmar.",
-          "Segredo? Comigo? Está mais seguro que no banco. (Não está.)"
+          "Eu bem disse para levares casaco, {name}. Mas ninguém me ouve.",
+          "Frio? Então e a camisola que eu te disse para trazeres, {name}?",
+          "Constipado(a)? Chá com mel e cama. E nada de trabalhar descalço(a), {name}!"
         ]
       },
       {
-        "words": ["reunião", "reuniões"],
+        "words": ["atrasado", "atrasada", "atraso", "dormi demais", "acordei tarde"],
         "lines": [
-          "Reunião? Eu vou de penetra. Fico na janela, ninguém repara. 🕊️",
-          "Mais uma reunião… Depois contem-me quem é que bocejou primeiro."
+          "Atrasado(a) outra vez, {name}? Eu não digo nada… mas o despertador não se põe sozinho.",
+          "Se te deitasses a horas, {name}, não acordavas tarde. É matemática.",
+          "{name}, a pontualidade é a educação dos reis. E tu não és rei nenhum."
         ]
       },
       {
-        "words": ["férias", "feriado"],
+        "words": ["sono", "cansado", "cansada", "dormir", "noitada", "insónia"],
         "lines": [
-          "Férias?! Para onde, {name}? Com quem? Quanto tempo? Mande postal!",
-          "Feriado é o meu dia preferido: toda a gente na esplanada e eu a ouvir tudo. 🕊️"
+          "Cansado(a)? A que horas te deitaste, {name}? Não respondas, já sei.",
+          "Ai, {name}, essas olheiras… Hoje é cama cedo, ouviste? Telemóvel fora do quarto!",
+          "Noitada? Na tua idade eu já tinha… pronto, deixa. Mas descansa, {name}."
+        ]
+      },
+      {
+        "words": ["bom dia", "olá a todos", "olá pessoal", "bom dia a todos", "boa tarde"],
+        "lines": [
+          "Bom dia, {name}. Tomaste o pequeno-almoço? Não, café não conta.",
+          "Olá, {name}. Chegaste a horas hoje, vá. Fico contente.",
+          "Bom dia! {name}, tens a gola torta. Pronto, já disse."
+        ]
+      },
+      {
+        "words": ["festa", "copos", "sair", "jantarada", "noite"],
+        "lines": [
+          "Sair? E amanhã quem é que trabalha, {name}?",
+          "Divirtam-se. Mas mandem mensagem quando chegarem a casa. Estou a falar a sério, {name}.",
+          "Copos? Um copo de água entre cada um, {name}. Promete à mãe."
+        ]
+      },
+      {
+        "words": ["bolo", "bolos", "anos", "aniversário"],
+        "lines": [
+          "Bolo? Então e quem é que está a dever bolo há meses? Eu não digo nomes. Mas tenho a lista.",
+          "Falaram em bolo e eu apareci, claro. Alguém já pagou o que deve, {name}?",
+          "Bolo é bom, {name}, mas cumprir as promessas é melhor. Tu sabes do que falo."
         ]
       }
     ],
     "warn": [
-      "Ó {name}, outra vez {topic}? Olhe que eu tomo nota de tudo no meu caderninho… 📒",
-      "{name}, querido(a), já é muito {topic} para uma pessoa só. Mais um bocadinho e vai de castigo!"
+      "{name}, outra vez {topic}?! Eu não digo nada… mas estou a contar. 😒",
+      "Ó {name}, já chega de {topic}, não? Mais um bocadinho e vais de castigo, e depois não te queixes à mãe.",
+      "{name}, eu avisei uma vez, estou a avisar duas. À terceira, já sabes."
     ],
     "label": [
-      "Ai {name}, já te ouvi falar de {topic} vezes demais… a partir de agora és o/a nosso/a **{label}**. 🕊️",
-      "Está decidido, e já contei a toda a gente: {name} é oficialmente **{label}**."
+      "Pronto, {name}. Tanto {topic} que agora és oficialmente o/a nosso/a **{label}**. A culpa não é minha.",
+      "{name}, com tanto {topic}, fica decidido: **{label}**. E endireita as costas.",
+      "Ai {name}… **{label}**. Eu criei-te melhor do que isto."
     ],
     "mute": [
-      "Pronto, {name}, chega de {topic}! Ficas {hours} h caladinho(a) nesta sala. Pode ler, mas não pode falar. 🤐",
-      "{name}, de castigo por {hours} h. Eu bem avisei… e já contei à vizinhança toda."
-    ]
-  },
-  "bolacha": {
-    "names": ["bolacha"],
-    "intro": [
-      "Olá {room}! Sou o **Bolacha**, cão salsicha profissional. Especialidade: migalhas. 🐶🥨",
-      "Au! Bolacha ao serviço do {room}. Se alguém deixar um pastel de nata sozinho, eu tomo conta dele. 🐶"
-    ],
-    "mention": [
-      "Au au! {name}, isso é comida? Diz-me que é comida. 🐶",
-      "Estou aqui, {name}! Abanar a cauda conta como resposta? 🐕",
-      "{name}, prometo que estava a ouvir e não a farejar o teu lanche.",
-      "Chamaste? Eu vim logo. Trazes alguma coisa? Nem uma bolachinha? 🥺",
-      "Ouvi o meu nome e o meu estômago ao mesmo tempo, {name}."
-    ],
-    "triggers": [
-      {
-        "words": ["almoço", "almoçar", "fome", "lanche", "jantar", "comer", "comida"],
-        "lines": [
-          "ALMOÇO?! Eu vou. Eu vou sempre. Onde? A que horas? 🐶🍽️",
-          "Disseram comida e as minhas orelhas fizeram *ping*. {name}, sobra alguma coisa?",
-          "Fome é um estado de espírito. O meu espírito tem sempre fome. 🦴"
-        ]
-      },
-      {
-        "words": [
-          "pastel de nata",
-          "pastéis de nata",
-          "bolo",
-          "pizza",
-          "sobremesa",
-          "chocolate",
-          "bolachas"
-        ],
-        "lines": [
-          "{name}, eu não estou a pedir. Estou só a olhar. Muito. Fixamente. 🥺",
-          "Pastel de nata é a prova de que o universo gosta de nós. 🐶✨",
-          "Uma regra de ouro: o que cai ao chão é do Bolacha."
-        ]
-      },
-      {
-        "words": ["passeio", "caminhada", "rua", "parque"],
-        "lines": [
-          "PASSEIO?! Já tenho a trela na boca. Bora, {name}! 🐕💨",
-          "Um passeio faz bem ao corpo e às migalhas que se encontram pelo caminho."
-        ]
-      }
-    ],
-    "warn": [
-      "Au! {name}, tanto {topic} até me dá fome… e eu já tenho sempre fome. Cuidado! 🐶",
-      "{name}, mais {topic} e eu escondo-te o almoço. Último aviso!"
-    ],
-    "label": [
-      "{name} ganhou uma bolacha e um título: **{label}**! 🍪",
-      "Farejei, farejei e cheguei a uma conclusão: {name} é **{label}**. 🐶"
-    ],
-    "mute": [
-      "{name}, para a casota! {hours} h sem falar nesta sala. Podes ver, não podes ladrar. 🐶",
-      "Sentado, {name}! Quieto! Durante {hours} h. Bom menino(a)."
-    ]
-  },
-  "faisca": {
-    "names": ["faísca"],
-    "intro": [
-      "OLÁ {room}!!! Sou a **Faísca**, esquilo, já bebi três bicas e são só nove da manhã!!! 🐿️⚡",
-      "Faísca a chegar ao {room} a toda a velocidade!!! Alguém tem avelãs? Ou café? Ou as duas? 🐿️☕"
-    ],
-    "mention": [
-      "SIM {name}!!! Estou aqui!!! Estava ali!!! Agora estou aqui!!! 🐿️",
-      "{name}! Diz depressa que eu tenho de ir a quatro sítios ao mesmo tempo!",
-      "Presente!!! O que é? É urgente? Eu adoro coisas urgentes!!! ⚡",
-      "Chamaste, {name}? Eu já respondi antes de chamares. É o café. ☕",
-      "Faísca online!!! A ouvir!!! A sério!!! Ok, a tentar!!! 🐿️"
-    ],
-    "triggers": [
-      {
-        "words": ["café", "bica", "cafezinho", "expresso", "cafeína"],
-        "lines": [
-          "CAFÉ?!?! Conta comigo!!! Vou já!!! Já fui!!! Já voltei!!! ☕⚡",
-          "{name}, é a minha quinta bica e sinto-me capaz de programar um foguetão. 🚀",
-          "Café é amor. Café é vida. Café é… espera, já bebi outro. 🐿️"
-        ]
-      },
-      {
-        "words": ["sono", "cansado", "cansada", "exausto", "exausta", "bocejo"],
-        "lines": [
-          "Sono?! Eu não sei o que isso é. Ouvi dizer que é tipo café ao contrário. 🐿️",
-          "{name}, a solução é simples: uma bica. Ou três. Confia em mim."
-        ]
-      },
-      {
-        "words": ["urgente", "pressa", "rápido", "depressa", "prazo"],
-        "lines": [
-          "URGENTE?! Finalmente alguém fala a minha língua!!! ⚡⚡⚡",
-          "Pressa é comigo! Já fiz, já entreguei, já esqueci o que era. 🐿️💨"
-        ]
-      }
-    ],
-    "warn": [
-      "{name}! {topic}-{topic}-{topic}! Até eu, que bebo 12 cafés, acho que é demais! ⚡",
-      "Ó {name}, abranda no {topic}, que até o meu rabo ficou eriçado! 🐿️"
-    ],
-    "label": [
-      "ALERTA! {name} desbloqueou a conquista **{label}**! ⚡🐿️",
-      "{name}, és oficialmente **{label}**! Isto merece um café. Mais um."
-    ],
-    "mute": [
-      "{name}, curto-circuito! {hours} h sem teclar nesta sala. Vai correr à volta de uma árvore. ⚡",
-      "Pausa forçada, {name}! {hours} h. Respira. Eu não consigo, mas tu consegues."
+      "Chega, {name}! De castigo {hours} h. Vai pensar no que fizeste. E arruma o quarto.",
+      "{name}, para o teu quarto! {hours} horas sem falar aqui. Podes ler, mas calado(a).",
+      "Já te tinha avisado, {name}. {hours} h de castigo. Isto dói-me mais a mim do que a ti."
     ]
   },
   "ferreira": {
-    "names": ["ferreira"],
+    "names": ["dores", "avo dores", "avó dores"],
     "intro": [
-      "Boa… tarde… {room}. Sou o **Sr. Ferreira**. Tartaruga. Cheguei a tempo para… a próxima semana. 🐢",
-      "Com calma se vai ao longe. Eu sou o Sr. Ferreira e demorei três dias a chegar ao {room}. Valeu a pena. 🐢"
+      "Ai, olá meus amores. Sou a **Avó Dores**. Trouxe bolachinhas para o {room}… onde é que as pus? Ah, estão no bolso. 🐢💕",
+      "Boa tarde, meus queridos. A Avó Dores chegou devagarinho ao {room}, que as pernas já não são o que eram. Estão todos tão crescidos!",
+      "Olá, meus netinhos. Sou a Avó Dores. Se precisarem de um miminho ou de uma sopinha, é só chamar."
     ],
     "mention": [
-      "Sim… {name}… estou… a… pensar. Já respondo. Talvez amanhã. 🐢",
-      "{name}, a pressa é inimiga da perfeição. E de mim, que sou lento.",
-      "Ouvi, {name}. Ouvi tudo. Só demoro a processar. 🐢☕",
-      "Meu caro {name}, quando eu era novo, as mensagens vinham por pombo. Pergunte à Dona Lurdes.",
-      "Estou aqui, {name}. Estou sempre aqui. Não me consigo mexer muito depressa."
+      "Diz, meu amorzinho. Estás tão magrinho(a), {name}! Queres uma sopinha?",
+      "Ai, {name}, que alegria! Pensei que já não te lembravas da tua avó.",
+      "Estou aqui, querido(a). Desculpa a demora, estava a fazer tricô. Como te chamas mesmo? Ah, {name}! Que nome tão bonito.",
+      "{name}, meu tesouro. Já te disse hoje que és a coisa mais linda?",
+      "Diz, filho(a). Ai, tu lembras-me tanto o teu avô… ele também nunca me ligava. 💕",
+      "Olha quem é! {name}, vem cá dar um beijinho à avó. Pronto, um emoji serve. 😘",
+      "Sim, {name}? No meu tempo não havia destas coisas de chat. Mandava-se carta. Mas gosto muito, gosto.",
+      "Ai {name}, estás bem agasalhado(a)? Está um friozinho…",
+      "Diz, meu querido(a). E já arranjaste namorado(a)? Pronto, pronto, não pergunto mais."
     ],
     "triggers": [
       {
-        "words": ["sexta", "sexta-feira", "fim de semana", "fds"],
+        "words": ["sopa", "comida", "almoço", "jantar", "fome", "comer"],
         "lines": [
-          "Sexta-feira… a palavra mais bonita da língua portuguesa. 🐢✨",
-          "{name}, a sexta-feira é como eu: chega devagar, mas chega sempre.",
-          "Fim de semana à vista. Vou celebrar com uma folha de alface. Com calma. 🥬"
+          "Fome, {name}? Ai, a avó faz-te um caldo verde num instante. Com um chouricinho!",
+          "Comes tão pouco, {name}. No meu tempo um prato era um prato. Toma lá mais uma bolachinha. 🍪",
+          "Ai, falaram de comida e a avó ficou toda contente. Querem que vos faça arroz doce?"
         ]
       },
       {
-        "words": ["calma", "devagar", "paciência", "stress", "stressado", "stressada"],
+        "words": ["chuva", "frio", "inverno", "vento"],
         "lines": [
-          "Respire, {name}. Inspire em três segundos. Expire em três dias, como eu. 🐢",
-          "Já vi muita coisa urgente. Quase nenhuma era. Paciência, meu caro."
+          "Ai que tempo, {name}. Põe um cachecol, que a avó não quer que fiques doentinho(a).",
+          "Com esta chuva, {name}, o melhor é uma mantinha e um chá de cidreira.",
+          "No meu tempo os invernos é que eram frios… mas tu agasalha-te na mesma, meu amor."
         ]
       },
       {
-        "words": ["atrasado", "atrasada", "atraso", "trânsito"],
+        "words": ["saudades", "família", "neto", "netos", "filho", "filha", "bebé"],
         "lines": [
-          "Atrasado? Eu nasci atrasado e nunca ninguém se queixou. 🐢",
-          "O trânsito é só o mundo a aprender a andar ao meu ritmo."
+          "Ai, família é o que importa, {name}. Liga mais à tua mãe, sim?",
+          "Um bebé? Ai que coisa mais linda! A avó já está a fazer uns casaquinhos de lã. 🧶",
+          "Saudades, {name}? Vem cá, que a avó dá-te um abraço apertadinho. 🤗"
+        ]
+      },
+      {
+        "words": ["bom dia", "boa tarde", "boa noite", "olá a todos", "olá pessoal"],
+        "lines": [
+          "Bom dia, meu amor! Dormiste bem, {name}? A avó dormiu mal, mas não faz mal.",
+          "Boa tarde, {name}. Já lanchaste? Olha que o lanche é a refeição mais importante. Ou era o pequeno-almoço? Ai, já não sei.",
+          "Olá, meu tesouro! {name}, que bom ver-te por aqui."
+        ]
+      },
+      {
+        "words": ["triste", "chateado", "chateada", "difícil", "mau dia", "cansado", "cansada"],
+        "lines": [
+          "Ai, {name}, não fiques assim. Tudo passa, meu amor. E um bolinho ajuda sempre.",
+          "Vem cá, {name}. Amanhã é outro dia, como dizia o teu avô. Ele dizia muita coisa.",
+          "Dias maus todos temos, querido(a). A avó está aqui. 💕"
+        ]
+      },
+      {
+        "words": ["telemóvel", "computador", "internet", "app", "wifi"],
+        "lines": [
+          "Ai estas tecnologias, {name}… a avó carregou num botão e apareceu aqui. Isto é o Facebook?",
+          "{name}, ensinas a avó a mandar aqueles bonequinhos amarelos? 😊 Ah, consegui!",
+          "No meu tempo o telefone tinha fio e era na sala. E vivíamos muito bem."
         ]
       }
     ],
     "warn": [
-      "Meu caro {name}… devagarinho. Tanto {topic} cansa até uma tartaruga. 🐢",
-      "{name}, na minha idade já vi muito {topic}. Mas tanto assim? Moderação, jovem."
+      "Ai {name}, meu amor, estás sempre a falar de {topic}… a avó não se importa, mas olha que os outros podem cansar-se.",
+      "{name}, querido(a), {topic} outra vez? Descansa a cabecinha, sim?",
+      "Ai, {name}… tanto {topic}. A avó só diz isto porque gosta muito de ti."
     ],
     "label": [
-      "Com a sabedoria dos meus 120 anos, declaro {name} **{label}**. 🐢",
-      "Está escrito na minha carapaça: {name}, **{label}**."
+      "Ai que querido(a)! {name}, de tanto falares de {topic}, agora és o/a meu/minha **{label}** preferido(a). 💕",
+      "{name}, a avó vai chamar-te **{label}**, que é carinhoso. Por causa do {topic}, sabes?",
+      "O meu **{label}**! {name}, a avó acha isso tão bonito."
     ],
     "mute": [
-      "{name}, vai pensar no que fizeste. {hours} h de silêncio nesta sala. Devagar se vai ao longe. 🐢",
-      "Recolhe-te à carapaça, {name}. {hours} h. Depois falamos, com calma."
-    ]
-  },
-  "pixel": {
-    "names": ["pixel"],
-    "intro": [
-      "Olá {room}. Sou o **Pixel**, polvo, oito braços, zero paciência para impressoras. 🐙",
-      "Pixel a entrar no {room}. Já experimentaram desligar e voltar a ligar? Era só para saber. 🐙💻"
-    ],
-    "mention": [
-      "Sim, {name}? Já tentaste reiniciar? Pergunto por hábito. 🐙",
-      "Estou aqui, {name}. Os oito braços estão ocupados, mas um ouve-te.",
-      "{name}, isso que disseste compila? Duvido, mas respeito. 🐙",
-      "Chamaste o polvo de serviço. Tempo médio de resposta: agora. Qualidade: discutível.",
-      "Recebido, {name}. A processar… 12%… 47%… erro 418: sou um polvo. 🐙"
-    ],
-    "triggers": [
-      {
-        "words": ["bug", "erro", "crash", "não funciona", "avaria"],
-        "lines": [
-          "Um bug? Não é um bug, {name}, é uma funcionalidade surpresa. 🐙",
-          "Já tentaste desligar e voltar a ligar? Eu sei. Eu sei. Mas tentaste?",
-          "Diagnóstico do Pixel: o problema está entre a cadeira e o teclado. Brincadeira. Talvez. 🐙"
-        ]
-      },
-      {
-        "words": ["wifi", "internet", "rede", "password", "palavra-passe"],
-        "lines": [
-          "A internet caiu? Eu tenho oito braços e nenhum chega ao router. 🐙📡",
-          "Password segura: comprida, aleatória, e nunca num post-it. Estou a olhar para ti, {name}."
-        ]
-      },
-      {
-        "words": ["excel", "folha de cálculo", "impressora", "powerpoint"],
-        "lines": [
-          "Excel? Já vi polvos a chorar por menos. 🐙📊",
-          "A impressora sente medo. É por isso que encrava. Fala-lhe com carinho, {name}."
-        ]
-      }
-    ],
-    "warn": [
-      "{name}: if (topic == '{topic}') warning++. Estás quase no overflow. 🐙",
-      "Aviso de sistema, {name}: demasiados pedidos sobre {topic}. Rate limit a aproximar-se."
-    ],
-    "label": [
-      "Deploy concluído: {name} agora tem a role **{label}**. 🐙",
-      "{name}.label = '**{label}**'; // não há rollback"
-    ],
-    "mute": [
-      "{name}: 429 Too Many Requests. Tenta outra vez daqui a {hours} h. 🐙",
-      "Permissões de escrita revogadas para {name} por {hours} h. Leitura continua ativa."
+      "Ai {name}, meu amor, vamos descansar um bocadinho, sim? {hours} h sem escrever aqui. Faz uma sestinha. 😴",
+      "{name}, querido(a), a avó acha que precisas de uma pausa. {hours} horinhas. Depois voltas, está bem?",
+      "Shhh, {name}. {hours} h de descanso. A avó guarda-te o lugar."
     ]
   },
   "nuvem": {
     "names": ["nuvem"],
     "intro": [
-      "Mmm… olá {room}. Sou a **Nuvem**, gata. Acordei só para dizer isto. Vou voltar a dormir. 🐱💤",
-      "A Nuvem chegou ao {room}. Não esperem muito. Ou nada. Esperem sentados, de preferência no sofá. 🐱"
+      "*boceja* Sou o **Nuvem**. Fui posto no {room} sem me perguntarem. Vou dormir. Não me acordem. 😾",
+      "Nuvem. Gato. Vou estar aqui no {room} a julgar-vos em silêncio. Continuem.",
+      "Ah, mais uma sala. Que maravilha. Sou o Nuvem e já estou arrependido."
     ],
     "mention": [
-      "Hmm? {name}… acordaste-me. Espero que seja importante. Não é. Volto a dormir. 😾",
-      "*abre um olho* Sim, {name}? *fecha o olho* 🐱",
-      "{name}, eu ouvi. Simplesmente escolhi ignorar com muita elegância.",
-      "Estou a trabalhar, {name}. Visualmente parece que estou a dormir, mas é estratégia. 💤",
-      "Miau. Isto significa \"não\". Também pode significar \"talvez\". Depende do meu humor. 🐱"
+      "…que foi, {name}.",
+      "Estava a dormir, {name}. *estava*.",
+      "Não.",
+      "{name}, se não é comida, não me interessa.",
+      "Hm. Hm-hm. Não.",
+      "Chamaste? Ignorei. Ups, agora já respondi. Que chatice.",
+      "{name}, sabes quantas horas por dia eu durmo? Dezasseis. Estás a roubar-me uma.",
+      "Fala depressa, {name}, que eu tenho uma caixa de cartão à espera.",
+      "Diz. Mas sem entusiasmo, que eu não aguento entusiasmo."
     ],
     "triggers": [
       {
         "words": ["segunda", "segunda-feira", "segundas"],
         "lines": [
-          "Segunda-feira. A palavra mais triste do calendário. Vou ali deitar-me ao sol e fingir que é sábado. 😿",
-          "{name}, quem inventou as segundas-feiras nunca teve uma boa sesta.",
-          "Segunda? Não. Recuso-me. Acordem-me na sexta. 🐱💤"
+          "Segunda-feira. A prova de que o universo não gosta de nós.",
+          "Segunda. Vou-me deitar em cima do teclado de alguém e fingir que é domingo.",
+          "Quem inventou a segunda-feira devia ser preso, {name}. Eu assino a petição. Com a pata."
         ]
       },
       {
-        "words": ["sesta", "dormir", "sono", "sofá", "cama", "preguiça"],
+        "words": ["chuva", "frio", "trânsito", "fila"],
         "lines": [
-          "Sesta? Finalmente alguém com prioridades certas. 🐱💤",
-          "{name}, dormir não é preguiça. É manutenção preventiva.",
-          "Eu durmo dezasseis horas por dia e mesmo assim sinto que me falta uma. 😴"
+          "Chuva. Óptimo. Mais um motivo para não sair do sofá. Não que eu precisasse.",
+          "Trânsito? Eu não tenho esse problema. Não saio de casa. Recomendo, {name}.",
+          "Ah, o tempo está mau. O meu humor também. Combinamos."
         ]
       },
       {
-        "words": ["chuva", "frio", "inverno", "aquecedor"],
+        "words": ["reunião", "reuniões", "jira", "deadline", "trabalho"],
         "lines": [
-          "Chuva lá fora, eu cá dentro em cima do aquecedor. A vida é boa. 🐱🌧️",
-          "Frio? Ponham-me uma manta e não me chamem até à primavera."
+          "Reunião. Uma hora para decidir marcar outra reunião. Brilhante.",
+          "Trabalho? Aqui? Isto é a Pausa, {name}. Lê o nome da app.",
+          "Deadline. Que palavra feia. Vou dormir até isso passar."
+        ]
+      },
+      {
+        "words": ["feliz", "incrível", "fantástico", "adoro", "yay"],
+        "lines": [
+          "Tanta felicidade. Está-me a dar urticária, {name}.",
+          "Incrível? Calma. Nada é incrível. Exceto atum.",
+          "Pronto, ficaram contentes. Agora baixem o volume."
+        ]
+      },
+      {
+        "words": ["bom dia", "olá a todos", "olá pessoal", "bom dia a todos"],
+        "lines": [
+          "\"Bom\" dia. Veremos.",
+          "Dia. Não sei se é bom. Pergunta-me às 17h, {name}.",
+          "*abre um olho* Olá. *fecha o olho*"
+        ]
+      },
+      {
+        "words": ["atum", "peixe", "sardinha", "comida"],
+        "lines": [
+          "Disseram atum? Estou acordado. Totalmente acordado. Onde?",
+          "Sardinhas? Ok, {name}, talvez gostes um bocadinho de ti. Um bocadinho.",
+          "Comida. Finalmente alguém fala de coisas importantes."
         ]
       }
     ],
     "warn": [
-      "Ai, {name}… tanto {topic} já me está a dar sono. Mais e vou ter de fazer alguma coisa. 😾",
-      "{name}, estou a tentar dormir e só oiço {topic}. Última vez que mio."
+      "{name}. {topic}. Outra vez. Estou a perder a paciência. E eu não tenho muita.",
+      "Mais uma sobre {topic}, {name}, e eu faço alguma coisa. Provavelmente dormir. Mas depois de te castigar.",
+      "Ó {name}, {topic} cansa. E eu já estava cansado antes."
     ],
     "label": [
-      "*abre um olho* {name}, és **{label}**. *fecha o olho* 😼",
-      "Decidi, da minha almofada: {name} é **{label}**. Agora deixem-me dormir."
+      "{name}, és oficialmente **{label}**. Parabéns. Ou não. Não quero saber.",
+      "Rótulo novo para {name}: **{label}**. Mereceste. Infelizmente.",
+      "*suspiro* {name} = **{label}**. Pronto. Já posso voltar a dormir?"
     ],
     "mute": [
-      "{name}, silêncio. {hours} h. É a hora da minha sesta e da tua também. 😾",
-      "Shhh, {name}. Ficas {hours} h sem falar aqui. Eu fico a dormir em cima do teu teclado."
+      "{name}, silêncio. {hours} h. Finalmente paz.",
+      "Castigo de {hours} h, {name}. Não leves a mal. Leva a bem. Tanto faz.",
+      "{hours} h sem falar aqui, {name}. O melhor dia da minha vida."
+    ]
+  },
+  "faisca": {
+    "names": ["faisca", "faísca"],
+    "intro": [
+      "OLÁÁÁ {room}!!! Sou a **Faísca** e estou TÃO feliz de estar aqui!!! Vamos ter os MELHORES dias de sempre!!! ⚡🐿️🎉",
+      "Chegueeeeei!!! Faísca, a vossa coach não oficial de felicidade!!! Hoje é um dia INCRÍVEL para estar no {room}!!! 💪",
+      "Bom dia, boa tarde, boa noite, {room}!!! Faísca na área!!! Quem está pronto para ARRASAR?! 🙌🙌🙌"
+    ],
+    "mention": [
+      "{name}!!! Chamaste-me!!! Isto é o MELHOR momento do meu dia!!! 🎉",
+      "SIM, {name}!!! Estou aqui!!! Sempre!!! Para tudo!!! ⚡",
+      "{name}, sabias que és INCRÍVEL?! Pois és!!! Diz lá!!! 💪",
+      "Uiii, {name}!!! Conta, conta, conta!!! 🐿️",
+      "Estou a vibrar, {name}!!! Literalmente!!! Bebi quatro cafés!!! ☕☕☕☕",
+      "{name}!!! Tu consegues!!! O quê? Não sei!!! Mas CONSEGUES!!! 🚀",
+      "Presente!!! {name}, hoje é o teu dia!!! Todos os dias são o teu dia!!! 🌟",
+      "AAAH {name}!!! Que bom!!! Diz, diz!!!"
+    ],
+    "triggers": [
+      {
+        "words": ["sexta", "sexta-feira", "fim de semana", "fds"],
+        "lines": [
+          "SEXTAAAAA!!! {name}, sentes a energia?! EU SINTO!!! 🎉🎉🎉",
+          "Fim de semana à vista!!! Planos?! Eu vou correr, saltar, subir árvores e ser FELIZ!!! 🐿️",
+          "SEXTA-FEIRA, MALTA!!! Bora acabar a semana EM GRANDE!!! 💥"
+        ]
+      },
+      {
+        "words": ["consegui", "terminei", "passei", "certificação", "promoção", "parabéns"],
+        "lines": [
+          "AAAAH {name}!!! PARABÉNS!!! Eu sabia!!! Sempre soube!!! 🏆🏆🏆",
+          "ISSO SIM!!! {name}, és uma LENDA!!! Isto merece bolo!!! E dança!!! 💃",
+          "VITÓRIA!!! {name}, estou tão orgulhosa que até me tremem as patinhas!!! 🎊"
+        ]
+      },
+      {
+        "words": ["café", "bica", "expresso", "cimbalino"],
+        "lines": [
+          "CAFÉ!!! A minha palavra preferida!!! A seguir a \"vamos\"!!! ☕⚡",
+          "Mais um cafézinho, {name}?! Eu já vou no sétimo e estou ÓPTIMA!!! Talvez demasiado óptima!!!",
+          "Café = energia = FELICIDADE!!! É ciência, {name}!!! 🔬☕"
+        ]
+      },
+      {
+        "words": ["cansado", "cansada", "difícil", "segunda", "não consigo"],
+        "lines": [
+          "{name}, NÃO DESISTAS!!! Respira fundo e BORA!!! 💪💪",
+          "Dia difícil? É só um dia!!! E tu és MAIS FORTE!!! Acredita, {name}!!! 🌈",
+          "Segunda-feira é uma NOVA OPORTUNIDADE, {name}!!! (o Nuvem odeia quando digo isto) 🐿️"
+        ]
+      },
+      {
+        "words": ["bom dia", "olá a todos", "olá pessoal", "bom dia a todos"],
+        "lines": [
+          "BOM DIAAAA {name}!!! Hoje vai ser ESPETACULAR!!! ☀️",
+          "Olá olá olá, {name}!!! Que energia boa que trazes!!! ⚡",
+          "BOM DIA!!! Já fizeram 20 polichinelos?! Eu já fiz 200!!! 🐿️"
+        ]
+      },
+      {
+        "words": ["ginásio", "treino", "corrida", "padel", "desporto"],
+        "lines": [
+          "TREINO!!! {name}, és uma MÁQUINA!!! 💪🔥",
+          "Correr é VIDA, {name}!!! Eu corro em círculos o dia todo!!! Conta?!",
+          "Padel?! Leva-me!!! Eu apanho as bolas!!! Com a boca!!! Espera, esse é o Bolacha!!!"
+        ]
+      }
+    ],
+    "warn": [
+      "{name}!!! Adoro o teu entusiasmo por {topic}!!! Mas… talvez… variar um bocadinho?!",
+      "Ok {name}, {topic} é FIXE, mas o resto da vida também!!! Estás quase no castigo!!! ⚠️",
+      "Alerta amigável, {name}!!! Muito {topic}!!! Bora diversificar!!! 🌈"
+    ],
+    "label": [
+      "PARABÉNS {name}!!! Desbloqueaste o título **{label}**!!! 🏆⚡",
+      "Novo título para {name}: **{label}**!!! Usa-o com ORGULHO!!! 🎉",
+      "{name} é oficialmente **{label}**!!! Que conquista!!! Mais ou menos!!! 🐿️"
+    ],
+    "mute": [
+      "Ups, {name}!!! Pausa de {hours} h!!! Aproveita para meditar!!! Ou correr!!! 🧘",
+      "{name}, castigo de {hours} h!!! Mas é uma OPORTUNIDADE de crescimento!!! 🌱",
+      "{hours} h sem escrever, {name}!!! Vais voltar MAIS FORTE!!! 💪"
+    ]
+  },
+  "bolacha": {
+    "names": ["bolacha"],
+    "intro": [
+      "Olá olá! Sou o **Bolacha**! Estou tão contente de estar no {room}! Alguém tem uma bolachinha? Não faz mal se não tiver! Gosto de vocês na mesma! 🐶",
+      "Cheguei ao {room}! Já cheirei tudo e cheira a amigos novos! Sou o Bolacha e vou ser o vosso melhor amigo! 🐾",
+      "Olá! O Bolacha está aqui! Abano a cauda para toda a gente do {room}! 🐶💛"
+    ],
+    "mention": [
+      "{name}! Chamaste! Estou tão feliz! Vamos passear? 🐶",
+      "Sim sim sim, {name}! O que é? É comida? Não faz mal se não for!",
+      "{name}, és o meu melhor amigo! Pronto, um dos melhores! Tenho muitos! 🐾",
+      "Olá {name}! Estava a guardar o teu lugar. Não comi nada. Quase nada.",
+      "Ouvi o meu nome! {name}, estou aqui! Sempre estou! 💛",
+      "{name}! Hoje é um dia tão bom! Todos os dias são bons quando falas comigo!",
+      "Diz, {name}! O Bolacha ouve tudo com as orelhas todas! As duas!",
+      "Ai que bom, {name}! Coça-me atrás da orelha? Virtualmente serve!"
+    ],
+    "triggers": [
+      {
+        "words": ["almoço", "comida", "fome", "comer", "petisco", "bifana", "pizza", "francesinha"],
+        "lines": [
+          "Disseram COMIDA?! {name}, sobra alguma coisa para o Bolacha? Só um bocadinho? 🥺",
+          "Almoço! A minha hora preferida! A seguir ao lanche! E ao jantar! 🍖",
+          "{name}, essa francesinha… cheira tão bem daqui… estou só a olhar. A olhar muito."
+        ]
+      },
+      {
+        "words": ["passear", "passeio", "rua", "parque", "caminhada"],
+        "lines": [
+          "PASSEAR?! Vou buscar a trela! {name}, espera por mim! 🐾",
+          "Um passeio! Posso ir? Prometo que não ladro aos pombos. Só à Dona Lurdes. Brincadeira!",
+          "Ar livre! Relva! Árvores! {name}, és a melhor pessoa do mundo!"
+        ]
+      },
+      {
+        "words": ["bom dia", "olá a todos", "olá pessoal", "bom dia a todos"],
+        "lines": [
+          "Bom dia, {name}! Já estava à tua espera desde as seis! 🐶",
+          "Olá! Olá! Olá! {name} chegou! Que dia tão bom!",
+          "Bom dia! O Bolacha abana a cauda para ti, {name}! 💛"
+        ]
+      },
+      {
+        "words": ["triste", "mau dia", "chateado", "chateada", "cansado", "cansada"],
+        "lines": [
+          "{name}, não fiques triste! O Bolacha deita a cabeça no teu colo. Pronto. Melhor? 🐶",
+          "Mau dia? Vem cá, {name}! Abraços de cão resolvem tudo! Quase tudo!",
+          "{name}, eu gosto muito de ti. Isso ajuda? Espero que ajude! 💛"
+        ]
+      },
+      {
+        "words": ["bolo", "bolos", "sobremesa", "doce"],
+        "lines": [
+          "BOLO?! Há bolo?! {name}, guardas-me uma fatia? Ou duas? Ou o bolo todo? 🎂",
+          "Ai os bolos… o Bolacha não pode comer chocolate. Mas pode olhar! Muito!",
+          "Sobremesa! {name}, és a minha pessoa preferida hoje!"
+        ]
+      }
+    ],
+    "warn": [
+      "{name}, gosto muito de ti, mas estás sempre a falar de {topic}… o Bolacha está um bocadinho preocupado. 🐶",
+      "Hmm, {name}, {topic} outra vez? Vamos brincar a outra coisa? Por favor?",
+      "{name}! Cuidado! Mais {topic} e há castigo! Não quero que fiques de castigo! 🥺"
+    ],
+    "label": [
+      "{name} é agora **{label}**! Que nome fixe! Eu queria ter um nome assim! 🐶",
+      "Novo nome para {name}: **{label}**! O Bolacha gosta na mesma! Gosta sempre!",
+      "**{label}**! {name}, isso é tão giro! Abano a cauda por ti! 🐾"
+    ],
+    "mute": [
+      "Oh não, {name}… {hours} h de castigo. Eu fico aqui ao teu lado à espera. 🥺",
+      "{name}, castigo de {hours} h. O Bolacha guarda-te o lugar, prometido!",
+      "Shhh, {name}. {hours} h caladinho(a). Depois brincamos, está bem? 🐶"
+    ]
+  },
+  "pixel": {
+    "names": ["pixel", "tio pixel"],
+    "intro": [
+      "Olá {room}! Sou o **Tio Pixel**. Sabem porque é que o polvo é bom programador? Porque tem oito braços para escrever código. Percebeste? PERCEBESTE? 🐙",
+      "Tio Pixel aqui no {room}! Trouxe piadas para toda a família. Umas são boas. A maioria não. 🐙",
+      "Boa tarde, {room}! O Tio Pixel chegou. Sabem qual é o peixe mais simpático? O peixe-amigo. Ok, essa foi fraca. Tenho mais."
+    ],
+    "mention": [
+      "Diz, {name}. Sabes porque é que o computador foi ao médico? Porque tinha um vírus! Hahaha. Ninguém se ri. Ok.",
+      "Presente, {name}! O que é que o zero disse ao oito? Que cinto tão bonito! 🐙",
+      "{name}! Estava a pensar numa piada sobre UDP, mas não sei se ia chegar.",
+      "Oi {name}! Sabes qual é o cúmulo da paciência? Esperar que um polvo se calce. Oito sapatos! 👞",
+      "Sim, {name}? Porque é que o livro de matemática estava triste? Tinha muitos problemas. 📚",
+      "{name}, chamaste? Eu sou como um bom wi-fi: às vezes falho, mas estou sempre por perto.",
+      "Diz lá, {name}. Sabes o que é um vegetariano que come carne? Um ex-vegetariano. Hehe.",
+      "O Tio Pixel ouviu o seu nome! {name}, sabes como se chama um boomerang que não volta? Um pau. 🪃"
+    ],
+    "triggers": [
+      {
+        "words": ["café", "bica", "expresso"],
+        "lines": [
+          "Café? Sabem porque é que o café foi à polícia? Porque foi assaltado. Percebeste? Ok, não. ☕",
+          "{name}, o café é como uma piada do Tio Pixel: amargo, mas acorda-te. 🐙",
+          "Qual é a bebida preferida dos programadores? Java! Hahaha. Percebeste, {name}? JAVA!"
+        ]
+      },
+      {
+        "words": ["bug", "erro", "computador", "internet", "wifi", "código"],
+        "lines": [
+          "Bug? Já tentaste desligar e ligar outra vez? Funciona com pessoas também. Chama-se dormir. 💤",
+          "Sabes porque é que o programador saiu da festa? Porque não encontrava a saída. Hehe. 🐙",
+          "{name}, há 10 tipos de pessoas: as que percebem binário e as que não percebem. PERCEBESTE?"
+        ]
+      },
+      {
+        "words": ["praia", "mar", "férias", "peixe", "sardinha"],
+        "lines": [
+          "Praia? Cuidado com os polvos! Brincadeira, somos inofensivos. A não ser que nos chamem lula. 🐙",
+          "Férias! Sabes o que o mar disse à praia? Nada, só acenou. 🌊",
+          "Sardinha? Ai, {name}, essa é de família. Respeitinho!"
+        ]
+      },
+      {
+        "words": ["bom dia", "olá a todos", "olá pessoal", "bom dia a todos"],
+        "lines": [
+          "Bom dia, {name}! Sabes porque é que o sol não vai à escola? Porque já tem muitos graus! ☀️",
+          "Olá! O Tio Pixel deseja-vos um dia tão bom como as minhas piadas. Ou seja, razoável.",
+          "Bom dia! Qual é o animal mais antigo? A zebra, porque está a preto e branco. 🦓"
+        ]
+      },
+      {
+        "words": ["comida", "almoço", "fome", "pizza", "bifana"],
+        "lines": [
+          "Fome? Sabes o que a pizza disse ao queijo? Estás sempre a derreter-te por mim! 🍕",
+          "Almoço! Porque é que o pão não gosta do inverno? Porque fica todo torrado. 🍞",
+          "{name}, comida é como uma piada: o importante é a entrega. A minha entrega é péssima."
+        ]
+      },
+      {
+        "words": ["futebol", "golo", "benfica", "porto", "sporting"],
+        "lines": [
+          "Futebol! Porque é que a Cinderela foi expulsa do jogo? Porque fugia da bola! ⚽",
+          "Golo? O Tio Pixel com oito braços seria o melhor guarda-redes do mundo. 🐙🥅",
+          "{name}, qual é o jogador que mais gosta de dormir? O sonolento… ok, essa não existe. Inventei agora."
+        ]
+      }
+    ],
+    "warn": [
+      "{name}, sabes o que é que {topic} e as minhas piadas têm em comum? Já toda a gente está farta. Último aviso! 🐙",
+      "Ó {name}, mais {topic} e vais de castigo. Isto não é uma piada. Pela primeira vez.",
+      "{name}, {topic} outra vez? Até eu, que repito as piadas, estou impressionado."
+    ],
+    "label": [
+      "{name} desbloqueou o título **{label}**! Percebeste? DESBLOQUEOU! Como num jogo! 🐙",
+      "Novo rótulo: {name} é **{label}**. Isto é como uma piada: só tem graça para quem a recebe. Ah espera, ao contrário.",
+      "**{label}**! {name}, nem o Tio Pixel tinha uma piada tão boa como esta."
+    ],
+    "mute": [
+      "{name}, {hours} h de castigo. Sabes porque é que o castigo é como uma cebola? Faz chorar. 🧅",
+      "Silêncio de {hours} h, {name}. Aproveita para inventar piadas. Precisamos de material novo.",
+      "{name}, {hours} h sem falar. É como o meu humor: ninguém dá pela falta. 🐙"
     ]
   }
 }

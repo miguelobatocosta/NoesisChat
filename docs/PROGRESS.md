@@ -23,6 +23,7 @@ Update at the end of every phase: status, date, commit, and anything deferred.
 | 15 | Sign in with the company email (D-52) | ✅ done | 2026-11-27 | phase/15-entrar-com-email | Cloudflare Access JWT verified with node:crypto; new emails join as members, owner email = host; migration 0005 |
 | 16 | Bolos (owner request, D-53) | ✅ done | 2026-11-27 | phase/16-bolos | People + guests, milestones confirmed by a second person, birthdays, promises, Excel paste import, chat cards; migration 0006 |
 | 17 | Escritório (owner request, D-54) | ✅ done | 2026-11-27 | phase/17-escritorio | Weekly vote Fri→Mon, Vou/Não vou, check-in, no-shows → cake after N, day-before nomination, Livro de desculpas, Presenças import; migration 0007 |
+| 18 | Mascot personalities + names (owner request, D-55) | ✅ done | 2026-11-27 | phase/18-mascotes-personalidade | Six archetypes with their own lines, temperament and emoji reactions; #geral announcements in the #geral mascot's voice; host-only renaming; Excel .xlsx upload |
 
 **Test totals:** 27 shared + 135 server + 231 web unit/integration, 20 Playwright E2E (incl. axe contrast in light and dark).
 

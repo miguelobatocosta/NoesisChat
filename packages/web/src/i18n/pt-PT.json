@@ -236,7 +236,8 @@
         "member-invite": "criou um convite (terminal)"
       },
       "mascot": {
-        "mute": "pôs {target} de castigo ({topic})"
+        "mute": "pôs {target} de castigo ({topic})",
+        "rename": "mudou o nome de uma mascote para {name}"
       },
       "moderation": {
         "lift": "levantou o castigo de {target}",
@@ -258,7 +259,8 @@
     "system": "Terminal",
     "topics": "Tópicos",
     "punishments": "Castigos",
-    "community": "Bolos & Escritório"
+    "community": "Bolos & Escritório",
+    "mascots": "Mascotes"
   },
   "notifications": {
     "image": "📷 Imagem",
@@ -289,40 +291,46 @@
     "tag": "mascote",
     "of": "{name}, a mascote da sala",
     "lurdes": {
-      "species": "pomba coscuvilheira",
-      "welcome1": "A Dona Lurdes já está à janela à espera de novidades.",
-      "welcome2": "Ninguém disse nada ainda? A Dona Lurdes não aguenta o suspense.",
-      "welcome3": "Silêncio no #{room}… a Dona Lurdes está desconfiada."
+      "species": "pomba · mãe implicativa",
+      "welcome1": "A {name} está à janela à espera. Já comeram? Digam alguma coisa.",
+      "welcome2": "Silêncio? A {name} não gosta de silêncios. Quem começa?",
+      "welcome3": "Ninguém disse nada no #{room}… a {name} já está a ficar preocupada.",
+      "personality": "Mãe implicativa: \"Já comeste? Levaste casaco?\" Controla tudo e lembra as dívidas de bolo. Voz do #geral."
     },
     "bolacha": {
-      "species": "cão salsicha guloso",
-      "welcome1": "O Bolacha está à espera. Se for sobre comida, melhor.",
-      "welcome2": "Nada por aqui ainda. O Bolacha já farejou tudo, só migalhas.",
-      "welcome3": "O Bolacha abana a cauda: alguém diz olá?"
+      "species": "cão · contente bonacheirão",
+      "welcome1": "O {name} está a abanar a cauda à espera de amigos novos!",
+      "welcome2": "Nada por aqui ainda. O {name} já farejou tudo: só migalhas.",
+      "welcome3": "O {name} senta-se e espera. Alguém diz olá? Por favor?",
+      "personality": "Contente bonacheirão: feliz com pouco, leal, só pensa em comida e em fazer amigos."
     },
     "faisca": {
-      "species": "esquilo a cafeína",
-      "welcome1": "A Faísca já bebeu três bicas à espera da primeira mensagem!!!",
-      "welcome2": "Tudo calmo? A Faísca não sabe o que é calma!!!",
-      "welcome3": "Primeira mensagem? A Faísca está pronta desde ontem!!!"
+      "species": "esquilo · alegre e hiperentusiasta",
+      "welcome1": "A {name} já bebeu três cafés à espera da primeira mensagem!!!",
+      "welcome2": "O #{room} está tão calmo!!! A {name} NÃO aguenta calma!!! Digam olá!!!",
+      "welcome3": "Primeira mensagem?! A {name} está pronta desde ONTEM!!! ⚡",
+      "personality": "Alegre e hiperentusiasta: tudo é INCRÍVEL!!! Responde logo, celebra tudo, enche de emojis."
     },
     "ferreira": {
-      "species": "tartaruga sábia",
-      "welcome1": "O Sr. Ferreira chegou cedo. Para ele, isto é cedo.",
-      "welcome2": "Com calma. O Sr. Ferreira espera a primeira mensagem há três dias.",
-      "welcome3": "Sem pressa. O Sr. Ferreira gosta de começos devagar."
+      "species": "tartaruga · avó fofinha",
+      "welcome1": "A {name} chegou devagarinho e trouxe bolachinhas. Quem diz olá primeiro?",
+      "welcome2": "Ai, tão sossegado o #{room}… a {name} está a fazer tricô à espera.",
+      "welcome3": "A {name} já pôs os óculos para ler a primeira mensagem. Sem pressa, meus amores.",
+      "personality": "Avó fofinha: \"Ai o meu amorzinho.\" Escreve devagar, oferece sopa e espalha corações."
     },
     "pixel": {
-      "species": "polvo técnico e sarcástico",
-      "welcome1": "O Pixel já testou a sala. Funciona. Por agora.",
-      "welcome2": "Zero mensagens. O Pixel diz que é um bug. É mentira.",
-      "welcome3": "O Pixel tem oito braços e nenhum para escrever a primeira mensagem. Escreves tu?"
+      "species": "polvo · tio das piadas secas",
+      "welcome1": "O {name} tem uma piada pronta para a primeira mensagem. Estão avisados.",
+      "welcome2": "Silêncio no #{room}? O {name} diz que é como o wi-fi: às vezes falha.",
+      "welcome3": "O {name} está a ensaiar trocadilhos com oito braços. Digam olá antes que ele comece.",
+      "personality": "Tio das piadas secas: trocadilhos e piadas de pai, ri-se sozinho. \"Percebeste? PERCEBESTE?\""
     },
     "nuvem": {
-      "species": "gata preguiçosa",
-      "welcome1": "A Nuvem está a dormir. Acorda-a com uma mensagem. Ou não.",
-      "welcome2": "Silêncio perfeito. A Nuvem aprova.",
-      "welcome3": "A Nuvem abriu um olho. Diz qualquer coisa antes que o feche."
+      "species": "gato · resmungão",
+      "welcome1": "O {name} está a dormir. Não acordem. Ou acordem, tanto faz.",
+      "welcome2": "Silêncio no #{room}. O {name} aprova. Finalmente.",
+      "welcome3": "O {name} abriu um olho. Fechou-o outra vez. Digam qualquer coisa se tiverem mesmo de dizer.",
+      "personality": "Resmungão: odeia segundas, fala pouco, às vezes nem responde. Mas reage a atum."
     },
     "sayHi": "Dizer olá",
     "hello": "Olá"
@@ -528,5 +536,10 @@
     "extraTitle": "Dia extra (admin)",
     "extraDate": "Data",
     "extraAdd": "Acrescentar"
+  },
+  "mascotsAdmin": {
+    "intro": "Só tu, o anfitrião, podes mudar os nomes. A personalidade de cada mascote fica igual, e passam a responder ao nome novo.",
+    "name": "Nome",
+    "saved": "Guardado"
   }
 }
