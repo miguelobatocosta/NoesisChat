@@ -152,3 +152,14 @@ export function excuses(c: CommunityState) {
     .map((a) => ({ ...a, text: (a.excuse ?? a.planReason)! }))
     .sort((a, b) => b.date.localeCompare(a.date));
 }
+
+/** How stale a debt is, for the bar colour (--stale-1..4) and its funny label (stale.*). */
+export function staleness(days: number): {
+  level: 1 | 2 | 3 | 4;
+  key: 'fresh' | 'dusty' | 'fossil' | 'heritage';
+} {
+  if (days < 30) return { level: 1, key: 'fresh' };
+  if (days < 90) return { level: 2, key: 'dusty' };
+  if (days < 180) return { level: 3, key: 'fossil' };
+  return { level: 4, key: 'heritage' };
+}

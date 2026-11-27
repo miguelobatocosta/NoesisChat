@@ -27,11 +27,13 @@ export function triggeredLines(script: MascotScript, normalizedText: string): st
   );
 }
 
-export type LineVars = Partial<Record<'name' | 'room' | 'topic' | 'label' | 'hours', string>>;
+export type LineVars = Partial<
+  Record<'name' | 'room' | 'topic' | 'label' | 'hours' | 'who' | 'count' | 'days' | 'date', string>
+>;
 
 export function fill(line: string, vars: LineVars): string {
   return line.replace(
-    /\{(name|room|topic|label|hours)\}/g,
+    /\{(name|room|topic|label|hours|who|count|days|date)\}/g,
     (_, k: keyof LineVars) => vars[k] ?? '',
   );
 }

@@ -24,6 +24,7 @@ Update at the end of every phase: status, date, commit, and anything deferred.
 | 16 | Bolos (owner request, D-53) | ✅ done | 2026-11-27 | phase/16-bolos | People + guests, milestones confirmed by a second person, birthdays, promises, Excel paste import, chat cards; migration 0006 |
 | 17 | Escritório (owner request, D-54) | ✅ done | 2026-11-27 | phase/17-escritorio | Weekly vote Fri→Mon, Vou/Não vou, check-in, no-shows → cake after N, day-before nomination, Livro de desculpas, Presenças import; migration 0007 |
 | 18 | Mascot personalities + names (owner request, D-55) | ✅ done | 2026-11-27 | phase/18-mascotes-personalidade | Six archetypes with their own lines, temperament and emoji reactions; #geral announcements in the #geral mascot's voice; host-only renaming; Excel .xlsx upload |
+| 19 | Fun Bolos/Escritório, top-bar search, mascots answer from data (owner request, D-56) | ✅ done | 2026-11-27 | phase/19-diversao | Mascot speech bubble, freshness bars, podium, vote columns, headcount; header search + Vou/Não vou; contrast checked on both pages |
 
 **Test totals:** 27 shared + 135 server + 231 web unit/integration, 20 Playwright E2E (incl. axe contrast in light and dark).
 

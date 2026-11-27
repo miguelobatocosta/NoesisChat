@@ -1,4 +1,9 @@
-/* Bolos and Escritório pages (D-53/D-54): the room layout's header, then a grid of cards. */
+/*
+ * Bolos and Escritório (D-53/D-54, Phase 19). The #geral mascot runs the board: one big speech
+ * bubble is the signature; everything around it stays quiet. Raleway only, with display numbers
+ * (800, tight tracking, tabular figures) for what matters: days owed, people here.
+ */
+
 .page {
   flex: 1;
   display: flex;
@@ -18,10 +23,15 @@
 }
 
 .title {
+  flex: 1;
   font-size: 20px;
   line-height: 26px;
   font-weight: 700;
   letter-spacing: -0.02em;
+}
+
+.headerAction {
+  flex-shrink: 0;
 }
 
 .roomsButton {
@@ -31,12 +41,134 @@
 .scroll {
   flex: 1;
   overflow-y: auto;
-  padding: var(--space-6) var(--space-8) var(--space-10);
+  padding: var(--space-6) var(--space-8) var(--space-12);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
 }
 
-.grid {
+/* --- the mascot and its bubble ------------------------------------------------------------------ */
+
+.hero {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--space-6);
+}
+
+.says {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--space-4);
+  margin: 0;
+  min-width: 0;
+  flex: 1 1 420px;
+}
+
+.saysArt {
+  flex-shrink: 0;
+  filter: drop-shadow(var(--mascot-drop));
+}
+
+.bubble {
+  position: relative;
+  margin: 0 0 var(--space-6);
+  padding: var(--space-4) var(--space-5);
+  border-radius: var(--radius-lg);
+  background: var(--bg-subtle);
+  max-width: 560px;
+}
+
+/* The tail points at the mascot. */
+.bubble::before {
+  content: '';
+  position: absolute;
+  left: -10px;
+  bottom: 18px;
+  border-width: 10px 12px 10px 0;
+  border-style: solid;
+  border-color: transparent var(--bg-subtle) transparent transparent;
+}
+
+.bubble p {
+  margin: 0;
+  font-size: 20px;
+  line-height: 28px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--fg);
+}
+
+.bubbleWho {
+  margin-top: var(--space-1);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--fg-muted);
+}
+
+.stats {
+  display: flex;
+  gap: var(--space-8);
+  margin: 0 0 var(--space-6);
+}
+
+.stat {
+  display: flex;
+  flex-direction: column-reverse;
+  gap: var(--space-1);
+}
+
+.statNumber,
+.daysNumber {
+  margin: 0;
+  font-size: 44px;
+  line-height: 44px;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  color: var(--fg);
+}
+
+.statText {
+  margin: 0;
+  font-size: 20px;
+  line-height: 44px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--fg);
+}
+
+.statLabel,
+.eyebrow {
+  margin: 0;
+  font-size: 11px;
+  line-height: 16px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--fg-muted);
+}
+
+/* --- layout -------------------------------------------------------------------------------------- */
+
+.layout {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  grid-template-columns: minmax(0, 1.7fr) minmax(280px, 1fr);
+  gap: var(--space-5);
+  align-items: start;
+}
+
+.side {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.layoutBottom {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: var(--space-5);
   align-items: start;
 }
@@ -47,12 +179,8 @@
   background: var(--bg-subtle);
 }
 
-.wide {
-  grid-column: 1 / -1;
-}
-
 .cardTitle {
-  margin: 0 0 var(--space-3);
+  margin: 0 0 var(--space-2);
   font-size: 17px;
   line-height: 22px;
   font-weight: 700;
@@ -110,32 +238,6 @@
   color: var(--link);
 }
 
-.debtList {
-  margin: var(--space-1) 0 0;
-  padding: 0;
-  list-style: none;
-}
-
-.debt {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: var(--space-2);
-  padding: var(--space-1) 0;
-  font-size: 14px;
-}
-
-.pledge {
-  font-weight: 600;
-  color: var(--link);
-}
-
-.actions {
-  display: flex;
-  gap: var(--space-1);
-}
-
 .form {
   display: flex;
   flex-direction: column;
@@ -154,13 +256,512 @@
   margin-top: var(--space-3);
 }
 
-/* Cards inside chat messages. */
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1);
+}
+
+/* --- the cake book ------------------------------------------------------------------------------- */
+
+.ledger .eyebrow {
+  margin-bottom: var(--space-3);
+}
+
+.ledgerRow {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: var(--space-5);
+  padding: var(--space-4) 0;
+  border-bottom: 1px solid var(--separator);
+}
+
+.ledgerRow:last-child {
+  border-bottom: none;
+}
+
+.ledgerMain {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.ledgerName {
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--fg);
+}
+
+.ledgerDays {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: var(--space-1);
+}
+
+.staleTrack {
+  height: 6px;
+  border-radius: 3px;
+  background: var(--fill);
+  overflow: hidden;
+}
+
+.staleFill {
+  display: block;
+  height: 100%;
+  border-radius: 3px;
+  background: var(--stale-1);
+}
+
+.staleFill[data-level='2'] {
+  background: var(--stale-2);
+}
+
+.staleFill[data-level='3'] {
+  background: var(--stale-3);
+}
+
+.staleFill[data-level='4'] {
+  background: var(--stale-4);
+}
+
+.staleLabel {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--fg-muted);
+}
+
+.debtList {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.debt {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  padding: var(--space-1) 0;
+  font-size: 14px;
+  color: var(--fg-body);
+}
+
+.debtReason {
+  font-weight: 600;
+}
+
+.pledge {
+  font-weight: 600;
+  color: var(--link);
+}
+
+/* The next office day as a ticket: a stub line divides the "when" from the "who". */
+.ticket {
+  background: var(--bg-selected);
+}
+
+.ticketDay {
+  margin: var(--space-2) 0 0;
+  font-size: 28px;
+  line-height: 32px;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: var(--fg);
+}
+
+.ticketWhen {
+  margin: var(--space-1) 0 var(--space-3);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--link);
+}
+
+.ticketStub {
+  margin: 0;
+  padding-top: var(--space-3);
+  border-top: 2px dashed var(--border);
+  font-size: 14px;
+  color: var(--fg-body);
+}
+
+.calendar {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+  gap: var(--space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.calendarDay {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: var(--space-3);
+  border-radius: var(--radius-md);
+  background: var(--bg);
+}
+
+.calendarDay[data-today] {
+  background: var(--mention-bg);
+}
+
+.calendarDate {
+  font-size: 22px;
+  line-height: 26px;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: var(--fg);
+}
+
+.calendarName {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--fg);
+}
+
+.podium {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  align-items: end;
+  gap: var(--space-2);
+  margin: var(--space-3) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.podiumStep {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-1);
+  padding: var(--space-3) var(--space-2);
+  border-radius: var(--radius-md) var(--radius-md) 0 0;
+  background: var(--fill);
+  text-align: center;
+}
+
+/* Gold in the middle, tallest. */
+.podiumStep[data-place='1'] {
+  order: 2;
+  min-height: 150px;
+  background: var(--bg-selected);
+}
+
+.podiumStep[data-place='2'] {
+  order: 1;
+  min-height: 120px;
+}
+
+.podiumStep[data-place='3'] {
+  order: 3;
+  min-height: 100px;
+}
+
+.medal {
+  font-size: 28px;
+  line-height: 32px;
+}
+
+.podiumName {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--fg);
+}
+
+.podiumCount {
+  font-size: 24px;
+  line-height: 28px;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: var(--fg);
+}
+
+/* One second of cake when a debt is paid. */
+.confetti {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.piece {
+  position: absolute;
+  top: -40px;
+  font-size: 28px;
+  animation: fall 1100ms var(--ease-spring) forwards;
+}
+
+@keyframes fall {
+  0% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(70vh) rotate(260deg);
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .confetti {
+    display: none;
+  }
+}
+
+/* --- the office week ----------------------------------------------------------------------------- */
+
+.weekHead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-bottom: var(--space-3);
+}
+
+.board {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: var(--space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.boardButton {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-1);
+  padding: var(--space-3) var(--space-2);
+  border: 0;
+  border-radius: var(--radius-md);
+  background: var(--bg);
+  color: var(--fg-body);
+  font: inherit;
+  text-align: center;
+}
+
+button.boardButton {
+  cursor: pointer;
+  transition:
+    background-color var(--dur-fast) var(--ease),
+    transform var(--dur-fast) var(--ease-spring);
+}
+
+button.boardButton:hover {
+  background: var(--fill-hover);
+}
+
+button.boardButton:active {
+  transform: scale(0.98);
+}
+
+.boardCol[data-mine] .boardButton {
+  background: var(--bg-selected);
+}
+
+.boardCol[data-won] .boardButton {
+  background: var(--bg-selected);
+  box-shadow: inset 0 0 0 2px var(--primary);
+}
+
+.boardDay {
+  font-size: 15px;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  text-transform: capitalize;
+  color: var(--fg);
+}
+
+.boardDate {
+  font-size: 12px;
+  color: var(--fg-muted);
+}
+
+.boardTrack {
+  position: relative;
+  width: 28px;
+  height: 96px;
+  margin: var(--space-2) 0;
+  border-radius: var(--radius-sm);
+  background: var(--fill);
+  overflow: hidden;
+}
+
+.boardBar {
+  position: absolute;
+  inset: auto 0 0;
+  border-radius: var(--radius-sm);
+  background: var(--primary);
+  transition: height 300ms var(--ease-spring);
+}
+
+.boardCount {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--fg);
+}
+
+.boardWinner,
+.boardMine {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--link);
+}
+
+.weekFacts {
+  margin-top: var(--space-4);
+}
+
+.weekCompact {
+  padding: 0;
+  background: transparent;
+}
+
+.weekCompact .boardTrack {
+  height: 48px;
+}
+
+/* --- today --------------------------------------------------------------------------------------- */
+
+.today {
+  background: var(--bg-selected);
+}
+
+.todayHead {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: var(--space-2) var(--space-5);
+  margin-bottom: var(--space-3);
+}
+
+.capacity {
+  margin: 0;
+  font-size: 32px;
+  line-height: 36px;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: var(--fg);
+}
+
+.capacityTrack {
+  height: 8px;
+  border-radius: 4px;
+  background: var(--fill);
+  overflow: hidden;
+}
+
+.capacityFill {
+  display: block;
+  height: 100%;
+  border-radius: 4px;
+  background: var(--primary);
+  transition: width 300ms var(--ease-spring);
+}
+
+.checkin {
+  grid-row: 1 / span 3;
+  grid-column: 2;
+  min-height: 56px;
+  padding: 0 var(--space-6);
+  font-size: 17px;
+}
+
+.roster {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 0 var(--space-5);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.rosterRow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-2) 0;
+  border-bottom: 1px solid var(--separator);
+}
+
+.rosterMark {
+  width: 20px;
+  font-weight: 800;
+  color: var(--fg-muted);
+  text-align: center;
+}
+
+.rosterRow[data-state='present'] .rosterMark {
+  color: var(--link);
+}
+
+.rosterRow[data-state='absent'] .rosterMark {
+  color: var(--danger);
+}
+
+/* No-show tally: N little bars, filled up to the absences that count. */
+.strikes {
+  display: inline-flex;
+  gap: 3px;
+}
+
+.strike {
+  width: 6px;
+  height: 18px;
+  border-radius: 2px;
+  background: var(--fill);
+}
+
+.strike[data-on] {
+  background: var(--stale-3);
+}
+
+.featuredExcuse {
+  margin: var(--space-2) 0 var(--space-3);
+  padding-bottom: var(--space-3);
+  border-bottom: 1px solid var(--separator);
+}
+
+.quoteBig {
+  margin: var(--space-2) 0;
+  font-size: 22px;
+  line-height: 30px;
+  font-weight: 600;
+  font-style: italic;
+  letter-spacing: -0.01em;
+  color: var(--fg);
+}
+
+.quote {
+  font-style: italic;
+  color: var(--fg-body);
+}
+
+.adminCard {
+  background: transparent;
+  border: 1px dashed var(--border);
+}
+
+/* --- cards inside chat messages ------------------------------------------------------------------ */
+
 .chatCard {
   margin-top: var(--space-2);
   padding: var(--space-3) var(--space-4);
   border-radius: var(--radius-md);
   background: var(--bg-subtle);
-  max-width: 480px;
+  max-width: 520px;
 }
 
 .chatCardRow {
@@ -175,6 +776,14 @@
   min-width: 0;
   font-size: 14px;
   color: var(--fg-body);
+}
+
+/* --- phones -------------------------------------------------------------------------------------- */
+
+@media (max-width: 900px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
 }
 
 @media (max-width: 767px) {
@@ -193,7 +802,55 @@
     padding: var(--space-4) var(--space-3) var(--space-8);
   }
 
-  .grid {
+  .says {
+    flex-basis: 100%;
+  }
+
+  .saysArt {
+    width: 72px;
+    height: 72px;
+  }
+
+  .bubble p {
+    font-size: 17px;
+    line-height: 24px;
+  }
+
+  .stats {
+    gap: var(--space-5);
+    flex-wrap: wrap;
+  }
+
+  .statNumber,
+  .daysNumber {
+    font-size: 34px;
+    line-height: 36px;
+  }
+
+  .board {
+    gap: var(--space-1);
+  }
+
+  .boardButton {
+    padding: var(--space-2) 2px;
+  }
+
+  .boardTrack {
+    width: 18px;
+    height: 64px;
+  }
+
+  .boardWinner,
+  .boardMine {
+    font-size: 9px;
+  }
+
+  .todayHead {
     grid-template-columns: 1fr;
+  }
+
+  .checkin {
+    grid-row: auto;
+    grid-column: auto;
   }
 }

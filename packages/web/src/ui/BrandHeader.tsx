@@ -5,7 +5,7 @@ import styles from './BrandHeader.module.css';
 import { ThemeToggle } from './ThemeToggle';
 
 /** Brand header (BRAND.md §5). Text placeholder until the official logo is approved (BRAND.md §6, D-01). */
-export function BrandHeader({ children }: { children?: ReactNode }) {
+export function BrandHeader({ children, center }: { children?: ReactNode; center?: ReactNode }) {
   return (
     <header className={styles.header} aria-label={t('header.label', { app: APP_NAME })}>
       <div className={styles.brand}>
@@ -13,6 +13,7 @@ export function BrandHeader({ children }: { children?: ReactNode }) {
         <span className={styles.divider} aria-hidden="true" />
         <span className={styles.appName}>{APP_NAME}</span>
       </div>
+      {center && <div className={styles.center}>{center}</div>}
       <div className={styles.right}>
         {children}
         <ThemeToggle />

@@ -17,6 +17,7 @@ import { getUser, type UserRow } from '../members/service';
 import { sendMessage, toggleReaction } from '../messages/service';
 import { getRoomRow, nextMascot, type RoomRow } from '../rooms/service';
 import { callsByName, fill, type LineVars, normalize, pick, triggeredLines } from './engine';
+import { answer } from './answers';
 import { MASCOT_LINES } from './lines';
 import { GRUMPY_SILENCE, PERSONALITIES } from './personalities';
 
@@ -123,7 +124,17 @@ export class Mascots {
           if (this.rng() < 0.5) this.later(key, room.id, [GRUMPY_SILENCE], vars, message.id);
           continue;
         }
-        this.later(key, room.id, MASCOT_LINES[key].mention, vars, message.id);
+        // A question about cakes or the office gets a real answer, in this mascot's voice.
+        const reply = answer(this.ctx.db, text, author);
+        if (reply)
+          this.later(
+            key,
+            room.id,
+            MASCOT_LINES[key].answers[reply.key],
+            { ...vars, ...reply.vars },
+            message.id,
+          );
+        else this.later(key, room.id, MASCOT_LINES[key].mention, vars, message.id);
       }
       return;
     }

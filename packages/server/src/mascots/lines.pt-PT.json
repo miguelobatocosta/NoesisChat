@@ -90,7 +90,28 @@
       "Chega, {name}! De castigo {hours} h. Vai pensar no que fizeste. E arruma o quarto.",
       "{name}, para o teu quarto! {hours} horas sem falar aqui. Podes ler, mas calado(a).",
       "Já te tinha avisado, {name}. {hours} h de castigo. Isto dói-me mais a mim do que a ti."
-    ]
+    ],
+    "answers": {
+      "owesMost": [
+        "{who}. {days} dias. Eu não digo nada… mas toda a gente sabe.",
+        "Quem deve mais? {who}, com {count} bolo(s), o mais antigo há {days} dias. Que vergonha, criei-vos melhor."
+      ],
+      "nobodyOwes": ["Ninguém deve bolos. Milagre! Ficam todos de parabéns. Por hoje."],
+      "broughtMost": ["Quem trouxe mais foi {who}: {count} bolos. Assim é que é. Aprendam."],
+      "nobodyBrought": ["Ainda ninguém trouxe bolo nenhum. Bonito serviço."],
+      "myDebt": [
+        "Deves {count} bolo(s), {name}. O mais antigo há {days} dias. Não me olhes assim."
+      ],
+      "myDebtNone": ["Não deves nada, {name}. Por agora. Eu estou de olho."],
+      "officeWhen": ["Escritório: {date}. Leva casaco."],
+      "officeUnknown": [
+        "Ainda não há dia de escritório decidido. A votação abre à sexta às 12h. Não se esqueçam de votar!"
+      ],
+      "cakeWho": ["Bolo de {date}: {who}. E é bom que traga."],
+      "cakeNobody": [
+        "Para {date} ninguém se ofereceu ainda. Na véspera escolho eu. Não digam que não avisei."
+      ]
+    }
   },
   "ferreira": {
     "names": ["dores", "avo dores", "avó dores"],
@@ -174,7 +195,27 @@
       "Ai {name}, meu amor, vamos descansar um bocadinho, sim? {hours} h sem escrever aqui. Faz uma sestinha. 😴",
       "{name}, querido(a), a avó acha que precisas de uma pausa. {hours} horinhas. Depois voltas, está bem?",
       "Shhh, {name}. {hours} h de descanso. A avó guarda-te o lugar."
-    ]
+    ],
+    "answers": {
+      "owesMost": [
+        "Ai, quem deve mais é o/a {who}, meu amor: {count} bolinho(s), há {days} dias. Mas a avó não se zanga."
+      ],
+      "nobodyOwes": ["Ninguém deve nada! Que meninos tão bem-comportados. 💕"],
+      "broughtMost": ["Quem trouxe mais bolinhos foi o/a {who}: {count}! A avó adorou todos."],
+      "nobodyBrought": ["Ainda ninguém trouxe bolinho… a avó faz um, se quiserem."],
+      "myDebt": [
+        "Ai, {name}, deves {count} bolinho(s). O mais antigo há {days} dias. Sem pressa, meu amor."
+      ],
+      "myDebtNone": ["Não deves nada, {name}, meu tesouro. És um amor."],
+      "officeWhen": ["O escritório é {date}, meu querido(a). Agasalha-te."],
+      "officeUnknown": [
+        "Ainda não sei o dia, meu amor. Votem na sexta, que a avó quer ver-vos juntinhos."
+      ],
+      "cakeWho": ["O bolinho de {date} é do/a {who}. Que querido(a)!"],
+      "cakeNobody": [
+        "Para {date} ainda ninguém se ofereceu… a avó leva bolachinhas, por via das dúvidas."
+      ]
+    }
   },
   "nuvem": {
     "names": ["nuvem"],
@@ -258,7 +299,19 @@
       "{name}, silêncio. {hours} h. Finalmente paz.",
       "Castigo de {hours} h, {name}. Não leves a mal. Leva a bem. Tanto faz.",
       "{hours} h sem falar aqui, {name}. O melhor dia da minha vida."
-    ]
+    ],
+    "answers": {
+      "owesMost": ["{who}. {count}. {days} dias. Pronto."],
+      "nobodyOwes": ["Ninguém deve bolos. Que aborrecido."],
+      "broughtMost": ["{who}, {count} bolos. Respeito. Um bocadinho."],
+      "nobodyBrought": ["Ninguém trouxe bolo. Típico."],
+      "myDebt": ["Deves {count}, {name}. Há {days} dias. Eu cá não digo nada. Disse."],
+      "myDebtNone": ["Não deves nada, {name}. Raro."],
+      "officeWhen": ["{date}. Eu não vou."],
+      "officeUnknown": ["Não há dia. Ainda bem."],
+      "cakeWho": ["{date}: {who}. Veremos."],
+      "cakeNobody": ["Ninguém para {date}. Surpresa nenhuma."]
+    }
   },
   "faisca": {
     "names": ["faisca", "faísca"],
@@ -341,7 +394,23 @@
       "Ups, {name}!!! Pausa de {hours} h!!! Aproveita para meditar!!! Ou correr!!! 🧘",
       "{name}, castigo de {hours} h!!! Mas é uma OPORTUNIDADE de crescimento!!! 🌱",
       "{hours} h sem escrever, {name}!!! Vais voltar MAIS FORTE!!! 💪"
-    ]
+    ],
+    "answers": {
+      "owesMost": [
+        "O CAMPEÃO das dívidas é {who}!!! {count} bolo(s), há {days} dias!!! Bora pagar!!! 🎂"
+      ],
+      "nobodyOwes": ["NINGUÉM DEVE NADA!!! Equipa PERFEITA!!! 🏆"],
+      "broughtMost": ["{who} trouxe {count} bolos!!! LENDA!!! 🎉"],
+      "nobodyBrought": ["Ainda ninguém trouxe bolo!!! Quem vai ser o PRIMEIRO?!?! ⚡"],
+      "myDebt": [
+        "{name}, deves {count} bolo(s)!!! O mais antigo há {days} dias!!! Tu CONSEGUES pagar!!! 💪"
+      ],
+      "myDebtNone": ["{name}, não deves NADA!!! És um EXEMPLO!!! 🌟"],
+      "officeWhen": ["ESCRITÓRIO: {date}!!! Mal posso esperar!!! ⚡"],
+      "officeUnknown": ["Ainda não há dia!!! A votação abre sexta às 12h!!! VOTEM!!! 🗳️"],
+      "cakeWho": ["O bolo de {date} é do/a {who}!!! Vai ser ÉPICO!!! 🎂"],
+      "cakeNobody": ["Ninguém se ofereceu para {date}!!! OPORTUNIDADE de ser herói!!! 🦸"]
+    }
   },
   "bolacha": {
     "names": ["bolacha"],
@@ -416,7 +485,21 @@
       "Oh não, {name}… {hours} h de castigo. Eu fico aqui ao teu lado à espera. 🥺",
       "{name}, castigo de {hours} h. O Bolacha guarda-te o lugar, prometido!",
       "Shhh, {name}. {hours} h caladinho(a). Depois brincamos, está bem? 🐶"
-    ]
+    ],
+    "answers": {
+      "owesMost": [
+        "Quem deve mais é o/a {who}! {count} bolo(s), há {days} dias! O Bolacha está à espera! 🐶"
+      ],
+      "nobodyOwes": ["Ninguém deve bolos! Isso é bom? É bom! Acho! 🐶"],
+      "broughtMost": ["O/a {who} trouxe {count} bolos! É o meu herói! 🐾"],
+      "nobodyBrought": ["Ninguém trouxe bolo ainda… o Bolacha está tão triste. 🥺"],
+      "myDebt": ["{name}, deves {count} bolo(s)! Há {days} dias! O Bolacha ajuda a comer! 🐶"],
+      "myDebtNone": ["Não deves nada, {name}! És o melhor! 💛"],
+      "officeWhen": ["O escritório é {date}! Vamos todos! 🐾"],
+      "officeUnknown": ["Ainda não há dia! Votem na sexta, por favor! 🐶"],
+      "cakeWho": ["Bolo de {date}: {who}! Já estou a abanar a cauda!"],
+      "cakeNobody": ["Ninguém para {date} ainda… alguém traz? Por favor? 🥺"]
+    }
   },
   "pixel": {
     "names": ["pixel", "tio pixel"],
@@ -499,6 +582,22 @@
       "{name}, {hours} h de castigo. Sabes porque é que o castigo é como uma cebola? Faz chorar. 🧅",
       "Silêncio de {hours} h, {name}. Aproveita para inventar piadas. Precisamos de material novo.",
       "{name}, {hours} h sem falar. É como o meu humor: ninguém dá pela falta. 🐙"
-    ]
+    ],
+    "answers": {
+      "owesMost": [
+        "Quem deve mais é o/a {who}: {count} bolo(s), há {days} dias. É uma dívida tão antiga que já tem cookies. 🍪🐙"
+      ],
+      "nobodyOwes": ["Ninguém deve bolos. Sabes o que é isso? Uma base de dados vazia. Hehe."],
+      "broughtMost": ["Recordista: {who}, {count} bolos. Um verdadeiro pasteleiro-sénior. 🐙"],
+      "nobodyBrought": ["Zero bolos trazidos. 404: bolo not found."],
+      "myDebt": [
+        "{name}, deves {count} bolo(s), o mais antigo há {days} dias. Isso é dívida técnica. 🐙"
+      ],
+      "myDebtNone": ["Não deves nada, {name}. Commit limpo!"],
+      "officeWhen": ["Escritório: {date}. Deploy marcado. 🐙"],
+      "officeUnknown": ["Dia ainda por decidir. Está em code review até sexta."],
+      "cakeWho": ["Bolo de {date}: {who}. Merge aprovado. 🎂"],
+      "cakeNobody": ["Para {date}: ninguém. Pedido de bolo em aberto. Alguém faz pull request?"]
+    }
   }
 }

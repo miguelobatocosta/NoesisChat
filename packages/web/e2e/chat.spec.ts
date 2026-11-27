@@ -329,7 +329,8 @@ test.describe('cakes (D-53)', () => {
       .click();
     await expect(host.page.getByRole('heading', { name: 'Bolos', exact: true })).toBeVisible();
     await expect(host.page).toHaveURL(/\/bolos$/);
-    const form = host.page.getByRole('region', { name: 'Registar marco' });
+    await host.page.getByRole('button', { name: /Registar marco/ }).click();
+    const form = host.page.getByRole('dialog', { name: 'Registar marco' });
     await form.getByLabel('Quem').selectOption({ label: anaName });
     await form.getByLabel('Motivo').selectOption({ label: 'Casa nova' });
     await form.getByRole('button', { name: 'Registar' }).click();
@@ -542,6 +543,35 @@ test.describe('moderation (D-51)', () => {
 
     expect(ana.errors).toEqual([]);
     await host.context.close();
+    await ana.context.close();
+  });
+});
+
+test.describe('Bolos and Escritório pages', () => {
+  for (const scheme of ['light', 'dark'] as const) {
+    test(`no contrast failures on Bolos and Escritório (${scheme})`, async ({ browser }) => {
+      const ana = await join(browser, memberInvite(), uniqueName('Ana'), { colorScheme: scheme });
+      for (const page of [/^Bolos/, /^Escritório/]) {
+        await ana.page.locator('nav').getByRole('button', { name: page }).click();
+        await expect(ana.page.getByRole('figure').first()).toBeVisible(); // the mascot and its bubble
+        const result = await new AxeBuilder({ page: ana.page })
+          .withRules(['color-contrast'])
+          .analyze();
+        expect(result.violations).toEqual([]);
+      }
+      expect(ana.errors).toEqual([]);
+      await ana.context.close();
+    });
+  }
+
+  test('top-bar search opens the search with what was typed; Ligado only shows on problems', async ({
+    browser,
+  }) => {
+    const ana = await join(browser, memberInvite(), uniqueName('Ana'));
+    await expect(ana.page.getByRole('status').getByText('Ligado')).toHaveCount(0);
+    await ana.page.getByRole('banner').getByLabel('Pesquisar mensagens…').pressSequentially('bo');
+    const dialog = ana.page.getByRole('dialog', { name: 'Pesquisar mensagens' });
+    await expect(dialog.getByLabel('O que procuras?')).toHaveValue(/^b/);
     await ana.context.close();
   });
 });

@@ -238,3 +238,13 @@ Nuvem (lazy cat). Original SVG drawings in `features/mascots/Mascot.tsx`, colour
   to Dona Lurdes.
 - **Only the host renames mascots** (Admin → Mascotes). A renamed mascot answers to its new name; names stay
   unique like people's. Migration 0008 moves only untouched defaults (Sr. Ferreira → Avó Dores, Pixel → Tio Pixel).
+
+### D-56 · Fun pages, top-bar search, mascots that know the cake book: SETTLED (2026-11-27, owner)
+- Bolos and Escritório are led by the #geral mascot with a live speech bubble in its voice (`bubble.*`), big
+  display numbers, a debt "freshness" bar (`--stale-1..4`: acabadinho de sair → património nacional), a ticket
+  for the next cake, a podium, the week as five vote columns, today's headcount, a featured excuse. A one-second
+  CSS cake shower on "Trouxe ✔" (off under reduced motion). Recording a milestone moved to a dialog.
+- Top bar: message search in the middle (typing opens the search with the text), the 🏢 Vou / Não vou shortcut
+  for the next office day, and the connection status only when there's a problem.
+- Called or mentioned with a known question ("quem deve mais bolos?", "quem trouxe mais?", "quantos devo?",
+  "quando é o escritório?", "quem leva bolo?"), a mascot answers from the real data, in its own voice.

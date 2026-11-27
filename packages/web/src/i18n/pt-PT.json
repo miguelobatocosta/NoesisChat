@@ -1,5 +1,10 @@
 {
   "header": {
+    "search": "Pesquisar mensagens…",
+    "searchShortcut": "Ctrl Shift F",
+    "office": "Escritório {day}",
+    "going": "Vou ✔",
+    "notGoing": "Não vou",
     "label": "Barra superior da {app}"
   },
   "theme": {
@@ -445,7 +450,24 @@
     "save": "Guardar",
     "historyTitle": "Bolos pagos",
     "topBakers": "Quem mais trouxe: {names}",
-    "noHistory": "Ainda não há bolos pagos."
+    "noHistory": "Ainda não há bolos pagos.",
+    "statOwed": "bolos em dívida",
+    "statPaidYear": "pagos este ano",
+    "statNext": "próximo dia de escritório",
+    "statNextNone": "por decidir",
+    "days": "dias",
+    "ledgerHint": "Do mais antigo para o mais recente.",
+    "nextTitle": "Próximo bolo",
+    "nextIn": "daqui a {days} dias",
+    "nextToday": "é hoje!",
+    "nextTomorrow": "é amanhã",
+    "nextBringers": "Leva: {names}",
+    "nextNobody": "Ainda ninguém se ofereceu. Na véspera às 12:00 é nomeada a dívida mais antiga.",
+    "nextNoDay": "Ainda não há dia de escritório decidido.",
+    "honourTitle": "Quadro de honra",
+    "honourEmpty": "Ainda ninguém trouxe bolo.",
+    "openRecord": "+ Registar marco",
+    "celebrate": "Bolo pago!"
   },
   "cards": {
     "gone": "já não existe",
@@ -516,7 +538,7 @@
     "notGoingButton": "Não vou",
     "why": "Porquê? (opcional)",
     "today": "Hoje: {day}",
-    "checkin": "Estou cá",
+    "checkin": "Estou cá 👋",
     "present": "presente",
     "absent": "ausente",
     "markAbsent": "Marcar ausente",
@@ -535,11 +557,75 @@
     "quote": "«{text}»",
     "extraTitle": "Dia extra (admin)",
     "extraDate": "Data",
-    "extraAdd": "Acrescentar"
+    "extraAdd": "Acrescentar",
+    "voteHintShort": "Carrega nos dias em que podes ir.",
+    "yourVote": "o teu voto",
+    "winner": "dia escolhido",
+    "presentOf": "{present} de {total} cá",
+    "arrived": "chegou",
+    "missing": "por chegar",
+    "featuredExcuse": "Desculpa mais recente",
+    "strikes": "faltas para bolo"
   },
   "mascotsAdmin": {
     "intro": "Só tu, o anfitrião, podes mudar os nomes. A personalidade de cada mascote fica igual, e passam a responder ao nome novo.",
     "name": "Nome",
     "saved": "Guardado"
+  },
+  "stale": {
+    "fresh": "acabadinho de sair",
+    "dusty": "a ganhar pó",
+    "fossil": "fóssil",
+    "heritage": "património nacional"
+  },
+  "bubble": {
+    "lurdes": {
+      "topDebtor": "{name}, já lá vão {days} dias. Eu não digo nada, mas…",
+      "allPaid": "Ninguém deve bolos. Estou orgulhosa. Não se habituem.",
+      "voting": "{day} está a ganhar. Votem, que eu quero saber quantos somos.",
+      "decided": "Escritório {day}. Vão {count}. Levem casaco.",
+      "today": "Já cá estão {count}. Os outros? Eu estou a ver tudo.",
+      "none": "Ainda não há dia de escritório. A votação abre à sexta às 12h."
+    },
+    "ferreira": {
+      "topDebtor": "Ai, {name}, meu amor… já são {days} dias. A avó espera, mas o bolinho não se faz sozinho.",
+      "allPaid": "Ninguém deve nada! Que meninos tão bem-comportados. 💕",
+      "voting": "{day} está a ganhar, meus queridos. A avó gosta de vos ver juntinhos.",
+      "decided": "Vão {count} {day}. A avó leva bolachinhas.",
+      "today": "Já chegaram {count}, meus amores. Os outros estão bem agasalhados?",
+      "none": "Ainda não há dia, meus queridos. Votem na sexta, sim?"
+    },
+    "nuvem": {
+      "topDebtor": "{name}. {days} dias. Pronto.",
+      "allPaid": "Ninguém deve bolos. Que aborrecido.",
+      "voting": "{day} vai à frente. Eu voto em nenhum.",
+      "decided": "{day}. Vão {count}. Eu não.",
+      "today": "{count} já cá. Demasiada gente.",
+      "none": "Não há dia de escritório. Ainda bem."
+    },
+    "faisca": {
+      "topDebtor": "{name}!!! {days} dias!!! Bora pagar esse bolo!!! 🎂",
+      "allPaid": "NINGUÉM DEVE NADA!!! Equipa PERFEITA!!! 🏆",
+      "voting": "{day} está a GANHAR!!! Votem, votem, VOTEM!!! ⚡",
+      "decided": "{day}!!! Vamos {count}!!! Vai ser INCRÍVEL!!! 🎉",
+      "today": "JÁ CÁ ESTÃO {count}!!! Quem é o próximo?!?! 🙌",
+      "none": "Ainda não há dia!!! A votação abre sexta às 12h!!! ⚡"
+    },
+    "bolacha": {
+      "topDebtor": "{name}, já são {days} dias… o Bolacha está à espera do bolo! 🐶",
+      "allPaid": "Ninguém deve bolos! Isso é bom? É bom! 🐶",
+      "voting": "{day} está a ganhar! Vamos todos? 🐾",
+      "decided": "{day}! Vão {count} amigos! 🐶",
+      "today": "Já chegaram {count}! Abano a cauda a cada um! 🐾",
+      "none": "Ainda não há dia! Votem na sexta, por favor! 🐶"
+    },
+    "pixel": {
+      "topDebtor": "{name}: {days} dias. É uma dívida tão antiga que já tem cookies. 🍪",
+      "allPaid": "Ninguém deve bolos. Base de dados vazia. Hehe. 🐙",
+      "voting": "{day} vai à frente. Está em code review até segunda.",
+      "decided": "Deploy marcado: {day}. Vão {count}. 🐙",
+      "today": "{count} já fizeram check-in. Os outros estão em timeout.",
+      "none": "Dia por decidir. 404: escritório not found."
+    }
   }
 }

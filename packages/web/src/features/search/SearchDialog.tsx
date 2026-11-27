@@ -34,12 +34,19 @@ interface Results {
 }
 
 /** Ctrl+Shift+F: full-text search over every room, newest first. Clicking a result jumps to it. */
-export function SearchDialog({ onClose }: { onClose: () => void }) {
+export function SearchDialog({
+  onClose,
+  initialQuery = '',
+}: {
+  onClose: () => void;
+  /** What was typed in the top-bar field. */
+  initialQuery?: string;
+}) {
   const store = getStore();
   const rooms = useChat((s) => s.rooms);
   const members = useChat((s) => s.members);
   const activeRoomId = useChat((s) => s.activeRoomId);
-  const [query, setQuery] = useState('');
+  const [query, setQuery] = useState(initialQuery);
   const [scope, setScope] = useState<'all' | 'room'>('all');
   const [userId, setUserId] = useState('');
   const [results, setResults] = useState<Results>({ q: '', messages: [], hasMore: false });

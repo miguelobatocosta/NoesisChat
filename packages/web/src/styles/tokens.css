@@ -70,6 +70,11 @@
   --mascot-nuvem-1: #e9ecf5;
   --mascot-nuvem-2: #ffc2cf;
   --mascot-nuvem-3: #9aa3bf;
+  /* added (Phase 19): how stale a cake debt is, as bar fills only (never text). */
+  --stale-1: #184bff; /* fresh */
+  --stale-2: #e0a100; /* dusty */
+  --stale-3: #e5671b; /* fossil */
+  --stale-4: #b42318; /* national heritage */
 
   --font-sans: 'Raleway', 'Segoe UI', system-ui, sans-serif;
   --font-mono: 'JetBrains Mono', 'Cascadia Code', Consolas, monospace;
@@ -106,6 +111,10 @@
 }
 
 [data-theme='dark'] {
+  --stale-1: #6f8bff;
+  --stale-2: #f2c14e;
+  --stale-3: #ff8a4c;
+  --stale-4: #ff6b5b;
   --bg: #0b1230;
   --bg-subtle: #132153;
   --bg-selected: #1c2a63;

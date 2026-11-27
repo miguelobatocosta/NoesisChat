@@ -1,0 +1,59 @@
+/* A segmented control on the blue bar, like the theme switch next to it. */
+.wrap {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+  padding: 2px;
+  gap: 2px;
+  border-radius: var(--radius-sm);
+  background: var(--on-brand-fill);
+  color: var(--on-primary);
+}
+
+.day,
+.choice {
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-size: 13px;
+  line-height: 20px;
+  font-weight: 700;
+  padding: 4px var(--space-3);
+  border-radius: 6px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background-color var(--dur-fast) var(--ease);
+}
+
+.day:hover,
+.choice:hover {
+  background: var(--on-brand-fill);
+}
+
+.choice[aria-pressed='true'] {
+  background: var(--on-primary);
+  color: var(--primary);
+}
+
+.day:focus-visible,
+.choice:focus-visible {
+  box-shadow: var(--focus-ring-on-brand);
+}
+
+@media (max-width: 767px) {
+  .day {
+    display: none;
+  }
+
+  .choice {
+    padding: 4px var(--space-2);
+  }
+}
+
+/* Small phones: the bar is full; the Escritório page has the same buttons. */
+@media (max-width: 479px) {
+  .wrap {
+    display: none;
+  }
+}

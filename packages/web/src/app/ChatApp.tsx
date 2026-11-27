@@ -5,7 +5,9 @@ import { RoomView } from '../features/messages/RoomView';
 import { NoAccess } from '../features/onboarding/NoAccess';
 import { NewRoomDialog } from '../features/rooms/NewRoomDialog';
 import { QuickSwitcher } from '../features/rooms/QuickSwitcher';
+import { HeaderSearch } from '../features/search/HeaderSearch';
 import { SearchDialog } from '../features/search/SearchDialog';
+import { OfficeShortcut } from '../features/community/OfficeShortcut';
 import { DndDialog } from '../features/settings/DndDialog';
 import { RoomSettingsDialog } from '../features/rooms/RoomSettingsDialog';
 import { Sidebar } from '../features/rooms/Sidebar';
@@ -74,6 +76,7 @@ function ChatLayout() {
   const view = page === 'room' ? activeRoomId : page;
   const hasRooms = useChat((s) => Object.keys(s.rooms).length > 0);
   const [dialog, setDialog] = useState<DialogName>(null);
+  const [searchQuery, setSearchQuery] = useState('');
   // Phone layout: the sidebar is a drawer, opened for the current room, so picking another room
   // closes it by itself. Esc and tapping outside close it too.
   const [drawerFor, setDrawerFor] = useState<string | null>(null);
@@ -91,6 +94,7 @@ function ChatLayout() {
     const onKey = (e: KeyboardEvent) => {
       if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key.toLowerCase() === 'f') {
         e.preventDefault();
+        setSearchQuery('');
         setDialog('search');
       } else if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
         e.preventDefault();
@@ -122,7 +126,19 @@ function ChatLayout() {
 
   return (
     <div className={styles.app}>
-      <BrandHeader>
+      <BrandHeader
+        center={
+          <>
+            <HeaderSearch
+              onOpen={(q) => {
+                setSearchQuery(q);
+                setDialog('search');
+              }}
+            />
+            <OfficeShortcut />
+          </>
+        }
+      >
         <ConnectionPill />
       </BrandHeader>
       <div className={styles.body}>
@@ -147,7 +163,10 @@ function ChatLayout() {
             roomId={activeRoomId}
             onOpenSettings={() => setDialog('roomSettings')}
             onOpenRooms={() => setDrawer(true)}
-            onOpenSearch={() => setDialog('search')}
+            onOpenSearch={() => {
+              setSearchQuery('');
+              setDialog('search');
+            }}
           />
         )}
       </div>
@@ -158,7 +177,9 @@ function ChatLayout() {
       {dialog === 'admin' && <AdminPanel onClose={() => setDialog(null)} />}
       <RulesDialog open={dialog === 'rules'} onClose={() => setDialog(null)} />
       {dialog === 'switcher' && <QuickSwitcher onClose={() => setDialog(null)} />}
-      {dialog === 'search' && <SearchDialog onClose={() => setDialog(null)} />}
+      {dialog === 'search' && (
+        <SearchDialog initialQuery={searchQuery} onClose={() => setDialog(null)} />
+      )}
       <DndDialog open={dialog === 'dnd'} onClose={() => setDialog(null)} />
       <Toast />
     </div>

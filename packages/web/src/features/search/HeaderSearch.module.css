@@ -1,0 +1,87 @@
+.wrap {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.field {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: min(520px, 100%);
+  height: 36px;
+  border-radius: var(--radius-sm);
+  background: var(--on-brand-fill);
+  color: var(--on-primary);
+  transition: background-color var(--dur-fast) var(--ease);
+}
+
+.field:hover,
+.field:has(:focus-visible) {
+  box-shadow: var(--focus-ring-on-brand);
+}
+
+.icon {
+  position: absolute;
+  left: var(--space-3);
+  opacity: 0.85;
+  pointer-events: none;
+}
+
+.input {
+  flex: 1;
+  min-width: 0;
+  height: 100%;
+  padding: 0 var(--space-3) 0 calc(var(--space-3) + 24px);
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  outline: none;
+}
+
+.input::placeholder {
+  color: var(--on-primary);
+  opacity: 1;
+}
+
+.kbd {
+  margin-right: var(--space-3);
+  font: inherit;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+
+.iconButton {
+  display: none;
+  place-items: center;
+  min-width: var(--hit-min);
+  min-height: var(--hit-min);
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--on-primary);
+  cursor: pointer;
+}
+
+.iconButton:focus-visible {
+  box-shadow: var(--focus-ring-on-brand);
+}
+
+@media (max-width: 767px) {
+  .wrap {
+    justify-content: flex-end;
+  }
+
+  .field {
+    display: none;
+  }
+
+  .iconButton {
+    display: grid;
+  }
+}

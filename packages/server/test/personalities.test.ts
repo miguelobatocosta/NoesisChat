@@ -135,7 +135,17 @@ describe('temperament', () => {
 
 describe('lines', () => {
   const PLACEHOLDERS = /\{(\w+)\}/g;
-  const CHAT_OK = new Set(['name', 'room', 'topic', 'label', 'hours']);
+  const CHAT_OK = new Set([
+    'name',
+    'room',
+    'topic',
+    'label',
+    'hours',
+    'who',
+    'count',
+    'days',
+    'date',
+  ]);
   const COMMUNITY_OK = new Set(['name', 'reason', 'who', 'date', 'count', 'cake']);
 
   it('chat lines: complete for every mascot, known placeholders, no line shared between mascots', () => {

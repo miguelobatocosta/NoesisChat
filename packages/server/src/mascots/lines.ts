@@ -1,4 +1,5 @@
 import type { MascotKey } from '@pausa/shared';
+import type { AnswerKey } from './answers';
 import lines from './lines.pt-PT.json';
 
 /** A mascot's script. Placeholders: {name} = the person it answers, {room} = #slug. */
@@ -15,6 +16,8 @@ export interface MascotScript {
   warn: string[];
   label: string[];
   mute: string[];
+  /** Answers with real cake/office data (Phase 19). Placeholders {who} {count} {days} {date} {name}. */
+  answers: Record<AnswerKey, string[]>;
 }
 
 /** pt-PT only for now; another locale is one more JSON file (CLAUDE.md rule 7, applied server-side). */
