@@ -4,6 +4,8 @@ import { isEmoji, ULID_RE } from './text';
 import type {
   AccessStatus,
   AdminLogEntry,
+  CommunityState,
+  ImportRow,
   InviteView,
   Member,
   Message,
@@ -46,6 +48,13 @@ export const TopicUpdate = z
     path: ['muteAt'],
     message: 'muteAt must be above labelAt',
   });
+/** Local calendar date, 'YYYY-MM-DD'. */
+export const IsoDate = z
+  .string()
+  .regex(/^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/, 'YYYY-MM-DD');
+/** Day and month, 'MM-DD'. */
+export const MonthDay = z.string().regex(/^(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/, 'MM-DD');
+export const CakeReason = z.string().trim().min(2).max(80);
 /** 128-bit invite code, base64url without padding (22 chars). */
 export const InviteCode = z.string().regex(/^[A-Za-z0-9_-]{22}$/, 'invalid invite code');
 
@@ -112,6 +121,34 @@ export const ClientEventSchemas = {
   'admin:moderation:list': z.object({}),
   'admin:moderation:lift': z.object({ muteId: Id }),
   'admin:moderation:reset': z.object({ userId: Id, roomId: Id, topicId: Id.optional() }),
+  // --- cakes (D-53) ---
+  'community:state': z.object({}),
+  'cakes:record': z
+    .object({
+      personId: Id.optional(),
+      guestName: DisplayName.optional(),
+      reason: CakeReason,
+      occurredOn: IsoDate,
+    })
+    .refine((v) => !!v.personId !== !!v.guestName, { message: 'personId or guestName' }),
+  'cakes:confirm': z.object({ debtId: Id }),
+  'cakes:cancel': z.object({ debtId: Id }),
+  'cakes:pledge': z.object({ debtId: Id, date: IsoDate }),
+  'cakes:unpledge': z.object({ debtId: Id }),
+  'cakes:paid': z.object({ debtId: Id }),
+  'people:setBirthday': z.object({ personId: Id, birthday: MonthDay.nullable() }),
+  'admin:people:addGuest': z.object({ name: DisplayName }),
+  'admin:people:merge': z.object({ guestId: Id, userId: Id }),
+  'admin:people:setTeam': z.object({ personId: Id, inTeam: z.boolean() }),
+  'admin:settings:update': z.object({ noshowLimit: z.number().int().min(1).max(20) }),
+  'admin:import:preview': z.object({
+    sheet: z.enum(['cakes', 'birthdays']),
+    text: z.string().max(200_000),
+  }),
+  'admin:import:commit': z.object({
+    sheet: z.enum(['cakes', 'birthdays']),
+    text: z.string().max(200_000),
+  }),
 } as const;
 
 export type ClientEventName = keyof typeof ClientEventSchemas;
@@ -148,7 +185,24 @@ export interface ClientEventResults {
   'admin:moderation:list': { mutes: MuteView[]; strikes: StrikeView[] };
   'admin:moderation:lift': { standing: Standing };
   'admin:moderation:reset': { standing: Standing };
+  'community:state': CommunityState;
+  'cakes:record': Ok;
+  'cakes:confirm': Ok;
+  'cakes:cancel': Ok;
+  'cakes:pledge': Ok;
+  'cakes:unpledge': Ok;
+  'cakes:paid': Ok;
+  'people:setBirthday': Ok;
+  'admin:people:addGuest': Ok;
+  'admin:people:merge': Ok;
+  'admin:people:setTeam': Ok;
+  'admin:settings:update': Ok;
+  'admin:import:preview': { rows: ImportRow[] };
+  'admin:import:commit': { created: number; skipped: number; guests: number };
 }
+
+/** Community actions answer with nothing; clients re-read `community:state` on `community:updated`. */
+type Ok = Record<string, never>;
 
 export const ERROR_CODES = [
   'VALIDATION',
@@ -194,6 +248,8 @@ export interface ServerToClientEvents {
   'member:updated': (p: { member: Member }) => void;
   /** Someone's labels or mute changed in a room (D-51). */
   'moderation:updated': (p: { standing: Standing }) => void;
+  /** Cakes or office data changed (D-53/D-54): re-read `community:state`. */
+  'community:updated': () => void;
   'session:revoked': () => void;
   'server:shutdown': () => void;
 }

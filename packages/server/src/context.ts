@@ -2,6 +2,7 @@ import type { FastifyBaseLogger } from 'fastify';
 import type { Server } from 'socket.io';
 import type { ClientToServerEvents, ServerToClientEvents } from '@pausa/shared';
 import type { AccessVerifier } from './auth/access';
+import type { Community } from './community/service';
 import type { Config } from './config';
 import type { Db } from './db';
 import type { Mascots } from './mascots/service';
@@ -37,6 +38,8 @@ export interface AppContext {
   mascots: Mascots;
   /** Mascots moderating topics (D-51). */
   moderator: Moderator;
+  /** Cakes and office days (D-53/D-54). */
+  community: Community;
 }
 
 /** Socket.IO rooms. */

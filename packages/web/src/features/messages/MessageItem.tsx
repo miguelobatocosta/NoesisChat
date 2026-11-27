@@ -4,6 +4,7 @@ import { type Attachment, mascotByUserId, type Message } from '@pausa/shared';
 import { t } from '../../i18n';
 import { formatFull, formatTime } from '../../lib/format';
 import { isJumboEmoji, renderMarkdown } from '../../lib/markdown';
+import { CommunityCard } from '../community/CommunityCard';
 import { plainText } from '../../lib/plaintext';
 import { QUICK_REACTIONS } from '../../lib/emoji';
 import { getStore, type PendingMessage, useChat } from '../../state/store';
@@ -109,6 +110,7 @@ export const MessageItem = memo(function MessageItem({
             {message.body && (
               <div className={styles.body} data-jumbo={isJumboEmoji(message.body) || undefined}>
                 {renderMarkdown(message.body, { nameOf, meId: me.id })}
+                {message.card && <CommunityCard card={message.card} />}
                 {message.editedAt && (
                   <span className={styles.edited}>{` (${t('message.edited')})`}</span>
                 )}

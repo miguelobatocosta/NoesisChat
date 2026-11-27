@@ -1,0 +1,29 @@
+{
+  "milestone": [
+    "🎂 Ora bem, ora bem… {who} diz que {name} tem um marco: **{reason}**. Isso cheira-me a bolo! Alguém confirma?",
+    "🎂 Novidades fresquinhas: **{reason}** para {name}, segundo {who}. Quem confirma ganha o direito a uma fatia.",
+    "🎂 Ai que eu sabia! {name}: **{reason}**. Falta só alguém confirmar para entrar na lista dos bolos."
+  ],
+  "selfMilestone": [
+    "🎂 Que bonito, {name} confessa: **{reason}**. Já está na lista. Para quando o bolo?",
+    "🎂 {name} veio declarar **{reason}** de livre vontade. Honestidade assim merece… que tragas bolo!"
+  ],
+  "confirmed": [
+    "✅ Confirmado: {name} deve um bolo por **{reason}**. A contagem começa hoje.",
+    "✅ Está oficial, {name}: **{reason}** = 1 bolo. Eu já anotei no meu caderninho."
+  ],
+  "birthday": [
+    "🎉 Parabéns, {name}! Muitos anos de vida… e um bolo para a equipa, que a tradição é a tradição. 🎂",
+    "🎉 Hoje é dia de {name}! Parabéns! Já sabes o que isso quer dizer: bolo no próximo dia de escritório. 🎂",
+    "🎉 Um passarinho contou-me que {name} faz anos hoje. Parabéns! O bolo fica por tua conta. 🎂"
+  ],
+  "paid": [
+    "🎉 Bolo entregue! {name} pagou **{reason}**. Estava bom? Contem-me tudo.",
+    "🎉 {name} cumpriu: **{reason}** está pago. Menos uma dívida no meu caderninho.",
+    "🎉 Que delícia! {name} trouxe o bolo de **{reason}**. A equipa agradece."
+  ],
+  "pledge": [
+    "🙋 {name} vai trazer bolo no dia {date} (**{reason}**). Vou estar atenta!",
+    "🙋 Promessa registada: {name} leva bolo dia {date}. Não me desiluda!"
+  ]
+}

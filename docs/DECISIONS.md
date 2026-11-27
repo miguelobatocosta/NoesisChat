@@ -201,3 +201,14 @@ Nuvem (lazy cat). Original SVG drawings in `features/mascots/Mascot.tsx`, colour
 - `OWNER_EMAIL` is the only email that becomes host (it attaches to the existing host). Email sign-in
   never grants admin to anyone else; the host can still promote someone by hand in the admin portal.
 - Off unless `ACCESS_TEAM_DOMAIN` and `ACCESS_AUD` are set (local, quick tunnel, tests): invites only.
+
+### D-53 · Cakes: milestones, birthdays, guests, Excel import: SETTLED (2026-11-27, owner)
+- `people` = every member plus **guests** (names who don't use Pausa); admins merge a guest into an account later.
+- A milestone anyone records is **pending** until someone else (or an admin) confirms; declaring your own
+  counts at once. Birthdays (day + month) create a debt on the day at 09:00, once a year, with congratulations.
+- Paying: the debtor promises a day ("Levo eu"); **someone other than the debtor** (or an admin) confirms
+  "Trouxe ✔". Admins cancel confirmed debts; the recorder cancels while pending.
+- The #geral mascot announces milestones, confirmations, promises, birthdays and paid cakes, mentioning
+  members (browser notification), with interactive cards (`messages.card`) rendered from live state.
+- Import: the admin pastes the Excel sheets ("Bolos Outros", "Aniversários"); names match by `nameKey`,
+  others become guests; "Ok" = paid. Importing twice doesn't duplicate. Visible to every member (D-16).

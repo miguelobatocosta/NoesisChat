@@ -244,11 +244,21 @@
       },
       "topic": {
         "update": "editou o tópico {name}"
+      },
+      "cake": {
+        "cancel": "anulou um bolo"
+      },
+      "people": {
+        "merge": "juntou um convidado à conta de {target}"
+      },
+      "import": {
+        "commit": "importou uma folha do Excel"
       }
     },
     "system": "Terminal",
     "topics": "Tópicos",
-    "punishments": "Castigos"
+    "punishments": "Castigos",
+    "community": "Bolos & Escritório"
   },
   "notifications": {
     "image": "📷 Imagem",
@@ -372,5 +382,98 @@
     "to": "Às",
     "weekends": "Fins de semana em silêncio",
     "active": "Em silêncio até às {time}"
+  },
+  "pages": {
+    "cakes": "Bolos",
+    "office": "Escritório",
+    "owed": "{count} bolos em dívida"
+  },
+  "cakes": {
+    "title": "Bolos",
+    "owedTitle": "Quem deve",
+    "nobodyOwes": "Ninguém deve bolos. Milagre!",
+    "topDebtor": "Caloteiro-mor",
+    "owedMeta": "{count} em dívida · o mais antigo há {days} dias",
+    "pledge": "Levo eu",
+    "pledgeDay": "Em que dia?",
+    "pledgeConfirm": "Prometo",
+    "unpledge": "Afinal não",
+    "pledged": "· leva dia {date}",
+    "nominated": "· nomeado para dia {date}",
+    "paid": "Trouxe ✔",
+    "cancel": "Anular",
+    "pendingTitle": "Por confirmar",
+    "recordedBy": "registado por {name}",
+    "confirm": "Confirmo",
+    "recordTitle": "Registar marco",
+    "recordHint": "Casa nova, filho, casamento, certificação… Conta quando outra pessoa confirmar. Se for o teu, conta logo.",
+    "who": "Quem",
+    "pickPerson": "Escolhe a pessoa",
+    "someoneElse": "Outra pessoa (não usa a Pausa)…",
+    "guestName": "Nome",
+    "reason": "Motivo",
+    "otherReason": "Outro…",
+    "customReason": "Qual?",
+    "when": "Quando",
+    "record": "Registar",
+    "recorded": "Registado. A mascote já está a espalhar a notícia.",
+    "reasons": {
+      "birthday": "Aniversário",
+      "house": "Casa nova",
+      "child": "Filho/a",
+      "wedding": "Casamento",
+      "joined": "Entrada na Noesis",
+      "anniversary": "1 ano de Noesis",
+      "certification": "Certificação",
+      "promotion": "Promoção",
+      "car": "Carro novo",
+      "justBecause": "Só porque sim"
+    },
+    "birthdaysTitle": "Aniversários",
+    "noBirthdays": "Ainda ninguém disse quando faz anos.",
+    "today": "é hoje! 🎉",
+    "inDays": "daqui a {days} dias",
+    "myBirthday": "O meu aniversário",
+    "save": "Guardar",
+    "historyTitle": "Bolos pagos",
+    "topBakers": "Quem mais trouxe: {names}",
+    "noHistory": "Ainda não há bolos pagos."
+  },
+  "cards": {
+    "gone": "já não existe",
+    "status": {
+      "pending": "por confirmar",
+      "owed": "em dívida",
+      "paid": "pago 🎉",
+      "cancelled": "anulado"
+    },
+    "openCakes": "Ver bolos"
+  },
+  "communityAdmin": {
+    "importTitle": "Importar do Excel",
+    "importHint": "No Excel, seleciona as linhas da folha (com ou sem o cabeçalho), copia e cola aqui. Bolos: Data, Réu, Motivo, Estado. Aniversários: Data, Aniversariante, Estado. \"Ok\" = pago. Importar duas vezes não duplica.",
+    "sheet": "Folha",
+    "sheetCakes": "Bolos Outros",
+    "sheetBirthdays": "Aniversários",
+    "paste": "Colar aqui",
+    "preview": "Pré-visualizar",
+    "commit": "Gravar",
+    "imported": "Feito: {created} novos, {skipped} ignorados, {guests} convidados criados.",
+    "matched": "existe",
+    "newGuest": "novo convidado",
+    "rowError": "linha {line}: {error}",
+    "rowOk": "{reason} · {date} · {status}",
+    "guestsTitle": "Convidados",
+    "guestsHint": "Pessoas que não usam a Pausa. Quando alguém entrar com o email, junta o convidado à conta para levar o histórico.",
+    "noGuests": "Não há convidados.",
+    "mergeInto": "Juntar {name} a…",
+    "pickMember": "Juntar a…",
+    "merge": "Juntar",
+    "guestName": "Nome do convidado",
+    "addGuest": "Adicionar",
+    "teamTitle": "Equipa do escritório",
+    "teamHint": "Quem conta para as idas ao escritório (presenças e faltas).",
+    "limitTitle": "Faltas",
+    "limit": "Faltas sem aviso até dever um bolo"
   }
 }

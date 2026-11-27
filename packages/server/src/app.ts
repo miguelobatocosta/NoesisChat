@@ -66,8 +66,8 @@ export async function buildApp(
     uploadsDir,
     access: config.access ? new AccessVerifier(config.access, options.accessKeys) : null,
   };
-  const { io, mascots, moderator } = createRealtime(app, base);
-  const ctx: AppContext = { ...base, io, mascots, moderator };
+  const { io, mascots, moderator, community } = createRealtime(app, base);
+  const ctx: AppContext = { ...base, io, mascots, moderator, community };
   app.decorate('pausa', ctx);
 
   await app.register(fastifyMultipart);
@@ -115,6 +115,7 @@ export async function buildApp(
     clearInterval(cleanup);
     mascots.dispose();
     moderator.dispose();
+    community.dispose();
     await new Promise<void>((resolve) => void io.close(() => resolve()));
     db.close();
   });

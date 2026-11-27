@@ -71,6 +71,14 @@ export interface ReplyPreview {
   hasAttachments: boolean;
 }
 
+/** An interactive card a mascot posts (D-53/D-54); rendered from live community state. */
+export type CardType = 'milestone' | 'birthday' | 'paid' | 'cakeCall';
+export interface MessageCard {
+  type: CardType;
+  /** A debt id, or a date for office-day cards. */
+  ref: string;
+}
+
 export interface Message {
   id: string;
   roomId: string;
@@ -87,6 +95,8 @@ export interface Message {
   createdAt: number;
   editedAt: number | null;
   deletedAt: number | null;
+  /** Interactive card (community posts), or null for an ordinary message. */
+  card: MessageCard | null;
 }
 
 export type InviteStatus = 'active' | 'used' | 'expired' | 'revoked';
@@ -150,6 +160,57 @@ export interface StrikeView {
   count: number;
   labelAt: number;
   muteAt: number;
+}
+
+// --- cakes (D-53) -----------------------------------------------------------------------------------
+
+/** A member (userId set) or a guest who doesn't use Pausa. */
+export interface Person {
+  id: string;
+  name: string;
+  userId: string | null;
+  /** 'MM-DD' */
+  birthday: string | null;
+  inTeam: boolean;
+}
+
+export type DebtKind = 'milestone' | 'birthday' | 'noshow' | 'import';
+export type DebtStatus = 'pending' | 'owed' | 'paid' | 'cancelled';
+
+export interface CakeDebt {
+  id: string;
+  personId: string;
+  reason: string;
+  kind: DebtKind;
+  /** Local 'YYYY-MM-DD'. */
+  occurredOn: string;
+  status: DebtStatus;
+  recordedBy: string | null;
+  confirmedBy: string | null;
+  pledgedOn: string | null;
+  pledgeKind: 'volunteer' | 'nominated' | null;
+  paidOn: string | null;
+  createdAt: number;
+}
+
+export interface CommunityState {
+  people: Person[];
+  debts: CakeDebt[];
+  settings: { noshowLimit: number };
+  /** The server's local date, 'YYYY-MM-DD'. */
+  today: string;
+}
+
+export type ImportSheet = 'cakes' | 'birthdays';
+export interface ImportRow {
+  line: number;
+  name: string;
+  date: string | null;
+  reason: string;
+  status: 'paid' | 'owed';
+  /** Existing person it matches, or null when a guest will be created. */
+  personId: string | null;
+  error: string | null;
 }
 
 export interface AdminLogEntry {

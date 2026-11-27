@@ -11,7 +11,8 @@ import { RoomSettingsDialog } from '../features/rooms/RoomSettingsDialog';
 import { Sidebar } from '../features/rooms/Sidebar';
 import { visibleRooms } from '../features/rooms/roomOrder';
 import { RulesDialog } from '../features/settings/RulesDialog';
-import { ChatStore, getStore, setStore, useChat } from '../state/store';
+import { CakesPage } from '../features/community/CakesPage';
+import { ChatStore, getStore, pageFromPath, setStore, useChat } from '../state/store';
 import { BrandHeader } from '../ui/BrandHeader';
 import { ConnectionPill } from '../ui/ConnectionPill';
 import { Toast } from '../ui/Toast';
@@ -48,6 +49,8 @@ export function ChatApp({ me }: { me: SessionUser }) {
   useEffect(() => {
     store.start();
     const onPop = () => {
+      const page = pageFromPath(window.location.pathname);
+      if (page !== 'room') return store.openPage(page, { replaceUrl: true });
       const slug = slugFromPath();
       const rooms = Object.values(store.getState().rooms);
       const room = rooms.find((r) => (slug ? r.slug === slug : r.isMain));
@@ -66,13 +69,15 @@ export function ChatApp({ me }: { me: SessionUser }) {
 function ChatLayout() {
   const revoked = useChat((s) => s.revoked);
   const activeRoomId = useChat((s) => s.activeRoomId);
+  const page = useChat((s) => s.page);
+  const view = page === 'room' ? activeRoomId : page;
   const hasRooms = useChat((s) => Object.keys(s.rooms).length > 0);
   const [dialog, setDialog] = useState<DialogName>(null);
   // Phone layout: the sidebar is a drawer, opened for the current room, so picking another room
   // closes it by itself. Esc and tapping outside close it too.
   const [drawerFor, setDrawerFor] = useState<string | null>(null);
-  const drawer = drawerFor === activeRoomId;
-  const setDrawer = (open: boolean) => setDrawerFor(open ? activeRoomId : null);
+  const drawer = drawerFor === view;
+  const setDrawer = (open: boolean) => setDrawerFor(open ? view : null);
 
   useEffect(() => {
     if (!drawer) return;
@@ -133,7 +138,8 @@ function ChatLayout() {
           onClick={() => setDrawer(false)}
           aria-hidden="true"
         />
-        {hasRooms && (
+        {page === 'cakes' && <CakesPage onOpenRooms={() => setDrawer(true)} />}
+        {page === 'room' && hasRooms && (
           <RoomView
             key={activeRoomId}
             roomId={activeRoomId}

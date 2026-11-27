@@ -50,6 +50,17 @@ import {
   sync,
   toggleReaction,
 } from '../messages/service';
+import {
+  cancelDebt,
+  confirmDebt,
+  markPaid,
+  pledge,
+  recordMilestone,
+  unpledge,
+} from '../community/cakes';
+import { commitSheet, parseSheet } from '../community/import';
+import { addGuest, mergeGuest, personOfUser, setBirthday, setTeam } from '../community/people';
+import { Community } from '../community/service';
 import { searchMessages } from '../messages/search';
 import { RATE_LIMITS } from '../rateLimit';
 import { archiveRoom, createRoom, listRoomsFor, updatePrefs, updateRoom } from '../rooms/service';
@@ -78,8 +89,8 @@ type Handler<K extends ClientEventName> = (
 
 export function createRealtime(
   app: FastifyInstance,
-  ctx: Omit<AppContext, 'io' | 'mascots' | 'moderator'>,
-): { io: PausaIo; mascots: Mascots; moderator: Moderator } {
+  ctx: Omit<AppContext, 'io' | 'mascots' | 'moderator' | 'community'>,
+): { io: PausaIo; mascots: Mascots; moderator: Moderator; community: Community } {
   const io: PausaIo = new Server(app.server, {
     serveClient: false,
     // Origin check on every handshake and polling request (CLAUDE.md rule 3, SPEC §7.5).
@@ -104,8 +115,9 @@ export function createRealtime(
   const full = { ...ctx, io } as AppContext;
   full.mascots = new Mascots(full);
   full.moderator = new Moderator(full);
+  full.community = new Community(full);
   io.on('connection', (socket) => onConnection(full, socket));
-  return { io, mascots: full.mascots, moderator: full.moderator };
+  return { io, mascots: full.mascots, moderator: full.moderator, community: full.community };
 }
 
 function onConnection(ctx: AppContext, socket: PausaSocket): void {
@@ -241,6 +253,94 @@ function onConnection(ctx: AppContext, socket: PausaSocket): void {
   on('admin:log:list', (input, { actor }) => {
     requireRole(actor, ['host', 'admin']);
     return listAdminLog(ctx.db, input.before);
+  });
+
+  // --- cakes (D-53) ---
+  const community = ctx.community;
+  const done = () => {
+    community.changed();
+    return {};
+  };
+  const staff = (actor: UserRow) => requireRole(actor, ['host', 'admin']);
+
+  on('community:state', () => community.state());
+
+  on('cakes:record', (input, { actor }) => {
+    const debt = recordMilestone(ctx.db, actor, input);
+    community.milestoneRecorded(debt.id, actor.id);
+    return done();
+  });
+  on('cakes:confirm', (input, { actor }) => {
+    const debt = confirmDebt(ctx.db, actor, input.debtId);
+    community.announce('confirmed', {
+      name: community.nameFor(debt.personId),
+      reason: debt.reason,
+    });
+    return done();
+  });
+  on('cakes:cancel', (input, { actor }) => {
+    const debt = cancelDebt(ctx.db, actor, input.debtId);
+    logAdmin(ctx.db, actor.id, 'cake.cancel', 'debt', debt.id, { reason: debt.reason });
+    return done();
+  });
+  on('cakes:pledge', (input, { actor }) => {
+    const debt = pledge(ctx.db, actor, input.debtId, input.date, community.today());
+    community.announce('pledge', {
+      name: community.nameFor(debt.personId),
+      reason: debt.reason,
+      date: input.date.split('-').reverse().join('/'),
+    });
+    return done();
+  });
+  on('cakes:unpledge', (input, { actor }) => {
+    unpledge(ctx.db, actor, input.debtId);
+    return done();
+  });
+  on('cakes:paid', (input, { actor }) => {
+    const debt = markPaid(ctx.db, actor, input.debtId, community.today());
+    community.announce(
+      'paid',
+      { name: community.nameFor(debt.personId), reason: debt.reason },
+      { type: 'paid', ref: debt.id },
+    );
+    return done();
+  });
+  on('people:setBirthday', (input, { actor }) => {
+    if (personOfUser(ctx.db, actor.id)?.id !== input.personId) staff(actor);
+    setBirthday(ctx.db, input.personId, input.birthday);
+    return done();
+  });
+  on('admin:people:addGuest', (input, { actor }) => {
+    staff(actor);
+    addGuest(ctx.db, input.name, true);
+    return done();
+  });
+  on('admin:people:merge', (input, { actor }) => {
+    staff(actor);
+    mergeGuest(ctx.db, input.guestId, input.userId);
+    logAdmin(ctx.db, actor.id, 'people.merge', 'user', input.userId);
+    return done();
+  });
+  on('admin:people:setTeam', (input, { actor }) => {
+    staff(actor);
+    setTeam(ctx.db, input.personId, input.inTeam);
+    return done();
+  });
+  on('admin:settings:update', (input, { actor }) => {
+    staff(actor);
+    community.setNoshowLimit(input.noshowLimit);
+    return done();
+  });
+  on('admin:import:preview', (input, { actor }) => {
+    staff(actor);
+    return { rows: parseSheet(ctx.db, input.sheet, input.text) };
+  });
+  on('admin:import:commit', (input, { actor }) => {
+    staff(actor);
+    const result = commitSheet(ctx.db, input.sheet, input.text);
+    logAdmin(ctx.db, actor.id, 'import.commit', 'sheet', input.sheet, result);
+    community.changed();
+    return result;
   });
 
   // --- topic moderation (D-51) ---

@@ -3,7 +3,7 @@ import { EllipsisVertical, Plus } from 'lucide-react';
 import { type Member, mascotByUserId, type RoomView } from '@pausa/shared';
 import type { DialogName } from '../../app/ChatApp';
 import { t } from '../../i18n';
-import { getStore, useChat } from '../../state/store';
+import { getStore, type Page, useChat } from '../../state/store';
 import { formatTime } from '../../lib/format';
 import { quietUntil, useDnd } from '../../lib/dnd';
 import { Mascot } from '../mascots/Mascot';
@@ -44,6 +44,9 @@ export function Sidebar({
       data-open={drawerOpen || undefined}
     >
       <div className={styles.scroll}>
+        <ul className={`${styles.list} ${styles.pages}`}>
+          <PageRow page="cakes" icon="🎂" />
+        </ul>
         <div className={styles.section}>
           <h2 className={styles.label}>{t('sidebar.rooms')}</h2>
           <ul className={styles.list}>
@@ -121,8 +124,39 @@ export function Sidebar({
   );
 }
 
+/** Bolos / Escritório (D-53/D-54): pages, not rooms. The number is cakes owed in total. */
+function PageRow({ page, icon }: { page: Exclude<Page, 'room'>; icon: string }) {
+  const isActive = useChat((s) => s.page === page);
+  const owed = useChat((s) =>
+    page === 'cakes' ? (s.community?.debts.filter((d) => d.status === 'owed').length ?? 0) : 0,
+  );
+  const name = t(`pages.${page}`);
+  return (
+    <li>
+      <button
+        type="button"
+        className={styles.room}
+        data-active={isActive || undefined}
+        aria-current={isActive ? 'page' : undefined}
+        aria-label={owed > 0 ? `${name}, ${t('pages.owed', { count: owed })}` : name}
+        onClick={() => getStore().openPage(page)}
+      >
+        <span className={styles.roomIcon} aria-hidden="true">
+          {icon}
+        </span>
+        <span className={styles.roomName}>{name}</span>
+        {owed > 0 && (
+          <span className={`${styles.pageCount} num`} aria-hidden="true">
+            {owed}
+          </span>
+        )}
+      </button>
+    </li>
+  );
+}
+
 function RoomRow({ room }: { room: RoomView }) {
-  const isActive = useChat((s) => s.activeRoomId === room.id);
+  const isActive = useChat((s) => s.page === 'room' && s.activeRoomId === room.id);
   const label = [
     room.name,
     room.unread > 0 ? t('sidebar.unread', { count: room.unread }) : '',

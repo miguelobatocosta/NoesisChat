@@ -279,3 +279,15 @@ summary.label {
   line-height: 16px;
   color: var(--sidebar-muted);
 }
+
+/* Bolos / Escritório above the rooms. */
+.pages {
+  margin-bottom: var(--space-4);
+}
+
+.pageCount {
+  margin-left: auto;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--sidebar-muted);
+}

@@ -314,6 +314,71 @@ test.describe('admin', () => {
   });
 });
 
+test.describe('cakes (D-53)', () => {
+  test('a milestone is recorded, the debtor confirms it from the chat card, promises a day, and the host marks it paid', async ({
+    browser,
+  }) => {
+    const anaName = uniqueName('Ana');
+    const ana = await join(browser, memberInvite(), anaName);
+    const host = await join(browser, hostLink(), 'Costa');
+
+    // Host records Ana's milestone on the Bolos page.
+    await host.page
+      .locator('nav')
+      .getByRole('button', { name: /^Bolos/ })
+      .click();
+    await expect(host.page.getByRole('heading', { name: 'Bolos', exact: true })).toBeVisible();
+    await expect(host.page).toHaveURL(/\/bolos$/);
+    const form = host.page.getByRole('region', { name: 'Registar marco' });
+    await form.getByLabel('Quem').selectOption({ label: anaName });
+    await form.getByLabel('Motivo').selectOption({ label: 'Casa nova' });
+    await form.getByRole('button', { name: 'Registar' }).click();
+
+    // Ana sees the mascot's card in #geral and confirms it herself.
+    const card = message(ana.page, /Casa nova/).filter({
+      has: ana.page.getByRole('button', { name: 'Confirmo' }),
+    });
+    await card.getByRole('button', { name: 'Confirmo' }).click();
+    await expect(
+      ana.page
+        .locator('article', { hasText: /Casa nova/ })
+        .filter({ has: ana.page.getByRole('button', { name: 'Ver bolos' }) })
+        .first()
+        .getByText('em dívida'),
+    ).toBeVisible();
+
+    // She promises it for a day.
+    await ana.page
+      .locator('nav')
+      .getByRole('button', { name: /^Bolos/ })
+      .click();
+    const owed = ana.page
+      .getByRole('region', { name: 'Quem deve' })
+      .getByRole('listitem')
+      .filter({ hasText: anaName })
+      .first();
+    await owed.getByRole('button', { name: 'Levo eu' }).click();
+    await owed.getByRole('button', { name: 'Prometo' }).click();
+    await expect(owed.getByText(/leva dia/)).toBeVisible();
+
+    // Someone else confirms the cake arrived.
+    const hostRow = host.page
+      .getByRole('region', { name: 'Quem deve' })
+      .getByRole('listitem')
+      .filter({ hasText: anaName })
+      .first();
+    await hostRow.getByRole('button', { name: 'Trouxe ✔' }).click();
+    await expect(
+      host.page.getByRole('region', { name: 'Bolos pagos' }).getByText(anaName).first(),
+    ).toBeVisible();
+
+    expect(ana.errors).toEqual([]);
+    expect(host.errors).toEqual([]);
+    await ana.context.close();
+    await host.context.close();
+  });
+});
+
 test.describe('do not disturb', () => {
   test('one hour of silence shows in the sidebar and survives a reload; switching off clears it', async ({
     browser,

@@ -11,6 +11,7 @@ import {
   type NotifyLevel,
   type Room,
   type RoomView,
+  type CommunityState,
   type SessionUser,
   type Standing,
 } from '@pausa/shared';
@@ -24,6 +25,16 @@ import { askPermissionOnce, setBadge, shouldNotify, showNotification } from '../
 import { plainText } from '../lib/plaintext';
 
 type Connection = 'connecting' | 'connected' | 'reconnecting' | 'offline';
+
+export type Page = 'room' | 'cakes' | 'office';
+export const PAGE_PATHS: Record<Exclude<Page, 'room'>, string> = {
+  cakes: '/bolos',
+  office: '/escritorio',
+};
+export function pageFromPath(path: string): Page {
+  const found = Object.entries(PAGE_PATHS).find(([, p]) => path === p || path === `${p}/`);
+  return found ? (found[0] as Page) : 'room';
+}
 
 export interface Timeline {
   messages: Message[];
@@ -50,6 +61,10 @@ export interface ChatState {
   revoked: boolean;
   rooms: Record<string, RoomView>;
   activeRoomId: string;
+  /** What the main area shows: a room, or the Bolos / Escritório pages (D-53/D-54). */
+  page: Page;
+  /** Cakes and office state; null until first loaded. */
+  community: CommunityState | null;
   timelines: Record<string, Timeline>;
   pending: PendingMessage[];
   members: Record<string, Member>;
@@ -129,6 +144,8 @@ export class ChatStore {
       revoked: false,
       rooms: {},
       activeRoomId: MAIN_ROOM_ID,
+      page: typeof window !== 'undefined' ? pageFromPath(window.location.pathname) : 'room',
+      community: null,
       timelines: {},
       pending: [],
       members: {},
@@ -216,6 +233,7 @@ export class ChatStore {
       }
     });
     s.on('moderation:updated', ({ standing }) => this.applyStanding(standing));
+    s.on('community:updated', () => void this.loadCommunity());
     s.on('typing', ({ roomId, userId }) => {
       if (userId === this.state.me.id) return;
       this.set((st) => ({
@@ -265,7 +283,7 @@ export class ChatStore {
       if (first) {
         const initial =
           rooms.find((r) => r.slug === this.initialSlug) ?? rooms.find((r) => r.isMain) ?? rooms[0];
-        if (initial) this.selectRoom(initial.id, { replaceUrl: true });
+        if (initial) this.selectRoom(initial.id, { replaceUrl: true, keepPage: true });
       } else {
         // Catch up on everything that changed while we were away (D-33).
         await Promise.all(
@@ -275,6 +293,7 @@ export class ChatStore {
         );
       }
       this.updateBadge();
+      void this.loadCommunity();
       await this.flushPending();
     } catch (err) {
       this.fail(err);
@@ -283,13 +302,49 @@ export class ChatStore {
 
   // --- rooms -----------------------------------------------------------------------------------------
 
-  selectRoom(roomId: string, opts: { replaceUrl?: boolean } = {}): void {
+  selectRoom(roomId: string, opts: { replaceUrl?: boolean; keepPage?: boolean } = {}): void {
     const room = this.state.rooms[roomId];
     if (!room) return;
-    this.set({ activeRoomId: roomId, editingId: null });
-    if (!opts.replaceUrl) this.navigate(room);
+    // On first load the address may be /bolos: pick the room behind it without leaving the page.
+    if (opts.keepPage && this.state.page !== 'room') {
+      this.set({ activeRoomId: roomId });
+      if (!this.state.timelines[roomId]?.loaded) void this.loadLatest(roomId);
+      return;
+    }
+    const fromPage = this.state.page !== 'room';
+    this.set({ activeRoomId: roomId, editingId: null, page: 'room' });
+    if (!opts.replaceUrl || fromPage) this.navigate(room);
     if (!this.state.timelines[roomId]?.loaded) void this.loadLatest(roomId);
     void this.loadStandings(roomId);
+  }
+
+  // --- cakes and office days (D-53/D-54) ------------------------------------------------------------
+
+  /** Shows the Bolos or Escritório page in the main area. */
+  openPage(page: Exclude<Page, 'room'>, opts: { replaceUrl?: boolean } = {}): void {
+    this.set({ page });
+    const path = PAGE_PATHS[page];
+    if (!opts.replaceUrl && window.location.pathname !== path)
+      window.history.pushState(null, '', path);
+  }
+
+  async loadCommunity(): Promise<void> {
+    try {
+      this.set({ community: await this.req('community:state', {}) });
+    } catch {
+      /* the next community:updated or reconnect retries */
+    }
+  }
+
+  /** Cakes/office actions; errors become a toast. Returns whether it worked. */
+  async act<K extends ClientEventName>(name: K, payload: ClientEventInput<K>): Promise<boolean> {
+    try {
+      await this.req(name, payload);
+      return true;
+    } catch (err) {
+      this.fail(err);
+      return false;
+    }
   }
 
   // --- topic moderation (D-51) -------------------------------------------------------------------------

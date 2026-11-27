@@ -1,0 +1,199 @@
+/* Bolos and Escritório pages (D-53/D-54): the room layout's header, then a grid of cards. */
+.page {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  background: var(--bg);
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  height: 64px;
+  padding: 0 var(--space-5) 0 var(--space-8);
+  border-bottom: 1px solid var(--separator);
+  flex-shrink: 0;
+}
+
+.title {
+  font-size: 20px;
+  line-height: 26px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.roomsButton {
+  display: none;
+}
+
+.scroll {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--space-6) var(--space-8) var(--space-10);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: var(--space-5);
+  align-items: start;
+}
+
+.card {
+  padding: var(--space-5);
+  border-radius: var(--radius-lg);
+  background: var(--bg-subtle);
+}
+
+.wide {
+  grid-column: 1 / -1;
+}
+
+.cardTitle {
+  margin: 0 0 var(--space-3);
+  font-size: 17px;
+  line-height: 22px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--fg);
+}
+
+.muted {
+  margin: 0 0 var(--space-3);
+  color: var(--fg-muted);
+  font-size: 14px;
+}
+
+.rows {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  padding: var(--space-3) 0;
+  border-bottom: 1px solid var(--separator);
+}
+
+.row:last-child {
+  border-bottom: none;
+}
+
+.rowMain {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.rowTitle {
+  font-weight: 700;
+  color: var(--fg);
+}
+
+.rowMeta {
+  font-size: 13px;
+  color: var(--fg-muted);
+}
+
+.badgeText {
+  margin-left: var(--space-2);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--link);
+}
+
+.debtList {
+  margin: var(--space-1) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.debt {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  padding: var(--space-1) 0;
+  font-size: 14px;
+}
+
+.pledge {
+  font-weight: 600;
+  color: var(--link);
+}
+
+.actions {
+  display: flex;
+  gap: var(--space-1);
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.form > button {
+  align-self: flex-start;
+}
+
+.inline {
+  display: flex;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-top: var(--space-3);
+}
+
+/* Cards inside chat messages. */
+.chatCard {
+  margin-top: var(--space-2);
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-md);
+  background: var(--bg-subtle);
+  max-width: 480px;
+}
+
+.chatCardRow {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.chatCardText {
+  flex: 1;
+  min-width: 0;
+  font-size: 14px;
+  color: var(--fg-body);
+}
+
+@media (max-width: 767px) {
+  .roomsButton {
+    display: grid;
+    min-width: var(--hit-min);
+    min-height: var(--hit-min);
+    margin-left: calc(-1 * var(--space-2));
+  }
+
+  .header {
+    padding: 0 var(--space-3);
+  }
+
+  .scroll {
+    padding: var(--space-4) var(--space-3) var(--space-8);
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}

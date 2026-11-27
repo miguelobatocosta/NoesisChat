@@ -21,6 +21,7 @@ Update at the end of every phase: status, date, commit, and anything deferred.
 | 13 | Do not disturb / quiet hours | ✅ done | 2026-11-27 | phase/13-nao-incomodar | Per device (localStorage, a preference, not a token); silences all notifications incl. mentions; unread count keeps working |
 | 14 | Start with Windows + daily backup | ✅ done | 2026-11-27 | phase/14-arranque-automatico | `pnpm autostart`: Task Scheduler at sign-in (no admin, no stored password) + daily 13:00 backup; demo logs to data/logs |
 | 15 | Sign in with the company email (D-52) | ✅ done | 2026-11-27 | phase/15-entrar-com-email | Cloudflare Access JWT verified with node:crypto; new emails join as members, owner email = host; migration 0005 |
+| 16 | Bolos (owner request, D-53) | ✅ done | 2026-11-27 | phase/16-bolos | People + guests, milestones confirmed by a second person, birthdays, promises, Excel paste import, chat cards; migration 0006 |
 
 **Test totals:** 27 shared + 135 server + 231 web unit/integration, 20 Playwright E2E (incl. axe contrast in light and dark).
 

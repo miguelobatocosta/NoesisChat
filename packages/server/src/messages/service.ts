@@ -4,6 +4,7 @@ import {
   extractMentionIds,
   LIMITS,
   type Message,
+  type MessageCard,
   type Reaction,
   type ReplyPreview,
 } from '@pausa/shared';
@@ -25,6 +26,8 @@ export interface MessageRow {
   created_at: number;
   edited_at: number | null;
   deleted_at: number | null;
+  /** JSON MessageCard (D-53), set only by the server. */
+  card: string | null;
 }
 
 interface AttachmentRow {
@@ -118,6 +121,7 @@ export function hydrate(db: Db, rows: MessageRow[]): Message[] {
       createdAt: row.created_at,
       editedAt: row.edited_at,
       deletedAt: row.deleted_at,
+      card: row.card && !row.deleted_at ? (JSON.parse(row.card) as MessageCard) : null,
     };
   });
 }
@@ -198,6 +202,8 @@ export function sendMessage(
   db: Db,
   actor: UserRow,
   input: ClientEventPayload<'messages:send'>,
+  /** Server-only extras: a community card (D-53). Never from a client payload. */
+  extra: { card?: MessageCard } = {},
 ): { message: Message; created: boolean } {
   return db.transaction(() => {
     // Idempotency (D-38): a retry after a lost ack returns the original message.
@@ -233,8 +239,8 @@ export function sendMessage(
     const id = newId();
     const now = Date.now();
     db.prepare(
-      `INSERT INTO messages (id, room_id, user_id, client_id, body, reply_to_id, seq, created_at)
-       VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
+      `INSERT INTO messages (id, room_id, user_id, client_id, body, reply_to_id, seq, created_at, card)
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
     ).run(
       id,
       input.roomId,
@@ -244,6 +250,7 @@ export function sendMessage(
       input.replyToId ?? null,
       nextSeq(db),
       now,
+      extra.card ? JSON.stringify(extra.card) : null,
     );
 
     const attach = db.prepare('UPDATE attachments SET message_id = ?, position = ? WHERE id = ?');
