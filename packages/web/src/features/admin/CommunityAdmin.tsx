@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import type { ImportRow, ImportSheet } from '@pausa/shared';
 import { t } from '../../i18n';
+import { readXlsx, sheetKind } from '../../lib/xlsx';
 import { showDate } from '../community/selectors';
 import { getStore, useChat } from '../../state/store';
 import buttons from '../../ui/buttons.module.css';
@@ -24,7 +25,48 @@ export function CommunityAdmin({ onError }: { onError: OnError }) {
 function Import({ onError }: { onError: OnError }) {
   const store = getStore();
   const [sheet, setSheet] = useState<ImportSheet>('cakes');
-  const [text, setText] = useState('');
+  // One text per sheet: pasted by hand, or filled from an uploaded .xlsx.
+  const [texts, setTexts] = useState<Record<ImportSheet, string>>({
+    cakes: '',
+    birthdays: '',
+    attendance: '',
+  });
+  const text = texts[sheet];
+  const setText = (value: string) => setTexts((cur) => ({ ...cur, [sheet]: value }));
+  const [loaded, setLoaded] = useState<string | null>(null);
+
+  async function upload(file: File) {
+    try {
+      const sheets = await readXlsx(file);
+      const next = { cakes: '', birthdays: '', attendance: '' } as Record<ImportSheet, string>;
+      const found: string[] = [];
+      for (const [name, tsv] of Object.entries(sheets)) {
+        const kind = sheetKind(name);
+        if (kind && tsv) {
+          next[kind] = tsv;
+          found.push(name);
+        }
+      }
+      setTexts(next);
+      setRows(null);
+      setResult(null);
+      setLoaded(
+        found.length
+          ? t('communityAdmin.fileLoaded', { sheets: found.join(', ') })
+          : t('communityAdmin.fileEmpty'),
+      );
+      const first = (['cakes', 'birthdays', 'attendance'] as const).find((k) => next[k]);
+      if (first) {
+        setSheet(first);
+        setRows(
+          (await store.admin('admin:import:preview', { sheet: first, text: next[first] })).rows,
+        );
+      }
+    } catch (err) {
+      setLoaded(t('communityAdmin.fileError'));
+      onError(err);
+    }
+  }
   const [rows, setRows] = useState<ImportRow[] | null>(null);
   const [result, setResult] = useState<string | null>(null);
 
@@ -32,14 +74,38 @@ function Import({ onError }: { onError: OnError }) {
     <section>
       <h3 className={styles.sectionTitle}>{t('communityAdmin.importTitle')}</h3>
       <p className={forms.hint}>{t('communityAdmin.importHint')}</p>
+      <label className={`${buttons.accent} ${styles.fileButton}`}>
+        {t('communityAdmin.chooseFile')}
+        <input
+          type="file"
+          accept=".xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+          className={styles.fileInput}
+          onChange={(e) => {
+            const file = e.target.files?.[0];
+            e.target.value = '';
+            if (file) void upload(file);
+          }}
+        />
+      </label>
+      {loaded && (
+        <p className={forms.hint} role="status">
+          {loaded}
+        </p>
+      )}
       <label className={forms.field}>
         <span className={forms.label}>{t('communityAdmin.sheet')}</span>
         <select
           className={forms.select}
           value={sheet}
           onChange={(e) => {
-            setSheet(e.target.value as ImportSheet);
+            const next = e.target.value as ImportSheet;
+            setSheet(next);
             setRows(null);
+            if (texts[next])
+              void store
+                .admin('admin:import:preview', { sheet: next, text: texts[next] })
+                .then((r) => setRows(r.rows))
+                .catch(onError);
           }}
         >
           <option value="cakes">{t('communityAdmin.sheetCakes')}</option>

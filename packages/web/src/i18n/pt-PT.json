@@ -453,11 +453,11 @@
   },
   "communityAdmin": {
     "importTitle": "Importar do Excel",
-    "importHint": "No Excel, seleciona as linhas da folha (com ou sem o cabeçalho), copia e cola aqui. Bolos: Data, Réu, Motivo, Estado. Aniversários: Data, Aniversariante, Estado. \"Ok\" = pago. Importar duas vezes não duplica. Presenças: Data, Nome, Presença, Desculpa, Bolo, Aviso Prévio, Justificação (o histórico nunca conta para bolos de faltas).",
+    "importHint": "Escolhe o ficheiro Excel da equipa: leio as folhas \"Bolos Outros\", \"Aniversários\" e \"Presenças\". Revê a pré-visualização de cada folha e grava. Importar duas vezes não duplica, e o histórico de presenças nunca conta para bolos de faltas.",
     "sheet": "Folha",
     "sheetCakes": "Bolos Outros",
     "sheetBirthdays": "Aniversários",
-    "paste": "Colar aqui",
+    "paste": "Conteúdo da folha (também podes colar do Excel)",
     "preview": "Pré-visualizar",
     "commit": "Gravar",
     "imported": "Feito: {created} novos, {skipped} ignorados, {guests} convidados criados.",
@@ -478,7 +478,11 @@
     "limitTitle": "Faltas",
     "limit": "Faltas sem aviso até dever um bolo",
     "sheetAttendance": "Presenças",
-    "rowAttendance": "{reason} · {date}"
+    "rowAttendance": "{reason} · {date}",
+    "chooseFile": "Escolher ficheiro Excel (.xlsx)",
+    "fileLoaded": "Lido: {sheets}. Revê cada folha (escolhe-a em \"Folha\") e carrega em Gravar.",
+    "fileEmpty": "Não encontrei as folhas \"Bolos Outros\", \"Aniversários\" ou \"Presenças\" neste ficheiro.",
+    "fileError": "Não consegui ler este ficheiro. É um .xlsx?"
   },
   "office": {
     "title": "Escritório",
