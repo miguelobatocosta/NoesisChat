@@ -4,6 +4,7 @@ import fastifyMultipart from '@fastify/multipart';
 import fastifyStatic from '@fastify/static';
 import Fastify, { type FastifyInstance, type FastifyReply, LogController } from 'fastify';
 import type { ErrorBody, HealthResponse } from '@pausa/shared';
+import { AccessVerifier, type FetchKeys } from './auth/access';
 import { allowedOrigins } from './auth/origin';
 import { registerAuthRoutes } from './auth/routes';
 import type { Config } from './config';
@@ -25,6 +26,8 @@ declare module 'fastify' {
 
 export interface BuildAppOptions {
   logger?: boolean;
+  /** Tests inject their own Access signing keys instead of fetching Cloudflare's. */
+  accessKeys?: FetchKeys;
 }
 
 /** Paths that belong to the server and must never fall back to the web app's index.html. */
@@ -61,6 +64,7 @@ export async function buildApp(
     origins: allowedOrigins(config),
     presence: new Presence(),
     uploadsDir,
+    access: config.access ? new AccessVerifier(config.access, options.accessKeys) : null,
   };
   const { io, mascots, moderator } = createRealtime(app, base);
   const ctx: AppContext = { ...base, io, mascots, moderator };

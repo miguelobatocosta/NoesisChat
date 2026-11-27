@@ -49,7 +49,9 @@ Every admin/host action is written to `admin_log` (who, what, when, target).
 - **Host bootstrap (once):** `pnpm server:init` creates a one-time host invite link (and, once a host
   exists, a link that signs the host in on another browser). The host joins in the browser like everyone
   else. There is no host-only UI or host mode. `pnpm server:invite` creates member invites from the terminal.
-- **Colleague:** clicks the invite link `<PUBLIC_URL>/join#<code>` → passes Cloudflare's email PIN screen
+- **Colleague with a company email (D-52, the normal way since Phase 15):** opens `<PUBLIC_URL>`, passes
+  Cloudflare's email PIN screen, picks a name the first time and is in. No invite.
+- **Colleague with an invite:** clicks the invite link `<PUBLIC_URL>/join#<code>` → passes Cloudflare's email PIN screen
   (if the tunnel is gated, §4) → sees the house rules and privacy note (§3.7) → picks a display name
   (prefilled and locked if the invite names the person) → lands in `#geral`.
 - Display names are unique after normalization (NFKC, lowercase, trimmed): "José" and "jose " collide.

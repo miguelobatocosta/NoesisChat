@@ -123,6 +123,17 @@ Without the "Pausa convite" bypass everything still works, but invitees have to 
 To run it without a window: `cloudflared service install` with a `config.yml`, plus the server at logon
 via Task Scheduler. Or move the folder to a small VPS: no code changes.
 
+### Email sign-in without invites (D-52)
+In `.env`, next to the tunnel settings:
+```
+ACCESS_TEAM_DOMAIN=<team>.cloudflareaccess.com   # the address on the Cloudflare login page
+ACCESS_AUD=<tag>          # Zero Trust → Access → Applications → Pausa → Overview → Application Audience (AUD) Tag
+ACCESS_EMAIL_DOMAIN=empresa.pt
+OWNER_EMAIL=you@empresa.pt   # the only email that becomes host
+```
+Restart Pausa. Anyone who passes the email code with a company address gets in after picking a name;
+your email signs you in as host on any browser. Invites still work.
+
 ## 9. Moving to a VPS or Raspberry Pi
 
 Copy the repo and the `data` folder, install Node + pnpm, `pnpm install`, set `.env`, `pnpm start`.

@@ -25,6 +25,22 @@ const ConfigInput = z.object({
   MASCOT_DELAY_MS: z.coerce.number().int().min(0).max(60_000).default(1200),
   /** Chance a mascot reacts to one of its keywords (mentions always get an answer). Tests use 0 or 1. */
   MASCOT_CHANCE: z.coerce.number().min(0).max(1).default(0.35),
+  /** Sign-in with the Cloudflare Access email (D-52). Both needed; otherwise invites only. */
+  ACCESS_TEAM_DOMAIN: z
+    .string()
+    .regex(/^[a-z0-9-]+\.cloudflareaccess\.com$/, 'like team-name.cloudflareaccess.com')
+    .optional(),
+  ACCESS_AUD: z
+    .string()
+    .regex(/^[a-f0-9]{32,128}$/, 'the Application Audience (AUD) tag')
+    .optional(),
+  /** Second check on the email domain, on top of the Access policy. */
+  ACCESS_EMAIL_DOMAIN: z
+    .string()
+    .regex(/^[a-z0-9.-]+\.[a-z]{2,}$/)
+    .optional(),
+  /** The only email that signs in as host. Everyone else is a member. */
+  OWNER_EMAIL: z.email().optional(),
 });
 
 const KEYS = Object.keys(ConfigInput.shape) as (keyof z.input<typeof ConfigInput>)[];
@@ -45,6 +61,13 @@ export interface Config {
   joinRatePerMin: number;
   mascotDelayMs: number;
   mascotChance: number;
+  /** Cloudflare Access sign-in (D-52), or null when not configured. */
+  access: {
+    teamDomain: string;
+    aud: string;
+    emailDomain: string | null;
+    ownerEmail: string | null;
+  } | null;
 }
 
 export class ConfigError extends Error {
@@ -91,6 +114,15 @@ export function loadConfig(options: LoadConfigOptions = {}): Config {
     joinRatePerMin: c.JOIN_RATE_PER_MIN,
     mascotDelayMs: c.MASCOT_DELAY_MS,
     mascotChance: c.MASCOT_CHANCE,
+    access:
+      c.ACCESS_TEAM_DOMAIN && c.ACCESS_AUD
+        ? {
+            teamDomain: c.ACCESS_TEAM_DOMAIN,
+            aud: c.ACCESS_AUD,
+            emailDomain: c.ACCESS_EMAIL_DOMAIN?.toLowerCase() ?? null,
+            ownerEmail: c.OWNER_EMAIL?.toLowerCase() ?? null,
+          }
+        : null,
   };
 }
 

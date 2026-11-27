@@ -1,4 +1,5 @@
 import type { AddressInfo } from 'node:net';
+import type { FetchKeys } from '../src/auth/access';
 import { io as ioClient, type Socket } from 'socket.io-client';
 import {
   type Ack,
@@ -26,13 +27,16 @@ export interface TestUser {
   cookie: string;
 }
 
-export async function startTestServer(env: Record<string, string> = {}) {
+export async function startTestServer(
+  env: Record<string, string> = {},
+  options: { accessKeys?: FetchKeys } = {},
+) {
   const dataDir = tempDir('pausa-data-');
   const config = loadConfig({
     root: tempDir(),
     env: { NODE_ENV: 'test', DATA_DIR: dataDir, ...env },
   });
-  const app = await buildApp(config);
+  const app = await buildApp(config, options);
   await app.listen({ port: 0, host: '127.0.0.1' });
   const port = (app.server.address() as AddressInfo).port;
   const url = `http://127.0.0.1:${port}`;

@@ -29,7 +29,8 @@
     "accept": "Li as regras e a nota de privacidade",
     "submit": "Entrar",
     "submitting": "A entrar…",
-    "noCode": "Este link não trouxe o convite. Se acabaste de pôr o código do email, abre outra vez o mesmo link: o convite continua válido. Se não resultar, pede um link novo a quem gere a {app}."
+    "noCode": "Este link não trouxe o convite. Se acabaste de pôr o código do email, abre outra vez o mesmo link: o convite continua válido. Se não resultar, pede um link novo a quem gere a {app}.",
+    "subtitleEmail": "Entraste como {email}. A {app} é o sítio da equipa para falar de tudo menos trabalho. Só falta escolheres o teu nome."
   },
   "noAccess": {
     "title": "Precisas de um convite",

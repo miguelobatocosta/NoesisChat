@@ -1,7 +1,7 @@
 import { type FormEvent, useState } from 'react';
 import { APP_NAME, InviteCode, LIMITS, type SessionUser } from '@pausa/shared';
 import { errorCode } from '../../api/errors';
-import { join } from '../../api/http';
+import { accessJoin, join } from '../../api/http';
 import { t } from '../../i18n';
 import buttons from '../../ui/buttons.module.css';
 import forms from '../../ui/forms.module.css';
@@ -12,13 +12,16 @@ import styles from './Onboarding.module.css';
 /** /join#<code>: house rules + privacy note, pick a name, get a session cookie (SPEC §3.1). */
 export function JoinPage({
   code,
+  email,
   onJoined,
 }: {
   /** From the address or the email-gate hand-off (invite.ts). */
   code: string | null;
+  /** A Cloudflare Access verified email (D-52): joins without an invite. */
+  email?: string | undefined;
   onJoined: (me: SessionUser) => void;
 }) {
-  const validCode = code !== null && InviteCode.safeParse(code).success;
+  const validCode = email !== undefined || (code !== null && InviteCode.safeParse(code).success);
   const [name, setName] = useState('');
   const [accepted, setAccepted] = useState(false);
   const [busy, setBusy] = useState(false);
@@ -29,7 +32,7 @@ export function JoinPage({
     setBusy(true);
     setError(null);
     try {
-      const me = await join(code!, name.trim());
+      const me = email ? await accessJoin(name.trim()) : await join(code!, name.trim());
       clearInvite();
       // The code has done its job: remove it from the address bar and history.
       window.history.replaceState(null, '', '/');
@@ -53,7 +56,11 @@ export function JoinPage({
       <h1 id="join-title" className={styles.title}>
         {t('join.title')}
       </h1>
-      <p className={styles.subtitle}>{t('join.subtitle', { app: APP_NAME })}</p>
+      <p className={styles.subtitle}>
+        {email
+          ? t('join.subtitleEmail', { app: APP_NAME, email })
+          : t('join.subtitle', { app: APP_NAME })}
+      </p>
 
       <div className={styles.rules}>
         <RulesContent />

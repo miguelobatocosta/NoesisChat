@@ -11,6 +11,9 @@ export interface SessionUser {
   role: Role;
 }
 
+/** What a verified Cloudflare Access email can do here (D-52). */
+export type AccessStatus = 'registered' | 'new' | 'revoked';
+
 export interface Member extends SessionUser {
   /** false once revoked. Kept in the list so old messages still show the author's name. */
   active: boolean;

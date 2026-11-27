@@ -11,12 +11,28 @@ async function parseError(res: Response): Promise<RequestError> {
   return new RequestError('INTERNAL', `HTTP ${res.status}`);
 }
 
-/** null when there is no valid session cookie. */
-export async function fetchSession(): Promise<SessionUser | null> {
+/** user is null without a valid session cookie; `access` says whether a verified email can sign in. */
+export async function fetchSession(): Promise<SessionState> {
   const res = await fetch('/api/session', { credentials: 'same-origin', cache: 'no-store' });
   if (!res.ok) throw await parseError(res);
-  return ((await res.json()) as SessionState).user;
+  return (await res.json()) as SessionState;
 }
+
+async function post(path: string, body: unknown = {}): Promise<SessionUser> {
+  const res = await fetch(path, {
+    method: 'POST',
+    credentials: 'same-origin',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(body),
+  });
+  if (!res.ok) throw await parseError(res);
+  return ((await res.json()) as SessionResponse).user;
+}
+
+/** Sign in with the email Cloudflare Access verified (D-52). */
+export const accessSignIn = () => post('/api/access/signin');
+/** First visit with a verified email: pick a name. */
+export const accessJoin = (displayName: string) => post('/api/access/join', { displayName });
 
 export async function join(code: string, displayName: string): Promise<SessionUser> {
   const res = await fetch('/api/join', {

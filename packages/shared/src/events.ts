@@ -2,6 +2,7 @@ import { z } from 'zod';
 import { LIMITS, MASCOT_KEYS } from './constants';
 import { isEmoji, ULID_RE } from './text';
 import type {
+  AccessStatus,
   AdminLogEntry,
   InviteView,
   Member,
@@ -211,4 +212,10 @@ export interface SessionResponse {
 export interface SessionState {
   ok: true;
   user: SessionUser | null;
+  /** Present when signed out but Cloudflare Access vouches for an email (D-52). */
+  access?: { email: string; status: AccessStatus };
 }
+
+/** POST /api/access/join: first visit with a verified email picks a display name. */
+export const EmailJoinRequest = z.object({ displayName: DisplayName });
+export type EmailJoinRequest = z.infer<typeof EmailJoinRequest>;

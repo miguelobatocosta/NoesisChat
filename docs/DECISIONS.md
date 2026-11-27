@@ -189,3 +189,15 @@ Nuvem (lazy cat). Original SVG drawings in `features/mascots/Mascot.tsx`, colour
   so its label goes too. Admins can also reset strikes. Mascot mutes, lifts, resets and topic edits are in `admin_log`.
 - Stated in the house rules shown at join (`rules.rule4`).
 
+### D-52 · Sign in with the Noesis email, no invite; admin only for the owner: SETTLED (2026-11-27, owner)
+- Behind Cloudflare Access, every gated request carries a signed JWT (`Cf-Access-Jwt-Assertion`). The server
+  verifies it itself (RS256 only, the team's published keys, `iss`, `aud` = the Pausa app's AUD tag,
+  `exp`/`nbf`/`iat` with 60 s leeway, email domain) in `packages/server/src/auth/access.ts`. No new dependency.
+- **Network exception to CLAUDE.md:** fetching `https://<team>.cloudflareaccess.com/cdn-cgi/access/certs`
+  (cached 1 h). If it fails, email sign-in waits; invites keep working.
+- A verified email with no account picks a name and joins as a **member**. A known email signs in on any
+  browser. Accounts made with an invite get their email linked on the next verified visit (never an email
+  someone else has, never the owner email unless it's the host). Revoked accounts stay out.
+- `OWNER_EMAIL` is the only email that becomes host (it attaches to the existing host). Email sign-in
+  never grants admin to anyone else; the host can still promote someone by hand in the admin portal.
+- Off unless `ACCESS_TEAM_DOMAIN` and `ACCESS_AUD` are set (local, quick tunnel, tests): invites only.

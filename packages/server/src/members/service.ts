@@ -12,6 +12,8 @@ export interface UserRow {
   last_seen_at: number | null;
   revoked_at: number | null;
   is_bot: number;
+  /** Verified Cloudflare Access email (D-52), lower-case, or null (invite-only accounts, bots). */
+  email: string | null;
 }
 
 export function getUser(db: Db, id: string): UserRow | undefined {

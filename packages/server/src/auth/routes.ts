@@ -1,5 +1,6 @@
 import type { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify';
 import {
+  EmailJoinRequest,
   type ErrorCode,
   JoinRequest,
   type SessionResponse,
@@ -10,6 +11,8 @@ import { type AppContext, ROOM_MEMBERS } from '../context';
 import { AppError } from '../errors';
 import { getUser, toMember, toSessionUser } from '../members/service';
 import { kickDevice } from '../realtime';
+import { ACCESS_HEADER } from './access';
+import { accessStatus, joinByEmail, linkEmail, signInByEmail } from './emailAccounts';
 import { redeemInvite } from './invites';
 import { isAllowedRequest, isSecureContext } from './origin';
 import { deviceLabel, findSession, revokeDevice, type Session } from './sessions';
@@ -89,8 +92,88 @@ export function registerAuthRoutes(app: FastifyInstance, ctx: AppContext): void 
     const session = sessionFromRequest(ctx, request);
     const user = session ? getUser(ctx.db, session.userId) : undefined;
     reply.header('Cache-Control', 'no-store');
-    const body: SessionState = { ok: true, user: session && user ? toSessionUser(user) : null };
+    const email = ctx.access ? await ctx.access.email(request.headers[ACCESS_HEADER]) : null;
+    const owner = ctx.config.access?.ownerEmail ?? null;
+    if (session && user) {
+      // Accounts made with an invite pick up their verified email on the next visit.
+      if (email) linkEmail(ctx.db, user, email, owner);
+      const body: SessionState = { ok: true, user: toSessionUser(user) };
+      return reply.send(body);
+    }
+    const body: SessionState = email
+      ? { ok: true, user: null, access: { email, status: accessStatus(ctx.db, email, owner) } }
+      : { ok: true, user: null };
     return reply.send(body);
+  });
+
+  /** Email sign-in (D-52): same guards as /api/join, the email comes only from a verified token. */
+  const verifiedEmail = async (request: FastifyRequest, reply: FastifyReply) => {
+    if (!checkOrigin(ctx, request, reply)) return null;
+    const ip = clientIp(request.raw);
+    if (!ctx.limiter.hit(`join:${ip}`, ctx.config.joinRatePerMin, 60_000)) {
+      void sendError(reply, 'RATE_LIMITED');
+      return null;
+    }
+    const email = ctx.access ? await ctx.access.email(request.headers[ACCESS_HEADER]) : null;
+    if (!email) {
+      ctx.log.warn({ ip }, 'email sign-in without a valid Access token');
+      void sendError(reply, 'UNAUTHORIZED', 'No verified email');
+      return null;
+    }
+    return email;
+  };
+
+  const finish = (
+    request: FastifyRequest,
+    reply: FastifyReply,
+    result: { user: Parameters<typeof toSessionUser>[0]; token: string },
+    isNew: boolean,
+  ) => {
+    reply.header(
+      'Set-Cookie',
+      sessionCookie(result.token, isSecureContext(request.headers, ctx.config)),
+    );
+    if (isNew)
+      ctx.io
+        .to(ROOM_MEMBERS)
+        .emit('member:updated', { member: toMember(result.user, ctx.presence) });
+    const body: SessionResponse = { ok: true, user: toSessionUser(result.user) };
+    return reply.send(body);
+  };
+
+  app.post('/api/access/signin', { bodyLimit: 1024 }, async (request, reply) => {
+    const email = await verifiedEmail(request, reply);
+    if (!email) return reply;
+    try {
+      const result = signInByEmail(ctx.db, {
+        email,
+        ownerEmail: ctx.config.access?.ownerEmail ?? null,
+        deviceLabel: deviceLabel(request.headers['user-agent']),
+      });
+      return finish(request, reply, result, false);
+    } catch (err) {
+      if (err instanceof AppError) return sendError(reply, err.code, err.message);
+      throw err;
+    }
+  });
+
+  app.post('/api/access/join', { bodyLimit: 4096 }, async (request, reply) => {
+    const email = await verifiedEmail(request, reply);
+    if (!email) return reply;
+    const parsed = EmailJoinRequest.safeParse(request.body);
+    if (!parsed.success) return sendError(reply, 'VALIDATION', 'Invalid join request');
+    try {
+      const result = joinByEmail(ctx.db, {
+        email,
+        displayName: parsed.data.displayName,
+        ownerEmail: ctx.config.access?.ownerEmail ?? null,
+        deviceLabel: deviceLabel(request.headers['user-agent']),
+      });
+      return finish(request, reply, result, true);
+    } catch (err) {
+      if (err instanceof AppError) return sendError(reply, err.code, err.message);
+      throw err;
+    }
   });
 
   app.post('/api/logout', { bodyLimit: 1024 }, async (request, reply) => {

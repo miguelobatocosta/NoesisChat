@@ -56,7 +56,8 @@ pnpm test:e2e         # Playwright against the production build
 pnpm lint && pnpm typecheck && pnpm format:check
 ```
 Config keys (env > `.env` > `pausa.config.json`): `PORT`, `BIND`, `DATA_DIR`, `PUBLIC_URL`, `UPLOAD_MAX_MB`,
-`JOIN_RATE_PER_MIN`, `MASCOT_DELAY_MS`, `MASCOT_CHANCE` (tests only), `WEB_DIST`; `ALLOWED_MAIL`, `TUNNEL_NAME`, `TUNNEL_URL` and `CLOUDFLARED_BIN` are read by `scripts/demo.mjs`.
+`JOIN_RATE_PER_MIN`, `MASCOT_DELAY_MS`, `MASCOT_CHANCE` (tests only), `WEB_DIST`; `ACCESS_TEAM_DOMAIN`, `ACCESS_AUD`, `ACCESS_EMAIL_DOMAIN`, `OWNER_EMAIL` (email sign-in, D-52);
+`ALLOWED_MAIL`, `TUNNEL_NAME`, `TUNNEL_URL` and `CLOUDFLARED_BIN` are read by `scripts/demo.mjs`.
 Scripts that need logic (tunnel, backup) are Node scripts in `scripts/`, not shell one-liners:
 the host runs Windows.
 
@@ -105,4 +106,5 @@ the host runs Windows.
 - Don't recreate or redraw the Noesis logo. Use `packages/web/src/assets/brand/logo.svg` (official
   file supplied by the owner, only after D-01 is approved) or the text placeholder defined in BRAND.md.
 - Don't load fonts, scripts or images from CDNs at runtime. Bundle them.
-- Don't add telemetry, analytics, Web Push or any third-party network call.
+- Don't add telemetry, analytics, Web Push or any third-party network call. One exception (D-52): the server
+  fetches the Cloudflare Access team's public signing keys to verify sign-in tokens. Nothing else.
