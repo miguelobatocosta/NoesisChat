@@ -12,7 +12,7 @@ export function normalize(text: string): string {
 const escapeRegExp = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 
 /** Whole-word (or whole-phrase) match on normalized text. */
-export function hasWord(normalizedText: string, word: string): boolean {
+function hasWord(normalizedText: string, word: string): boolean {
   const w = escapeRegExp(normalize(word));
   return new RegExp(`(^|[^\\p{L}\\p{N}])${w}($|[^\\p{L}\\p{N}])`, 'u').test(normalizedText);
 }

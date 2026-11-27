@@ -13,7 +13,7 @@ import { newId } from '../ids';
 import { isStaff, type UserRow } from '../members/service';
 import { requireRoom, requireWritableRoom } from '../rooms/service';
 
-export interface MessageRow {
+interface MessageRow {
   id: string;
   room_id: string;
   user_id: string;
@@ -52,7 +52,7 @@ export function toAttachment(
 }
 
 /** Turns rows into wire messages with attachments, reactions, mentions and reply previews (5 queries total). */
-export function hydrate(db: Db, rows: MessageRow[]): Message[] {
+function hydrate(db: Db, rows: MessageRow[]): Message[] {
   if (rows.length === 0) return [];
   const ids = rows.map((r) => r.id);
   const inIds = placeholders(ids.length);
@@ -121,7 +121,7 @@ export function hydrate(db: Db, rows: MessageRow[]): Message[] {
   });
 }
 
-export function getMessageRow(db: Db, id: string): MessageRow | undefined {
+function getMessageRow(db: Db, id: string): MessageRow | undefined {
   return db.prepare('SELECT * FROM messages WHERE id = ?').get(id) as MessageRow | undefined;
 }
 
@@ -131,7 +131,7 @@ function requireMessage(db: Db, id: string): MessageRow {
   return row;
 }
 
-export function getMessage(db: Db, id: string): Message {
+function getMessage(db: Db, id: string): Message {
   return hydrate(db, [requireMessage(db, id)])[0]!;
 }
 

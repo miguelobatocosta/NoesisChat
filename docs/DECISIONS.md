@@ -55,8 +55,8 @@ No Cloudflare account or domain needed. Restrict to the chosen colleagues' addre
 the allow-list lives in `.env` as `ALLOWED_MAIL`. Confirm the company email domain before using a wildcard.
 Known limits: the URL changes on every tunnel restart (everyone has to rejoin, because cookies belong to
 the old hostname), no uptime guarantee, 200 in-flight requests, interactive browsers only.
-**Pilot longer than a day:** domain on Cloudflare (~€10/yr) + named tunnel as a Windows service + Cloudflare
-Access with the same email rule. Backlog item 1.
+**Now (2026-11-27, D-50):** named tunnel on the owner's domain + Cloudflare Access (One-time PIN, company
+domain). Same address across restarts. The quick tunnel above stays as the fallback when `TUNNEL_NAME` is unset.
 **Never:** router port forwarding.
 
 ### D-21 · Code signing: NOT APPLICABLE (no installer)
@@ -165,7 +165,7 @@ Nuvem (lazy cat). Original SVG drawings in `features/mascots/Mascot.tsx`, colour
   header, the empty state, next to their messages and in room settings.
 
 ### D-50 · Fixed address on the owner's domain, invite survives the email gate: SETTLED (2026-11-27, owner)
-- `pnpm demo` runs the named tunnel `pausa` → `https://pausa.sw-league.com` when `TUNNEL_NAME`/`TUNNEL_URL`
+- `pnpm demo` runs the named tunnel `pausa` → the owner's subdomain (kept in `.env`, not in the repo) when `TUNNEL_NAME`/`TUNNEL_URL`
   are in `.env`; otherwise the quick tunnel as before. This is backlog item 1 for the demo, without a Windows
   service yet. The email gate is a Cloudflare Access application (One-time PIN, `@noesis.pt`). The script
   refuses to stay up if `/api/session` doesn't bounce to Cloudflare's login.

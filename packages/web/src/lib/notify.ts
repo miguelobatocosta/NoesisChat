@@ -21,7 +21,7 @@ export function shouldNotify(i: NotifyInput): boolean {
   return i.isMention || i.isReplyToMe;
 }
 
-export function notificationsSupported(): boolean {
+function notificationsSupported(): boolean {
   return typeof window !== 'undefined' && 'Notification' in window;
 }
 

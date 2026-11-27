@@ -27,7 +27,7 @@ export interface RoomRow {
   mascot_enabled: number;
 }
 
-export function toRoom(row: RoomRow): Room {
+function toRoom(row: RoomRow): Room {
   return {
     id: row.id,
     slug: row.slug,
@@ -103,7 +103,7 @@ export function listRoomsFor(db: Db, userId: string): RoomView[] {
   return rows.map(toRoomView);
 }
 
-export function roomViewFor(db: Db, userId: string, roomId: string): RoomView {
+function roomViewFor(db: Db, userId: string, roomId: string): RoomView {
   const row = db.prepare(`${ROOM_VIEW_SQL} WHERE r.id = @roomId`).get({ userId, roomId }) as
     RoomViewRow | undefined;
   if (!row) throw new AppError('NOT_FOUND', 'Room not found');
@@ -158,7 +158,7 @@ export function nextMascot(db: Db): MascotKey {
 }
 
 /** Creator, admins and host manage a room. Only the host touches #geral (SPEC §2, §3.2). */
-export function canManageRoom(actor: UserRow, room: RoomRow): boolean {
+function canManageRoom(actor: UserRow, room: RoomRow): boolean {
   if (room.is_main === 1) return actor.role === 'host';
   return isStaff(actor) || room.created_by === actor.id;
 }

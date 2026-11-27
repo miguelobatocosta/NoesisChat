@@ -321,8 +321,8 @@ one there are no stale cached versions and nothing cached at all.
 
 ## 11. Backlog (after the demo, in order)
 
-1. **Stable URL:** domain on Cloudflare + named tunnel as a Windows service + Cloudflare Access with the same
-   email rule. Fixes "tunnel restart logs everyone out". Needed before any pilot longer than a day.
+1. ~~**Stable URL**~~: done (D-50, `pnpm demo` with a named tunnel + Cloudflare Access). Left: start it
+   at logon (Task Scheduler or a Windows service) so it survives reboots without anyone at the PC.
 2. **Second device:** a signed-in device generates a one-time link code (10 min) to sign in another browser.
 3. **Narrow/mobile layout:** sidebar becomes a drawer below 768px.
 4. **Search:** FTS5 with `unicode61 remove_diacritics 2` ("café" matches "cafe"), filters room/author.

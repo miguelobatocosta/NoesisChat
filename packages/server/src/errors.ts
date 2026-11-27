@@ -11,10 +11,6 @@ export class AppError extends Error {
   }
 }
 
-export const fail = (code: ErrorCode, message?: string): never => {
-  throw new AppError(code, message);
-};
-
 export function toAckError(err: unknown): AckError {
   if (err instanceof AppError) return { code: err.code, message: err.message };
   return { code: 'INTERNAL', message: 'Internal error' };

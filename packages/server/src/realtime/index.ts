@@ -238,7 +238,7 @@ function onConnection(ctx: AppContext, socket: PausaSocket): void {
 }
 
 /** Tells every socket of a user that the session is over, then disconnects them (SPEC §7.4). */
-export function kickUser(ctx: AppContext, userId: string): void {
+function kickUser(ctx: AppContext, userId: string): void {
   ctx.io.to(userRoom(userId)).emit('session:revoked');
   ctx.io.in(userRoom(userId)).disconnectSockets(true);
 }

@@ -17,7 +17,7 @@
   },
   "dependencies": {
     "@fastify/multipart": "10.1.9",
-    "@fastify/static": "10.1.12",
+    "@fastify/static": "11.0.0",
     "@pausa/shared": "workspace:*",
     "better-sqlite3": "13.2.0",
     "fastify": "5.12.8",
@@ -28,7 +28,7 @@
   "devDependencies": {
     "@types/better-sqlite3": "9.6.0",
     "@types/node": "^22.20.5",
-    "@vitest/coverage-v8": "5.1.1",
+    "@vitest/coverage-v8": "5.1.2",
     "esbuild": "0.28.2",
     "socket.io-client": "4.8.4",
     "tsx": "4.23.15"

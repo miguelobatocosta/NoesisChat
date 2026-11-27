@@ -7,3 +7,4 @@ test-results
 _archive
 pnpm-lock.yaml
 **/*.md
+.vscode

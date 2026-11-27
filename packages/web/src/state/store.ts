@@ -21,7 +21,7 @@ import { newClientId } from '../lib/ids';
 import { askPermissionOnce, setBadge, shouldNotify, showNotification } from '../lib/notify';
 import { plainText } from '../lib/plaintext';
 
-export type Connection = 'connecting' | 'connected' | 'reconnecting' | 'offline';
+type Connection = 'connecting' | 'connected' | 'reconnecting' | 'offline';
 
 export interface Timeline {
   messages: Message[];

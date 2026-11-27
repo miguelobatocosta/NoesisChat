@@ -14,7 +14,7 @@ export const CONTENT_SECURITY_POLICY = [
   "frame-ancestors 'none'",
 ].join('; ');
 
-export const SECURITY_HEADERS: Readonly<Record<string, string>> = {
+const SECURITY_HEADERS: Readonly<Record<string, string>> = {
   'Content-Security-Policy': CONTENT_SECURITY_POLICY,
   'X-Content-Type-Options': 'nosniff',
   'Referrer-Policy': 'no-referrer',

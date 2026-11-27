@@ -58,9 +58,7 @@ if (spawnSync(cloudflared, ['--version'], { stdio: 'ignore' }).status !== 0) {
 }
 
 console.log('A compilar…');
-if (
-  spawnSync('pnpm', ['run', 'build'], { cwd: root, stdio: 'inherit', shell: true }).status !== 0
-) {
+if (spawnSync('pnpm run build', { cwd: root, stdio: 'inherit', shell: true }).status !== 0) {
   fail('A compilação falhou.');
 }
 

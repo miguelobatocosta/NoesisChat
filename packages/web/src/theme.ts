@@ -1,13 +1,13 @@
 import { useCallback, useEffect, useState } from 'react';
 
 /** Keep in sync with public/theme-init.js, which applies the theme before first paint. */
-export const THEME_STORAGE_KEY = 'pausa.theme';
+const THEME_STORAGE_KEY = 'pausa.theme';
 export const THEME_PREFERENCES = ['system', 'light', 'dark'] as const;
 export type ThemePreference = (typeof THEME_PREFERENCES)[number];
 
 const darkQuery = () => window.matchMedia('(prefers-color-scheme: dark)');
 
-export function readPreference(): ThemePreference {
+function readPreference(): ThemePreference {
   try {
     const value = window.localStorage.getItem(THEME_STORAGE_KEY);
     return THEME_PREFERENCES.includes(value as ThemePreference)
@@ -27,7 +27,7 @@ function storePreference(pref: ThemePreference): void {
   }
 }
 
-export function applyTheme(pref: ThemePreference): void {
+function applyTheme(pref: ThemePreference): void {
   const dark = pref === 'dark' || (pref === 'system' && darkQuery().matches);
   document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
 }

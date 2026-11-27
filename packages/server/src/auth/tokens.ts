@@ -10,7 +10,7 @@ export function sha256(value: string): string {
   return createHash('sha256').update(value).digest('hex');
 }
 
-export function parseCookies(header: string | undefined): Record<string, string> {
+function parseCookies(header: string | undefined): Record<string, string> {
   const out: Record<string, string> = {};
   if (!header) return out;
   for (const part of header.split(';')) {

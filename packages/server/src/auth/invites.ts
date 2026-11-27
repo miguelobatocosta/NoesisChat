@@ -110,7 +110,7 @@ function toViews(db: Db, rows: InviteRow[]): InviteView[] {
   }));
 }
 
-export function getInviteView(db: Db, id: string): InviteView | undefined {
+function getInviteView(db: Db, id: string): InviteView | undefined {
   const row = db.prepare('SELECT * FROM invites WHERE id = ?').get(id) as InviteRow | undefined;
   return row ? toViews(db, [row])[0] : undefined;
 }
