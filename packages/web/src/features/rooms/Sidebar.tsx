@@ -8,7 +8,14 @@ import { Mascot } from '../mascots/Mascot';
 import { archivedRooms, hiddenRooms, visibleRooms } from './roomOrder';
 import styles from './Sidebar.module.css';
 
-export function Sidebar({ onOpen }: { onOpen: (d: DialogName) => void }) {
+export function Sidebar({
+  onOpen,
+  drawerOpen = false,
+}: {
+  onOpen: (d: DialogName) => void;
+  /** Phone layout only: whether the drawer is pulled out. */
+  drawerOpen?: boolean;
+}) {
   const rooms = useChat((s) => s.rooms);
   const members = useChat((s) => s.members);
   const me = useChat((s) => s.me);
@@ -29,7 +36,11 @@ export function Sidebar({ onOpen }: { onOpen: (d: DialogName) => void }) {
   const offline = people.filter((m) => !m.online);
 
   return (
-    <nav className={styles.sidebar} aria-label={t('sidebar.rooms')}>
+    <nav
+      className={styles.sidebar}
+      aria-label={t('sidebar.rooms')}
+      data-open={drawerOpen || undefined}
+    >
       <div className={styles.scroll}>
         <div className={styles.section}>
           <h2 className={styles.label}>{t('sidebar.rooms')}</h2>

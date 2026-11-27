@@ -324,7 +324,7 @@ one there are no stale cached versions and nothing cached at all.
 1. ~~**Stable URL**~~: done (D-50, `pnpm demo` with a named tunnel + Cloudflare Access). Left: start it
    at logon (Task Scheduler or a Windows service) so it survives reboots without anyone at the PC.
 2. **Second device:** a signed-in device generates a one-time link code (10 min) to sign in another browser.
-3. **Narrow/mobile layout:** sidebar becomes a drawer below 768px.
+3. ~~**Narrow/mobile layout**~~: done (Phase 11). Sidebar is a drawer below 768px.
 4. **Search:** FTS5 with `unicode61 remove_diacritics 2` ("café" matches "cafe"), filters room/author.
 5. **Non-image files**, with an executable/script blocklist and `Content-Disposition: attachment`.
 6. **Thumbnails** generated in the browser.

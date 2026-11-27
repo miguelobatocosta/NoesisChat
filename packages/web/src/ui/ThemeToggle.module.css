@@ -33,3 +33,9 @@
 .option:focus-visible {
   box-shadow: var(--focus-ring-on-brand);
 }
+
+@media (max-width: 767px) {
+  .option {
+    padding: 2px var(--space-2);
+  }
+}

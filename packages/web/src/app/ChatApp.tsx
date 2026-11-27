@@ -65,6 +65,18 @@ function ChatLayout() {
   const activeRoomId = useChat((s) => s.activeRoomId);
   const hasRooms = useChat((s) => Object.keys(s.rooms).length > 0);
   const [dialog, setDialog] = useState<DialogName>(null);
+  // Phone layout: the sidebar is a drawer, opened for the current room, so picking another room
+  // closes it by itself. Esc and tapping outside close it too.
+  const [drawerFor, setDrawerFor] = useState<string | null>(null);
+  const drawer = drawerFor === activeRoomId;
+  const setDrawer = (open: boolean) => setDrawerFor(open ? activeRoomId : null);
+
+  useEffect(() => {
+    if (!drawer) return;
+    const onKey = (e: KeyboardEvent) => e.key === 'Escape' && setDrawerFor(null);
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [drawer]);
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -102,12 +114,25 @@ function ChatLayout() {
         <ConnectionPill />
       </BrandHeader>
       <div className={styles.body}>
-        <Sidebar onOpen={setDialog} />
+        <Sidebar
+          onOpen={(d) => {
+            setDrawer(false);
+            setDialog(d);
+          }}
+          drawerOpen={drawer}
+        />
+        <div
+          className={styles.scrim}
+          data-open={drawer || undefined}
+          onClick={() => setDrawer(false)}
+          aria-hidden="true"
+        />
         {hasRooms && (
           <RoomView
             key={activeRoomId}
             roomId={activeRoomId}
             onOpenSettings={() => setDialog('roomSettings')}
+            onOpenRooms={() => setDrawer(true)}
           />
         )}
       </div>

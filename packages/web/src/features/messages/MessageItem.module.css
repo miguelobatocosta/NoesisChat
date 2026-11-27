@@ -300,3 +300,18 @@
   text-decoration: underline;
   cursor: pointer;
 }
+
+.message:focus {
+  outline: none;
+}
+
+@media (max-width: 767px) {
+  .message {
+    padding-left: var(--space-4);
+    padding-right: var(--space-4);
+  }
+
+  .actions {
+    right: var(--space-3);
+  }
+}

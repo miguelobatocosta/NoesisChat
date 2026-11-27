@@ -80,7 +80,8 @@
     "start": "Este é o início de #{name}.",
     "jumpToLatest": "Ir para as mais recentes",
     "today": "Hoje",
-    "yesterday": "Ontem"
+    "yesterday": "Ontem",
+    "openRooms": "Salas"
   },
   "message": {
     "edited": "editada",

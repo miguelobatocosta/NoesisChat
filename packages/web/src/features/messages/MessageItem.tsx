@@ -51,6 +51,8 @@ export const MessageItem = memo(function MessageItem({
       data-mascot={mascot ? true : undefined}
       data-message-id={message.id}
       aria-label={author}
+      // Focusable by tap (not by Tab), so touch screens can show the actions bar via :focus-within.
+      tabIndex={-1}
     >
       {grouped && (
         <time

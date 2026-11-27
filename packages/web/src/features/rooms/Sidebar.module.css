@@ -250,3 +250,26 @@ summary.label {
 .menu button:focus-visible {
   background: var(--fill-hover);
 }
+
+/* Phone layout (D-22): off-canvas drawer, pulled out by the room header's "Salas" button. */
+@media (max-width: 767px) {
+  .sidebar {
+    position: fixed;
+    inset: 0 auto 0 0;
+    z-index: 30;
+    width: min(85vw, 320px);
+    padding-bottom: env(safe-area-inset-bottom);
+    box-shadow: var(--shadow-3);
+    transform: translateX(-105%);
+    visibility: hidden;
+    transition:
+      transform 240ms var(--ease-spring),
+      visibility 0s linear 240ms;
+  }
+
+  .sidebar[data-open] {
+    transform: none;
+    visibility: visible;
+    transition: transform 240ms var(--ease-spring);
+  }
+}

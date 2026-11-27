@@ -1,5 +1,5 @@
 import { type DragEvent, useEffect, useRef, useState } from 'react';
-import { Settings } from 'lucide-react';
+import { Menu, Settings } from 'lucide-react';
 import { t } from '../../i18n';
 import { useChat } from '../../state/store';
 import buttons from '../../ui/buttons.module.css';
@@ -12,9 +12,12 @@ import { TypingIndicator } from './TypingIndicator';
 export function RoomView({
   roomId,
   onOpenSettings,
+  onOpenRooms,
 }: {
   roomId: string;
   onOpenSettings: () => void;
+  /** Phone layout: pull out the rooms drawer. */
+  onOpenRooms?: () => void;
 }) {
   const room = useChat((s) => s.rooms[roomId]);
   const muted = useMyMute(roomId);
@@ -46,6 +49,14 @@ export function RoomView({
       data-dragging={dragging || undefined}
     >
       <header className={styles.header}>
+        <button
+          type="button"
+          className={`${buttons.icon} ${styles.roomsButton}`}
+          aria-label={t('room.openRooms')}
+          onClick={onOpenRooms}
+        >
+          <Menu size={20} strokeWidth={1.75} aria-hidden />
+        </button>
         {room.mascotKey ? (
           <Mascot mascot={room.mascotKey} size={40} className={styles.mascot} />
         ) : (

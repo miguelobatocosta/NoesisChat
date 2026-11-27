@@ -60,7 +60,7 @@ domain). Same address across restarts. The quick tunnel above stays as the fallb
 **Never:** router port forwarding.
 
 ### D-21 · Code signing: NOT APPLICABLE (no installer)
-### D-22 · Target platforms: desktop browsers (Edge, Chrome, Firefox; Safari best effort), width ≥ 960px
+### D-22 · Target platforms: desktop browsers (Edge, Chrome, Firefox; Safari best effort) and phones ≥ 360px wide (2026-11-27: below 768px the sidebar is a drawer)
 ### D-23 · Where the server lives: the host's PC for the demo. Move to a VPS/RPi if the pilot continues (zero code change).
 ### D-24 · Size and locale: pilot 10–20, design ceiling 50. pt-PT only; all strings in one file so `en` is a drop-in.
 ### D-25 · App name, icon: working name "Pausa"; generic placeholder icon. **Final name/icon still OPEN** (needs D-01).

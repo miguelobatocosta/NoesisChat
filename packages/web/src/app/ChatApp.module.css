@@ -2,7 +2,6 @@
   display: flex;
   flex-direction: column;
   height: 100%;
-  min-width: 960px;
 }
 
 .body {
@@ -16,4 +15,19 @@
   display: grid;
   place-items: center;
   padding: var(--space-8) var(--space-4);
+}
+
+.scrim {
+  display: none;
+}
+
+/* Phone layout (D-22): the sidebar becomes a drawer over a dimmed backdrop. */
+@media (max-width: 767px) {
+  .scrim[data-open] {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: 20;
+    background: var(--overlay);
+  }
 }
