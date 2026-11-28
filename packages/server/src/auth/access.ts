@@ -17,7 +17,7 @@ const REFETCH_MIN_MS = 60_000;
 export type FetchKeys = (teamDomain: string) => Promise<(JsonWebKey & { kid?: string })[]>;
 
 /** The only network call Pausa makes to a third party: the Access team's public signing keys. */
-export const fetchCloudflareKeys: FetchKeys = async (teamDomain) => {
+const fetchCloudflareKeys: FetchKeys = async (teamDomain) => {
   const res = await fetch(`https://${teamDomain}/cdn-cgi/access/certs`, {
     signal: AbortSignal.timeout(10_000),
   });

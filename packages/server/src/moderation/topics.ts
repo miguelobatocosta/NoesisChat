@@ -58,7 +58,7 @@ export function listTopicRows(db: Db, onlyEnabled = false): TopicRow[] {
     .all() as TopicRow[];
 }
 
-export function getTopicRow(db: Db, id: string): TopicRow | undefined {
+function getTopicRow(db: Db, id: string): TopicRow | undefined {
   return db.prepare('SELECT * FROM topics WHERE id = ?').get(id) as TopicRow | undefined;
 }
 

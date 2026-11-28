@@ -1,30 +1,40 @@
 import { type FormEvent, useMemo, useState } from 'react';
-import { Menu } from 'lucide-react';
-import { type CakeDebt, type CommunityState, mascotByKey } from '@pausa/shared';
+import type { CakeDebt, CommunityState } from '@pausa/shared';
 import { t } from '../../i18n';
 import { getStore, useChat } from '../../state/store';
 import buttons from '../../ui/buttons.module.css';
 import { Dialog } from '../../ui/Dialog';
 import forms from '../../ui/forms.module.css';
 import styles from './Community.module.css';
+import { CommunityPage } from './CommunityPage';
 import { Confetti } from './Confetti';
-import { MascotSays, useHostMascot } from './MascotSays';
+import { useHostMascotName, useMe, useNameOf } from './hooks';
+import { MascotSays } from './MascotSays';
+import { Senha } from './Paper';
 import {
   birthdays,
   daysBetween,
   debtors,
+  nextOfficeDay,
   paid,
+  paidByYear,
   pending,
   REASON_KEYS,
   showDate,
   showMonthDay,
   staleness,
   topBakers,
-  weekdayOf,
+  weekdayName,
 } from './selectors';
 
-const weekdayShort = (iso: string) =>
-  `${t(`office.weekdays.${weekdayOf(iso) as 1 | 2 | 3 | 4 | 5}`)}, ${showDate(iso).slice(0, 5)}`;
+const weekdayShort = (iso: string) => `${weekdayName(iso)}, ${showDate(iso).slice(0, 5)}`;
+
+function countdown(today: string, date: string): string {
+  const days = daysBetween(today, date);
+  if (days === 0) return t('cakes.nextToday');
+  if (days === 1) return t('cakes.nextTomorrow');
+  return t('cakes.nextIn', { days });
+}
 
 /** Next Wednesday (the usual office day) as 'YYYY-MM-DD', for the "Levo eu" default. */
 function nextWednesday(today: string): string {
@@ -35,35 +45,23 @@ function nextWednesday(today: string): string {
   return `${date.getFullYear()}-${p(date.getMonth() + 1)}-${p(date.getDate())}`;
 }
 
-function useMe() {
-  const me = useChat((s) => s.me);
-  const community = useChat((s) => s.community);
-  const person = community?.people.find((p) => p.userId === me.id);
-  return { me, person, staff: me.role === 'host' || me.role === 'admin' };
-}
+const byDate = (a: CakeDebt, b: CakeDebt) => a.occurredOn.localeCompare(b.occurredOn);
 
-const nameOf = (c: CommunityState, id: string) => c.people.find((p) => p.id === id)?.name ?? '?';
-const nextOfficeDay = (c: CommunityState) => c.days.find((d) => d.date >= c.today && !d.closed);
-
-/** 🎂 Bolos (D-53, Phase 19): the #geral mascot runs the board; the cake book, the next cake, honour. */
+/**
+ * 🎂 Bolos (D-53, Phase 20). One hero answers "who brings the next cake?" (the senha), then your
+ * own situation, then the cake book; birthdays, honour and history are quiet reference below.
+ */
 export function CakesPage({ onOpenRooms }: { onOpenRooms: () => void }) {
   const community = useChat((s) => s.community);
   const [recording, setRecording] = useState(false);
   const [burst, setBurst] = useState(0);
+  const celebrate = () => setBurst(Date.now());
   return (
-    <section className={styles.page} aria-labelledby="cakes-title">
-      <header className={styles.header}>
-        <button
-          type="button"
-          className={`${buttons.icon} ${styles.roomsButton}`}
-          aria-label={t('room.openRooms')}
-          onClick={onOpenRooms}
-        >
-          <Menu size={20} strokeWidth={1.75} aria-hidden />
-        </button>
-        <h1 id="cakes-title" className={styles.title}>
-          {t('cakes.title')}
-        </h1>
+    <CommunityPage
+      id="cakes-title"
+      title={t('cakes.title')}
+      onOpenRooms={onOpenRooms}
+      action={
         <button
           type="button"
           className={`${buttons.accent} ${styles.headerAction}`}
@@ -71,71 +69,125 @@ export function CakesPage({ onOpenRooms }: { onOpenRooms: () => void }) {
         >
           {t('cakes.openRecord')}
         </button>
-      </header>
-      <div className={styles.scroll}>
-        {!community ? (
-          <p className={styles.muted}>{t('boot.loading')}</p>
-        ) : (
-          <>
-            <Hero c={community} />
-            <div className={styles.layout}>
-              <Ledger c={community} onPaid={() => setBurst(Date.now())} />
-              <aside className={styles.side}>
-                <NextCake c={community} />
-                <Pending c={community} />
-                <Birthdays c={community} />
-              </aside>
-            </div>
-            <div className={styles.layoutBottom}>
-              <Honour c={community} />
-              <History c={community} />
-            </div>
-          </>
-        )}
-      </div>
-      {community && recording && <RecordDialog c={community} onClose={() => setRecording(false)} />}
+      }
+    >
+      {community && (
+        <>
+          <Hero c={community} />
+          <MyStatus c={community} />
+          <Pending c={community} />
+          <Ledger c={community} onPaid={celebrate} />
+          <div className={styles.reference}>
+            <Birthdays c={community} />
+            <Honour c={community} />
+            <History c={community} />
+          </div>
+          {recording && <RecordDialog c={community} onClose={() => setRecording(false)} />}
+        </>
+      )}
       <Confetti burst={burst} />
-    </section>
+    </CommunityPage>
   );
 }
 
+/** The senha: the year's next cake number, the day, who brings it; the mascot comments beside it. */
 function Hero({ c }: { c: CommunityState }) {
-  const mascot = useHostMascot();
-  const mascotName = useChat(
-    (s) => s.members[mascotByKey(mascot).userId]?.displayName ?? mascotByKey(mascot).name,
-  );
+  const { mascot, name } = useHostMascotName();
+  const nameOf = useNameOf();
+  const { person: mine } = useMe();
+  const store = getStore();
   const list = useMemo(() => debtors(c), [c]);
-  const owed = c.debts.filter((d) => d.status === 'owed').length;
+  const next = nextOfficeDay(c);
   const year = c.today.slice(0, 4);
   const paidYear = c.debts.filter(
     (d) => d.status === 'paid' && (d.paidOn ?? d.occurredOn).startsWith(year),
   ).length;
-  const next = nextOfficeDay(c);
+  const bringers = next
+    ? c.debts.filter((d) => d.pledgedOn === next.date && d.status === 'owed')
+    : [];
   const top = list[0];
   const line = top
     ? t(`bubble.${mascot}.topDebtor`, { name: top.person.name, days: top.oldestDays })
     : t(`bubble.${mascot}.allPaid`);
+  const myOpen = mine
+    ? c.debts
+        .filter((d) => d.personId === mine.id && d.status === 'owed' && !d.pledgedOn)
+        .sort(byDate)[0]
+    : undefined;
+  const bringerNames = [...new Set(bringers.map((d) => nameOf(d.personId)))].join(', ');
 
   return (
-    <div className={styles.hero}>
-      <MascotSays mascot={mascot} line={line} name={mascotName} />
-      <dl className={styles.stats}>
-        <div className={styles.stat}>
-          <dt className={styles.statLabel}>{t('cakes.statOwed')}</dt>
-          <dd className={`${styles.statNumber} num`}>{owed}</dd>
-        </div>
-        <div className={styles.stat}>
-          <dt className={styles.statLabel}>{t('cakes.statPaidYear')}</dt>
-          <dd className={`${styles.statNumber} num`}>{paidYear}</dd>
-        </div>
-        <div className={styles.stat}>
-          <dt className={styles.statLabel}>{t('cakes.statNext')}</dt>
-          <dd className={styles.statText}>
-            {next ? weekdayShort(next.date) : t('cakes.statNextNone')}
-          </dd>
-        </div>
-      </dl>
-    </div>
+    <section className={styles.hero} aria-labelledby="cakes-next">
+      <Senha number={paidYear + 1} year={year}>
+        <span className={styles.senhaLabel}>{t('cakes.ticketBringer')}</span>
+        <span className={styles.senhaWho}>{bringerNames || t('cakes.ticketNobody')}</span>
+      </Senha>
+      <div className={styles.heroMain}>
+        <h2 id="cakes-next" className={styles.heroEyebrow}>
+          {t('cakes.nextTitle')}
+        </h2>
+        <p className={styles.heroDay}>
+          {next ? weekdayShort(next.date) : t('cakes.ticketUndecided')}
+        </p>
+        {next && <p className={`${styles.heroWhen} num`}>{countdown(c.today, next.date)}</p>}
+        {!next && <p className={styles.heroNote}>{t('cakes.nextNoDay')}</p>}
+        {next && bringers.length === 0 && (
+          <p className={styles.heroNote}>{t('cakes.nextNobody')}</p>
+        )}
+        {next && myOpen && (
+          <div className={styles.heroActions}>
+            <button
+              type="button"
+              className={buttons.accent}
+              onClick={() => void store.act('cakes:pledge', { debtId: myOpen.id, date: next.date })}
+            >
+              {t('cakes.pledgeNext')}
+            </button>
+          </div>
+        )}
+      </div>
+      <MascotSays mascot={mascot} line={line} name={name} />
+    </section>
+  );
+}
+
+/** Your own line: what you owe (and whether you promised a day), or that you're clean. */
+function MyStatus({ c }: { c: CommunityState }) {
+  const { person: mine } = useMe();
+  if (!mine) return null;
+  const owed = c.debts.filter((d) => d.personId === mine.id && d.status === 'owed').sort(byDate);
+  const oldest = owed[0];
+  const promised = owed.find((d) => d.pledgedOn);
+  const lastBrought = paid(c).find((d) => d.personId === mine.id);
+  return (
+    <section
+      className={styles.status}
+      data-tone={oldest ? 'owe' : 'clean'}
+      aria-labelledby="cakes-me"
+    >
+      <h2 id="cakes-me" className={styles.eyebrow}>
+        {t('cakes.myTitle')}
+      </h2>
+      <p className={styles.statusLine}>
+        {oldest
+          ? owed.length === 1
+            ? t('cakes.myOwesOne')
+            : t('cakes.myOwesMany', { count: owed.length })
+          : t('cakes.myClean')}
+      </p>
+      <p className={styles.statusDetail}>
+        {oldest
+          ? `${t('cakes.myOldest', {
+              reason: oldest.reason,
+              days: daysBetween(oldest.occurredOn, c.today),
+            })}${promised ? ` ${t('cakes.myPledged', { date: showDate(promised.pledgedOn!) })}` : ''}`
+          : lastBrought
+            ? t('cakes.myLastBrought', {
+                date: showDate(lastBrought.paidOn ?? lastBrought.occurredOn),
+              })
+            : t('cakes.myNeverBrought')}
+      </p>
+    </section>
   );
 }
 
@@ -147,17 +199,22 @@ function Ledger({ c, onPaid }: { c: CommunityState; onPaid: () => void }) {
   const [date, setDate] = useState(() => nextOfficeDay(c)?.date ?? nextWednesday(c.today));
 
   return (
-    <section className={`${styles.card} ${styles.ledger}`} aria-labelledby="cakes-owed">
-      <h2 id="cakes-owed" className={styles.cardTitle}>
-        {t('cakes.owedTitle')}
-      </h2>
-      <p className={styles.eyebrow}>{t('cakes.ledgerHint')}</p>
+    <section className={styles.section} aria-labelledby="cakes-owed">
+      <div className={styles.sectionHead}>
+        <h2 id="cakes-owed" className={styles.sectionTitle}>
+          {t('cakes.owedTitle')}
+        </h2>
+        <p className={styles.eyebrow}>{t('cakes.ledgerHint')}</p>
+      </div>
       {list.length === 0 && <p className={styles.muted}>{t('cakes.nobodyOwes')}</p>}
       <ol className={styles.rows}>
         {list.map(({ person, debts, oldestDays }, i) => {
           const stale = staleness(oldestDays);
           return (
-            <li key={person.id} className={styles.ledgerRow}>
+            <li key={person.id} className={styles.ledgerRow} data-rank={i + 1}>
+              <span className={`${styles.rank} num`} aria-hidden="true">
+                {t('cakes.rank', { rank: i + 1 })}
+              </span>
               <div className={styles.ledgerMain}>
                 <span className={styles.ledgerName}>
                   {person.name}
@@ -167,7 +224,7 @@ function Ledger({ c, onPaid }: { c: CommunityState; onPaid: () => void }) {
                   <span
                     className={styles.staleFill}
                     data-level={stale.level}
-                    style={{ width: `${Math.min(100, (oldestDays / 365) * 100)}%` }}
+                    style={{ width: `${Math.max(4, Math.min(100, (oldestDays / 365) * 100))}%` }}
                   />
                 </div>
                 <span className={styles.staleLabel}>
@@ -226,7 +283,7 @@ function Ledger({ c, onPaid }: { c: CommunityState; onPaid: () => void }) {
               </div>
               <div className={styles.ledgerDays}>
                 <span className={`${styles.daysNumber} num`}>{oldestDays}</span>
-                <span className={styles.statLabel}>{t('cakes.days')}</span>
+                <span className={styles.eyebrow}>{t('cakes.days')}</span>
               </div>
             </li>
           );
@@ -286,51 +343,16 @@ function DebtLine(props: {
   );
 }
 
-/** The next office day as a ticket: when, how long until, who brings the cake. */
-function NextCake({ c }: { c: CommunityState }) {
-  const next = nextOfficeDay(c);
-  const bringers = next
-    ? c.debts.filter((d) => d.pledgedOn === next.date && d.status === 'owed')
-    : [];
-  const inDays = next ? daysBetween(c.today, next.date) : 0;
-  return (
-    <section className={`${styles.card} ${styles.ticket}`} aria-labelledby="cakes-next">
-      <h2 id="cakes-next" className={styles.eyebrow}>
-        {t('cakes.nextTitle')}
-      </h2>
-      {!next ? (
-        <p className={styles.muted}>{t('cakes.nextNoDay')}</p>
-      ) : (
-        <>
-          <p className={styles.ticketDay}>{weekdayShort(next.date)}</p>
-          <p className={styles.ticketWhen}>
-            {inDays === 0
-              ? t('cakes.nextToday')
-              : inDays === 1
-                ? t('cakes.nextTomorrow')
-                : t('cakes.nextIn', { days: inDays })}
-          </p>
-          <p className={styles.ticketStub}>
-            {bringers.length
-              ? t('cakes.nextBringers', {
-                  names: bringers.map((d) => nameOf(c, d.personId)).join(', '),
-                })
-              : t('cakes.nextNobody')}
-          </p>
-        </>
-      )}
-    </section>
-  );
-}
-
+/** Milestones waiting for a second person: an action, so it sits right under your status. */
 function Pending({ c }: { c: CommunityState }) {
   const list = pending(c);
   const { me, person: mine, staff } = useMe();
+  const nameOf = useNameOf();
   const store = getStore();
   if (list.length === 0) return null;
   return (
-    <section className={styles.card} aria-labelledby="cakes-pending">
-      <h2 id="cakes-pending" className={styles.cardTitle}>
+    <section className={styles.attention} aria-labelledby="cakes-pending">
+      <h2 id="cakes-pending" className={styles.sectionTitle}>
         {t('cakes.pendingTitle')}
       </h2>
       <ul className={styles.rows}>
@@ -340,7 +362,7 @@ function Pending({ c }: { c: CommunityState }) {
           return (
             <li key={d.id} className={styles.row}>
               <div className={styles.rowMain}>
-                <span className={styles.rowTitle}>{nameOf(c, d.personId)}</span>
+                <span className={styles.rowTitle}>{nameOf(d.personId)}</span>
                 <span className={styles.rowMeta}>
                   {d.reason} · {showDate(d.occurredOn)}
                   {d.recordedBy &&
@@ -376,11 +398,10 @@ function Pending({ c }: { c: CommunityState }) {
 function Birthdays({ c }: { c: CommunityState }) {
   const list = birthdays(c).slice(0, 6);
   const { person: mine } = useMe();
-  const store = getStore();
-  const [value, setValue] = useState(mine?.birthday ? `2000-${mine.birthday}` : '');
+  const [editing, setEditing] = useState(false);
   return (
-    <section className={styles.card} aria-labelledby="cakes-birthdays">
-      <h2 id="cakes-birthdays" className={styles.cardTitle}>
+    <section className={styles.refBlock} aria-labelledby="cakes-birthdays">
+      <h2 id="cakes-birthdays" className={styles.sectionTitle}>
         {t('cakes.birthdaysTitle')}
       </h2>
       {list.length === 0 && <p className={styles.muted}>{t('cakes.noBirthdays')}</p>}
@@ -396,31 +417,65 @@ function Birthdays({ c }: { c: CommunityState }) {
         ))}
       </ul>
       {mine && (
-        <form
-          className={styles.inline}
-          onSubmit={(e) => {
-            e.preventDefault();
-            void store.act('people:setBirthday', {
-              personId: mine.id,
-              birthday: value ? value.slice(5) : null,
-            });
-          }}
-        >
-          <label className={forms.field}>
-            <span className={forms.label}>{t('cakes.myBirthday')}</span>
-            <input
-              className={forms.input}
-              type="date"
-              value={value}
-              onChange={(e) => setValue(e.target.value)}
-            />
-          </label>
-          <button type="submit" className={buttons.secondary}>
-            {t('cakes.save')}
-          </button>
-        </form>
+        <button type="button" className={styles.linkButton} onClick={() => setEditing(true)}>
+          {mine.birthday
+            ? t('cakes.changeBirthday', { date: showMonthDay(mine.birthday) })
+            : t('cakes.setBirthday')}
+        </button>
+      )}
+      {mine && editing && (
+        <BirthdayDialog
+          personId={mine.id}
+          current={mine.birthday}
+          onClose={() => setEditing(false)}
+        />
       )}
     </section>
+  );
+}
+
+function BirthdayDialog({
+  personId,
+  current,
+  onClose,
+}: {
+  personId: string;
+  current: string | null;
+  onClose: () => void;
+}) {
+  const store = getStore();
+  const [value, setValue] = useState(current ? `2000-${current}` : '');
+  return (
+    <Dialog
+      open
+      onClose={onClose}
+      title={t('cakes.myBirthday')}
+      closeLabel={t('admin.cancel')}
+      size="sm"
+    >
+      <form
+        className={styles.form}
+        onSubmit={(e) => {
+          e.preventDefault();
+          void store
+            .act('people:setBirthday', { personId, birthday: value ? value.slice(5) : null })
+            .then((ok) => ok && onClose());
+        }}
+      >
+        <label className={forms.field}>
+          <span className={forms.label}>{t('cakes.myBirthday')}</span>
+          <input
+            className={forms.input}
+            type="date"
+            value={value}
+            onChange={(e) => setValue(e.target.value)}
+          />
+        </label>
+        <button type="submit" className={buttons.primary}>
+          {t('cakes.save')}
+        </button>
+      </form>
+    </Dialog>
   );
 }
 
@@ -429,8 +484,8 @@ const MEDALS = ['🥇', '🥈', '🥉'] as const;
 function Honour({ c }: { c: CommunityState }) {
   const bakers = topBakers(c);
   return (
-    <section className={styles.card} aria-labelledby="cakes-honour">
-      <h2 id="cakes-honour" className={styles.cardTitle}>
+    <section className={styles.refBlock} aria-labelledby="cakes-honour">
+      <h2 id="cakes-honour" className={styles.sectionTitle}>
         {t('cakes.honourTitle')}
       </h2>
       {bakers.length === 0 ? (
@@ -452,24 +507,47 @@ function Honour({ c }: { c: CommunityState }) {
   );
 }
 
+const HISTORY_PREVIEW = 6;
+
 function History({ c }: { c: CommunityState }) {
-  const list = paid(c).slice(0, 12);
+  const nameOf = useNameOf();
+  const [all, setAll] = useState(false);
+  const years = paidByYear(c);
+  const total = years.reduce((n, y) => n + y.debts.length, 0);
+  // Rows before each year, so the preview can stop after HISTORY_PREVIEW across year groups.
+  const before = years.map((_, i) => years.slice(0, i).reduce((n, y) => n + y.debts.length, 0));
+  const limit = all ? Infinity : HISTORY_PREVIEW;
+  const shown = years
+    .map(({ year, debts }, i) => ({ year, debts: debts.slice(0, Math.max(0, limit - before[i]!)) }))
+    .filter((y) => y.debts.length > 0);
+
   return (
-    <section className={styles.card} aria-labelledby="cakes-history">
-      <h2 id="cakes-history" className={styles.cardTitle}>
+    <section className={styles.refBlock} aria-labelledby="cakes-history">
+      <h2 id="cakes-history" className={styles.sectionTitle}>
         {t('cakes.historyTitle')}
       </h2>
-      <ul className={styles.rows}>
-        {list.length === 0 && <li className={styles.muted}>{t('cakes.noHistory')}</li>}
-        {list.map((d) => (
-          <li key={d.id} className={styles.row}>
-            <span className={styles.rowTitle}>{nameOf(c, d.personId)}</span>
-            <span className={`${styles.rowMeta} num`}>
-              {d.reason} · {showDate(d.paidOn ?? d.occurredOn)}
-            </span>
-          </li>
-        ))}
-      </ul>
+      {total === 0 && <p className={styles.muted}>{t('cakes.noHistory')}</p>}
+      {shown.map(({ year, debts }) => (
+        <div key={year} className={styles.yearGroup}>
+          <h3 className={`${styles.yearLabel} num`}>{year}</h3>
+          <ul className={styles.rows}>
+            {debts.map((d) => (
+              <li key={d.id} className={styles.historyRow}>
+                <span className={styles.rowTitle}>{nameOf(d.personId)}</span>
+                <span className={styles.rowMeta}>{d.reason}</span>
+                <span className={`${styles.rowMeta} num`}>
+                  {showDate(d.paidOn ?? d.occurredOn).slice(0, 5)}
+                </span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+      {total > HISTORY_PREVIEW && (
+        <button type="button" className={styles.linkButton} onClick={() => setAll((v) => !v)}>
+          {all ? t('cakes.showLess') : t('cakes.showAll', { count: total })}
+        </button>
+      )}
     </section>
   );
 }

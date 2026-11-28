@@ -1,7 +1,7 @@
 import { t } from '../../i18n';
 import { getStore, useChat } from '../../state/store';
 import styles from './OfficeShortcut.module.css';
-import { showDate, weekdayOf } from './selectors';
+import { showDate, weekdayName } from './selectors';
 
 /**
  * Top-bar shortcut (Phase 19): my answer for the next decided office day, one click from anywhere.
@@ -16,7 +16,7 @@ export function OfficeShortcut() {
   if (!next || !mine) return null;
   const plan =
     community.attendance.find((a) => a.date === next.date && a.personId === mine.id)?.plan ?? null;
-  const day = `${t(`office.weekdays.${weekdayOf(next.date) as 1 | 2 | 3 | 4 | 5}`)} ${showDate(next.date).slice(0, 5)}`;
+  const day = `${weekdayName(next.date)} ${showDate(next.date).slice(0, 5)}`;
   const store = getStore();
 
   return (

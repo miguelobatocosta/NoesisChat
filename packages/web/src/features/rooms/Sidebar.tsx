@@ -6,6 +6,7 @@ import { t } from '../../i18n';
 import { getStore, type Page, useChat } from '../../state/store';
 import { formatTime } from '../../lib/format';
 import { quietUntil, useDnd } from '../../lib/dnd';
+import { THEME_PREFERENCES, useTheme } from '../../theme';
 import { Mascot } from '../mascots/Mascot';
 import { archivedRooms, hiddenRooms, visibleRooms } from './roomOrder';
 import styles from './Sidebar.module.css';
@@ -34,7 +35,8 @@ export function Sidebar({
   );
   const people = active.filter((m) => !m.isBot);
   const mascots = active.filter((m) => m.isBot);
-  const online = people.filter((m) => m.online);
+  // You're in the footer already, so Online lists the others.
+  const online = people.filter((m) => m.online && m.id !== me.id);
   const offline = people.filter((m) => !m.online);
 
   return (
@@ -86,7 +88,7 @@ export function Sidebar({
           <h2 className={`${styles.label} num`}>{t('sidebar.online', { count: online.length })}</h2>
           <ul className={styles.members}>
             {online.map((m) => (
-              <MemberRow key={m.id} member={m} isMe={m.id === me.id} />
+              <MemberRow key={m.id} member={m} />
             ))}
           </ul>
           {offline.length > 0 && (
@@ -96,7 +98,7 @@ export function Sidebar({
               </summary>
               <ul className={styles.members}>
                 {offline.map((m) => (
-                  <MemberRow key={m.id} member={m} isMe={m.id === me.id} />
+                  <MemberRow key={m.id} member={m} />
                 ))}
               </ul>
             </details>
@@ -195,12 +197,11 @@ function RoomRow({ room }: { room: RoomView }) {
   );
 }
 
-function MemberRow({ member, isMe }: { member: Member; isMe: boolean }) {
+function MemberRow({ member }: { member: Member }) {
   return (
     <li className={styles.member} data-online={member.online || undefined}>
       <span className={styles.presence} aria-hidden="true" />
       <span className={styles.memberName}>{member.displayName}</span>
-      {isMe && <span className={styles.meTag}>{t('sidebar.you')}</span>}
     </li>
   );
 }
@@ -208,6 +209,7 @@ function MemberRow({ member, isMe }: { member: Member; isMe: boolean }) {
 function MeFooter({ onOpen }: { onOpen: (d: DialogName) => void }) {
   const me = useChat((s) => s.me);
   const [open, setOpen] = useState(false);
+  const [theme, setTheme] = useTheme();
   const ref = useRef<HTMLDivElement>(null);
   const isStaff = me.role === 'host' || me.role === 'admin';
 
@@ -255,12 +257,27 @@ function MeFooter({ onOpen }: { onOpen: (d: DialogName) => void }) {
           <button type="button" role="menuitem" onClick={pick(() => onOpen('dnd'))}>
             {t('dnd.title')}
           </button>
-          <button type="button" role="menuitem" onClick={pick(() => onOpen('search'))}>
-            {t('search.open')}
-          </button>
           <button type="button" role="menuitem" onClick={pick(() => onOpen('rules'))}>
             {t('sidebar.rules')}
           </button>
+          <div className={styles.menuGroup} role="group" aria-label={t('theme.label')}>
+            <span className={styles.menuLabel} aria-hidden="true">
+              {t('theme.label')}
+            </span>
+            <div className={styles.menuSegments}>
+              {THEME_PREFERENCES.map((option) => (
+                <button
+                  key={option}
+                  type="button"
+                  role="menuitemradio"
+                  aria-checked={theme === option}
+                  onClick={() => setTheme(option)}
+                >
+                  {t(`theme.${option}`)}
+                </button>
+              ))}
+            </div>
+          </div>
           <button type="button" role="menuitem" onClick={pick(() => void getStore().logout())}>
             {t('sidebar.logout')}
           </button>

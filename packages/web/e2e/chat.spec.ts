@@ -394,8 +394,9 @@ test.describe('office days (D-54)', () => {
       .getByRole('button', { name: /^Escritório/ })
       .click();
     await expect(host.page).toHaveURL(/\/escritorio$/);
+    await host.page.getByText('Ferramentas de admin').click();
     await host.page
-      .getByRole('region', { name: 'Dia extra (admin)' })
+      .getByRole('region', { name: 'Dia extra' })
       .getByRole('button', { name: 'Acrescentar' })
       .click();
 
@@ -563,6 +564,18 @@ test.describe('Bolos and Escritório pages', () => {
       await ana.context.close();
     });
   }
+
+  test('the theme lives in the account menu; you are not listed twice', async ({ browser }) => {
+    const ana = await join(browser, memberInvite(), uniqueName('Ana'), { colorScheme: 'light' });
+    await expect(ana.page.getByRole('banner').getByRole('radio')).toHaveCount(0);
+    await ana.page.getByRole('button', { name: 'Menu' }).click();
+    await ana.page.getByRole('menuitemradio', { name: 'Escuro' }).click();
+    await expect(ana.page.locator('html')).toHaveAttribute('data-theme', 'dark');
+    await expect(ana.page.getByRole('menuitem', { name: 'Pesquisar' })).toHaveCount(0);
+    await ana.page.getByRole('menuitemradio', { name: 'Sistema' }).click();
+    await expect(ana.page.locator('html')).toHaveAttribute('data-theme', 'light');
+    await ana.context.close();
+  });
 
   test('top-bar search opens the search with what was typed; Ligado only shows on problems', async ({
     browser,

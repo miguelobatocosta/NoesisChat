@@ -1,4 +1,5 @@
 import type { CakeDebt, CommunityState, Person } from '@pausa/shared';
+import { t } from '../../i18n';
 
 /** Whole days from an ISO date to another (b − a), in local time. */
 export function daysBetween(a: string, b: string): number {
@@ -14,7 +15,7 @@ export const showDate = (iso: string) => iso.split('-').reverse().join('/');
 /** 'MM-DD' → 'dd/mm'. */
 export const showMonthDay = (md: string) => md.split('-').reverse().join('/');
 
-export interface Debtor {
+interface Debtor {
   person: Person;
   debts: CakeDebt[];
   /** Days since the oldest open debt. */
@@ -85,7 +86,6 @@ export const REASON_KEYS = [
   'car',
   'justBecause',
 ] as const;
-export type ReasonKey = (typeof REASON_KEYS)[number];
 
 // --- office days (D-54) -----------------------------------------------------------------------------
 
@@ -94,6 +94,10 @@ export function weekdayOf(iso: string): number {
   const [y, m, d] = iso.split('-').map(Number) as [number, number, number];
   return ((new Date(y, m - 1, d).getDay() + 6) % 7) + 1;
 }
+
+/** The weekday's name ("quarta"); extra days can fall on a weekend, so all seven exist. */
+export const weekdayName = (iso: string) =>
+  t(`office.weekdays.${weekdayOf(iso) as 1 | 2 | 3 | 4 | 5 | 6 | 7}`);
 
 /** ISO date of a weekday (1..5) in the week starting on `monday`. */
 export function dateInWeek(monday: string, weekday: number): string {
@@ -119,7 +123,7 @@ export function goingIds(c: CommunityState, date: string): string[] {
 }
 
 /** The Monday of the week containing this date. */
-export function weekStartOf(iso: string): string {
+function weekStartOf(iso: string): string {
   // dateInWeek counts from its first argument, so going back (weekday − 1) days lands on Monday.
   return dateInWeek(iso, 2 - weekdayOf(iso));
 }
@@ -162,4 +166,20 @@ export function staleness(days: number): {
   if (days < 90) return { level: 2, key: 'dusty' };
   if (days < 180) return { level: 3, key: 'fossil' };
   return { level: 4, key: 'heritage' };
+}
+
+/** The next office day that isn't over (today counts). */
+export const nextOfficeDay = (c: CommunityState) =>
+  [...c.days]
+    .sort((a, b) => a.date.localeCompare(b.date))
+    .find((d) => d.date >= c.today && !d.closed);
+
+/** Paid cakes grouped by year, newest year first (for the history). */
+export function paidByYear(c: CommunityState): { year: string; debts: CakeDebt[] }[] {
+  const groups = new Map<string, CakeDebt[]>();
+  for (const d of paid(c)) {
+    const year = (d.paidOn ?? d.occurredOn).slice(0, 4);
+    groups.set(year, [...(groups.get(year) ?? []), d]);
+  }
+  return [...groups].map(([year, debts]) => ({ year, debts }));
 }

@@ -167,11 +167,6 @@ summary.label {
   white-space: nowrap;
 }
 
-.meTag {
-  font-size: 12px;
-  color: var(--sidebar-muted);
-}
-
 .me {
   position: relative;
   display: flex;
@@ -249,6 +244,46 @@ summary.label {
 .menu button:hover,
 .menu button:focus-visible {
   background: var(--fill-hover);
+}
+
+/* Theme (D-57): a small segmented row inside the menu, not a control on the blue header. */
+.menuGroup {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  padding: var(--space-2) var(--space-3);
+  border-top: 1px solid var(--separator);
+  border-bottom: 1px solid var(--separator);
+  margin: var(--space-1) 0;
+}
+
+.menuLabel {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--fg-muted);
+}
+
+.menuSegments {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+  padding: 2px;
+  border-radius: var(--radius-sm);
+  background: var(--fill);
+}
+
+.menu .menuSegments button {
+  min-height: 30px;
+  padding: var(--space-1);
+  text-align: center;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.menu .menuSegments button[aria-checked='true'] {
+  background: var(--bg);
+  color: var(--fg);
+  box-shadow: var(--shadow-1);
 }
 
 /* Phone layout (D-22): off-canvas drawer, pulled out by the room header's "Salas" button. */

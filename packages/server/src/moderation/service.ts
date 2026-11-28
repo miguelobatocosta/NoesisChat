@@ -47,7 +47,7 @@ export function requireNotMuted(db: Db, userId: string, roomId: string): void {
   if (mute) throw new AppError('MUTED', `Muted until ${new Date(mute.until).toISOString()}`);
 }
 
-export function standingOf(db: Db, userId: string, roomId: string, now = Date.now()): Standing {
+function standingOf(db: Db, userId: string, roomId: string, now = Date.now()): Standing {
   const labels = db
     .prepare(
       `SELECT t.label FROM strikes s JOIN topics t ON t.id = s.topic_id

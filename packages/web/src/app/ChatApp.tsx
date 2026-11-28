@@ -127,6 +127,7 @@ function ChatLayout() {
   return (
     <div className={styles.app}>
       <BrandHeader
+        theme={false}
         center={
           <>
             <HeaderSearch

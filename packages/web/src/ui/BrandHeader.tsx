@@ -4,8 +4,19 @@ import { t } from '../i18n';
 import styles from './BrandHeader.module.css';
 import { ThemeToggle } from './ThemeToggle';
 
-/** Brand header (BRAND.md §5). Text placeholder until the official logo is approved (BRAND.md §6, D-01). */
-export function BrandHeader({ children, center }: { children?: ReactNode; center?: ReactNode }) {
+/**
+ * Brand header (BRAND.md §5). Text placeholder until the official logo is approved (BRAND.md §6, D-01).
+ * Inside the app the theme lives in the account menu (D-57); the sign-in pages keep it here.
+ */
+export function BrandHeader({
+  children,
+  center,
+  theme = true,
+}: {
+  children?: ReactNode;
+  center?: ReactNode;
+  theme?: boolean;
+}) {
   return (
     <header className={styles.header} aria-label={t('header.label', { app: APP_NAME })}>
       <div className={styles.brand}>
@@ -16,7 +27,7 @@ export function BrandHeader({ children, center }: { children?: ReactNode; center
       {center && <div className={styles.center}>{center}</div>}
       <div className={styles.right}>
         {children}
-        <ThemeToggle />
+        {theme && <ThemeToggle />}
       </div>
     </header>
   );

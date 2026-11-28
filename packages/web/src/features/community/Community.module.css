@@ -1,7 +1,8 @@
 /*
- * Bolos and Escritório (D-53/D-54, Phase 19). The #geral mascot runs the board: one big speech
- * bubble is the signature; everything around it stays quiet. Raleway only, with display numbers
- * (800, tight tracking, tabular figures) for what matters: days owed, people here.
+ * Bolos and Escritório (D-53/D-54, Phase 20). Each page has one hero: a navy band holding a paper
+ * object from the team's world (the pastelaria "senha", the desk calendar page) next to the one fact
+ * that matters, with the #geral mascot commenting. Below it, in decreasing weight: your own status,
+ * the main list, quiet reference blocks (hairlines, no cards), and folded admin tools.
  */
 
 .page {
@@ -44,103 +45,11 @@
   padding: var(--space-6) var(--space-8) var(--space-12);
   display: flex;
   flex-direction: column;
-  gap: var(--space-5);
-}
-
-/* --- the mascot and its bubble ------------------------------------------------------------------ */
-
-.hero {
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: var(--space-6);
-}
-
-.says {
-  display: flex;
-  align-items: flex-end;
-  gap: var(--space-4);
-  margin: 0;
-  min-width: 0;
-  flex: 1 1 420px;
-}
-
-.saysArt {
-  flex-shrink: 0;
-  filter: drop-shadow(var(--mascot-drop));
-}
-
-.bubble {
-  position: relative;
-  margin: 0 0 var(--space-6);
-  padding: var(--space-4) var(--space-5);
-  border-radius: var(--radius-lg);
-  background: var(--bg-subtle);
-  max-width: 560px;
-}
-
-/* The tail points at the mascot. */
-.bubble::before {
-  content: '';
-  position: absolute;
-  left: -10px;
-  bottom: 18px;
-  border-width: 10px 12px 10px 0;
-  border-style: solid;
-  border-color: transparent var(--bg-subtle) transparent transparent;
-}
-
-.bubble p {
-  margin: 0;
-  font-size: 20px;
-  line-height: 28px;
-  font-weight: 600;
-  letter-spacing: -0.01em;
-  color: var(--fg);
-}
-
-.bubbleWho {
-  margin-top: var(--space-1);
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--fg-muted);
-}
-
-.stats {
-  display: flex;
   gap: var(--space-8);
-  margin: 0 0 var(--space-6);
 }
 
-.stat {
-  display: flex;
-  flex-direction: column-reverse;
-  gap: var(--space-1);
-}
+/* --- shared type ---------------------------------------------------------------------------------- */
 
-.statNumber,
-.daysNumber {
-  margin: 0;
-  font-size: 44px;
-  line-height: 44px;
-  font-weight: 800;
-  letter-spacing: -0.04em;
-  color: var(--fg);
-}
-
-.statText {
-  margin: 0;
-  font-size: 20px;
-  line-height: 44px;
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  color: var(--fg);
-}
-
-.statLabel,
 .eyebrow {
   margin: 0;
   font-size: 11px;
@@ -151,47 +60,443 @@
   color: var(--fg-muted);
 }
 
-/* --- layout -------------------------------------------------------------------------------------- */
-
-.layout {
-  display: grid;
-  grid-template-columns: minmax(0, 1.7fr) minmax(280px, 1fr);
-  gap: var(--space-5);
-  align-items: start;
-}
-
-.side {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-5);
-}
-
-.layoutBottom {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: var(--space-5);
-  align-items: start;
-}
-
-.card {
-  padding: var(--space-5);
-  border-radius: var(--radius-lg);
-  background: var(--bg-subtle);
-}
-
-.cardTitle {
-  margin: 0 0 var(--space-2);
-  font-size: 17px;
-  line-height: 22px;
-  font-weight: 700;
-  letter-spacing: -0.01em;
+.sectionTitle {
+  margin: 0;
+  font-size: 20px;
+  line-height: 26px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
   color: var(--fg);
 }
 
 .muted {
-  margin: 0 0 var(--space-3);
+  margin: 0;
   color: var(--fg-muted);
   font-size: 14px;
+}
+
+.badgeText {
+  margin-left: var(--space-2);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--link);
+}
+
+.linkButton {
+  align-self: flex-start;
+  padding: var(--space-1) 0;
+  border: 0;
+  background: none;
+  color: var(--link);
+  font: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  border-radius: var(--radius-sm);
+}
+
+.linkButton:hover {
+  text-decoration: underline;
+}
+
+.linkButton:focus-visible {
+  box-shadow: var(--focus-ring);
+}
+
+/* --- tier 1: the hero band ----------------------------------------------------------------------- */
+
+.hero {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) minmax(0, 1.05fr);
+  align-items: center;
+  gap: var(--space-6) var(--space-8);
+  padding: var(--space-8) var(--space-8) var(--space-6);
+  border-radius: var(--radius-lg);
+  background: var(--hero-bg);
+  color: var(--hero-fg);
+}
+
+.heroMain {
+  min-width: 0;
+}
+
+.heroEyebrow {
+  margin: 0;
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--hero-muted);
+}
+
+.heroDay {
+  margin: var(--space-2) 0 0;
+  font-size: 36px;
+  line-height: 40px;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+}
+
+.heroDay::first-letter {
+  text-transform: uppercase;
+}
+
+.heroWhen {
+  margin: var(--space-1) 0 0;
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--hero-accent);
+}
+
+.heroBig {
+  margin: var(--space-2) 0 0;
+  font-size: 52px;
+  line-height: 56px;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  color: var(--hero-accent);
+}
+
+.heroNote {
+  margin: var(--space-3) 0 0;
+  max-width: 48ch;
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--hero-muted);
+}
+
+.heroFact {
+  margin: var(--space-2) 0 0;
+  font-size: 15px;
+  line-height: 22px;
+}
+
+.heroFact strong {
+  font-weight: 800;
+}
+
+.heroActions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: var(--space-2);
+  margin-top: var(--space-4);
+}
+
+.heroButton {
+  min-height: 40px;
+  padding: 0 var(--space-4);
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: var(--hero-raised);
+  color: var(--hero-fg);
+  font: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color var(--dur-fast) var(--ease);
+}
+
+.heroButton:hover {
+  background: var(--hero-raised-hover);
+}
+
+.heroButton:focus-visible,
+.heroInput:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring-on-brand);
+}
+
+.heroLabel {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--hero-muted);
+}
+
+.heroInput {
+  min-height: 40px;
+  padding: 0 var(--space-3);
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: var(--hero-raised);
+  color: var(--hero-fg);
+  font: inherit;
+}
+
+.checkin {
+  min-height: 52px;
+  padding: 0 var(--space-6);
+  font-size: 17px;
+}
+
+.capacityTrack {
+  max-width: 420px;
+  height: 8px;
+  margin-top: var(--space-3);
+  border-radius: 4px;
+  background: var(--hero-raised);
+  overflow: hidden;
+}
+
+.capacityFill {
+  display: block;
+  height: 100%;
+  border-radius: 4px;
+  background: var(--hero-accent);
+  transition: width 300ms var(--ease-spring);
+}
+
+/* The mascot and its bubble, on the band. */
+.says {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--space-3);
+  margin: 0;
+  min-width: 0;
+  align-self: end;
+}
+
+.saysArt {
+  flex-shrink: 0;
+}
+
+.bubble {
+  position: relative;
+  margin: 0 0 var(--space-6);
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-lg);
+  background: var(--hero-raised);
+}
+
+/* The tail points at the mascot. */
+.bubble::before {
+  content: '';
+  position: absolute;
+  left: -10px;
+  bottom: 18px;
+  border-width: 10px 12px 10px 0;
+  border-style: solid;
+  border-color: transparent var(--hero-raised) transparent transparent;
+}
+
+.bubble p {
+  margin: 0;
+  font-size: 17px;
+  line-height: 24px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--hero-fg);
+}
+
+.bubbleWho {
+  margin-top: var(--space-1);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--hero-muted);
+}
+
+/* --- the paper objects ------------------------------------------------------------------------------ */
+
+/* The pastelaria senha: tilted a little, notched where the stub tears off. */
+.senha {
+  width: 168px;
+  padding: var(--space-4) var(--space-4) var(--space-3);
+  border-radius: 6px;
+  background: var(--paper);
+  color: var(--paper-fg);
+  text-align: center;
+  box-shadow: var(--shadow-2);
+  transform: rotate(-2.5deg);
+}
+
+.senha p {
+  margin: 0;
+}
+
+.senha .senhaHead {
+  padding-bottom: var(--space-2);
+  margin-bottom: var(--space-2);
+  border-bottom: 1px solid var(--separator);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--paper-muted);
+}
+
+.senhaLabel {
+  display: block;
+  font-size: 11px;
+  line-height: 16px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--paper-muted);
+}
+
+.senhaNumber {
+  font-size: 68px;
+  line-height: 68px;
+  font-weight: 800;
+  letter-spacing: -0.05em;
+  color: var(--paper-ink);
+}
+
+.senhaStub {
+  position: relative;
+  margin-top: var(--space-3);
+  padding-top: var(--space-3);
+  border-top: 2px dashed var(--paper-muted);
+}
+
+.senhaStub::before,
+.senhaStub::after {
+  content: '';
+  position: absolute;
+  top: -9px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--hero-bg);
+}
+
+.senhaStub::before {
+  left: calc(-1 * var(--space-4) - 8px);
+}
+
+.senhaStub::after {
+  right: calc(-1 * var(--space-4) - 8px);
+}
+
+.senhaWho {
+  display: block;
+  font-size: 15px;
+  line-height: 20px;
+  font-weight: 800;
+  color: var(--paper-fg);
+  overflow-wrap: anywhere;
+}
+
+/* The desk calendar page: blue band with the weekday, the day huge, two binding holes on top. */
+.calendarPage {
+  position: relative;
+  width: 148px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 10px;
+  background: var(--paper);
+  color: var(--paper-fg);
+  box-shadow: var(--shadow-2);
+  overflow: hidden;
+}
+
+.calendarPage::before,
+.calendarPage::after {
+  content: '';
+  position: absolute;
+  top: 6px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--hero-bg);
+}
+
+.calendarPage::before {
+  left: 30%;
+}
+
+.calendarPage::after {
+  right: 30%;
+}
+
+.calendarBand {
+  width: 100%;
+  padding: var(--space-6) var(--space-2) var(--space-2);
+  background: var(--paper-band);
+  color: var(--hero-fg);
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.calendarNumber {
+  padding-top: var(--space-2);
+  font-size: 76px;
+  line-height: 80px;
+  font-weight: 800;
+  letter-spacing: -0.05em;
+}
+
+.calendarMonth {
+  padding-bottom: var(--space-3);
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--paper-muted);
+}
+
+/* --- tier 2: your status and what needs you -------------------------------------------------------- */
+
+.status {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  padding: var(--space-4) var(--space-5);
+  border-left: 4px solid var(--stale-3);
+  border-radius: var(--radius-sm);
+  background: var(--bg-subtle);
+}
+
+.status[data-tone='clean'] {
+  border-left-color: var(--accent);
+}
+
+.statusLine {
+  margin: 0;
+  font-size: 22px;
+  line-height: 28px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--fg);
+}
+
+.statusDetail {
+  margin: 0;
+  font-size: 14px;
+  color: var(--fg-muted);
+}
+
+.attention {
+  padding: var(--space-4) var(--space-5);
+  border-radius: var(--radius-md);
+  background: var(--bg-selected);
+}
+
+/* --- tier 3: main sections ------------------------------------------------------------------------- */
+
+.section {
+  min-width: 0;
+}
+
+.sectionHead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-4);
+  padding-bottom: var(--space-3);
+  border-bottom: 1px solid var(--separator);
+}
+
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
 }
 
 .rows {
@@ -231,13 +536,6 @@
   color: var(--fg-muted);
 }
 
-.badgeText {
-  margin-left: var(--space-2);
-  font-size: 12px;
-  font-weight: 700;
-  color: var(--link);
-}
-
 .form {
   display: flex;
   flex-direction: column;
@@ -262,22 +560,24 @@
   gap: var(--space-1);
 }
 
-/* --- the cake book ------------------------------------------------------------------------------- */
-
-.ledger .eyebrow {
-  margin-bottom: var(--space-3);
-}
-
+/* The cake book: ranked, the top debtor set larger with its days in red. */
 .ledgerRow {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  gap: var(--space-5);
+  grid-template-columns: 40px minmax(0, 1fr) auto;
+  gap: var(--space-4);
   padding: var(--space-4) 0;
   border-bottom: 1px solid var(--separator);
 }
 
 .ledgerRow:last-child {
   border-bottom: none;
+}
+
+.rank {
+  padding-top: 2px;
+  font-size: 15px;
+  font-weight: 800;
+  color: var(--fg-muted);
 }
 
 .ledgerMain {
@@ -288,7 +588,7 @@
 }
 
 .ledgerName {
-  font-size: 18px;
+  font-size: 17px;
   font-weight: 700;
   letter-spacing: -0.01em;
   color: var(--fg);
@@ -301,7 +601,31 @@
   gap: var(--space-1);
 }
 
+.daysNumber {
+  font-size: 32px;
+  line-height: 34px;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  color: var(--fg);
+}
+
+.ledgerRow[data-rank='1'] .ledgerName {
+  font-size: 22px;
+}
+
+.ledgerRow[data-rank='1'] .rank {
+  font-size: 22px;
+  color: var(--fg);
+}
+
+.ledgerRow[data-rank='1'] .daysNumber {
+  font-size: 56px;
+  line-height: 56px;
+  color: var(--danger);
+}
+
 .staleTrack {
+  max-width: 520px;
   height: 6px;
   border-radius: 3px;
   background: var(--fill);
@@ -359,38 +683,27 @@
   color: var(--link);
 }
 
-/* The next office day as a ticket: a stub line divides the "when" from the "who". */
-.ticket {
-  background: var(--bg-selected);
+/* --- tier 4: quiet reference ----------------------------------------------------------------------- */
+
+.reference {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--space-8) var(--space-10);
+  align-items: start;
+  padding-top: var(--space-6);
+  border-top: 1px solid var(--separator);
 }
 
-.ticketDay {
-  margin: var(--space-2) 0 0;
-  font-size: 28px;
-  line-height: 32px;
-  font-weight: 800;
-  letter-spacing: -0.03em;
-  color: var(--fg);
-}
-
-.ticketWhen {
-  margin: var(--space-1) 0 var(--space-3);
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--link);
-}
-
-.ticketStub {
-  margin: 0;
-  padding-top: var(--space-3);
-  border-top: 2px dashed var(--border);
-  font-size: 14px;
-  color: var(--fg-body);
+.refBlock {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
 }
 
 .calendar {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(104px, 1fr));
   gap: var(--space-2);
   margin: 0;
   padding: 0;
@@ -403,7 +716,7 @@
   gap: 2px;
   padding: var(--space-3);
   border-radius: var(--radius-md);
-  background: var(--bg);
+  background: var(--bg-subtle);
 }
 
 .calendarDay[data-today] {
@@ -429,7 +742,7 @@
   grid-template-columns: repeat(3, 1fr);
   align-items: end;
   gap: var(--space-2);
-  margin: var(--space-3) 0 0;
+  margin: 0;
   padding: 0;
   list-style: none;
 }
@@ -481,55 +794,129 @@
   color: var(--fg);
 }
 
-/* One second of cake when a debt is paid. */
-.confetti {
-  position: fixed;
-  inset: 0;
-  z-index: 60;
-  pointer-events: none;
-  overflow: hidden;
+.yearGroup + .yearGroup {
+  margin-top: var(--space-2);
 }
 
-.piece {
-  position: absolute;
-  top: -40px;
-  font-size: 28px;
-  animation: fall 1100ms var(--ease-spring) forwards;
+.yearLabel {
+  margin: 0 0 var(--space-1);
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: var(--fg-muted);
 }
 
-@keyframes fall {
-  0% {
-    transform: translateY(0) rotate(0deg);
-    opacity: 1;
-  }
-  100% {
-    transform: translateY(70vh) rotate(260deg);
-    opacity: 0;
-  }
+.historyRow {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: baseline;
+  gap: var(--space-3);
+  padding: var(--space-2) 0;
+  border-bottom: 1px solid var(--separator);
+}
+
+.historyRow:last-child {
+  border-bottom: none;
+}
+
+/* No-show tally: N little bars, filled up to the absences that count. */
+.strikes {
+  display: inline-flex;
+  gap: 3px;
+}
+
+.strike {
+  width: 6px;
+  height: 18px;
+  border-radius: 2px;
+  background: var(--fill);
+}
+
+.strike[data-on] {
+  background: var(--stale-3);
+}
+
+.featuredExcuse {
+  margin: 0;
+  padding-bottom: var(--space-3);
+  border-bottom: 1px solid var(--separator);
+}
+
+.quoteBig {
+  margin: var(--space-2) 0;
+  font-size: 22px;
+  line-height: 30px;
+  font-weight: 600;
+  font-style: italic;
+  letter-spacing: -0.01em;
+  color: var(--fg);
+}
+
+.quote {
+  font-style: italic;
+  color: var(--fg-body);
+}
+
+/* --- tier 5: admin tools, folded ------------------------------------------------------------------- */
+
+.admin {
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--separator);
+}
+
+.adminSummary {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: var(--hit-min);
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--fg);
+  cursor: pointer;
+  border-radius: var(--radius-sm);
+}
+
+.adminSummary {
+  list-style: none;
+}
+
+.adminSummary::-webkit-details-marker {
+  display: none;
+}
+
+.adminChevron {
+  color: var(--fg-muted);
+  transition: transform var(--dur-fast) var(--ease);
+}
+
+.admin[open] .adminChevron {
+  transform: rotate(90deg);
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .confetti {
-    display: none;
+  .adminChevron {
+    transition: none;
   }
 }
 
-/* --- the office week ----------------------------------------------------------------------------- */
-
-.weekHead {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: var(--space-2);
-  margin-bottom: var(--space-3);
+.adminSummary:focus-visible {
+  box-shadow: var(--focus-ring);
 }
+
+.adminBody {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  padding-top: var(--space-3);
+}
+
+/* --- the office week ------------------------------------------------------------------------------- */
 
 .board {
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: var(--space-2);
-  margin: 0;
+  margin: var(--space-3) 0 0;
   padding: 0;
   list-style: none;
 }
@@ -544,7 +931,7 @@
   padding: var(--space-3) var(--space-2);
   border: 0;
   border-radius: var(--radius-md);
-  background: var(--bg);
+  background: var(--bg-subtle);
   color: var(--fg-body);
   font: inherit;
   text-align: center;
@@ -621,63 +1008,22 @@ button.boardButton:active {
 }
 
 .weekFacts {
-  margin-top: var(--space-4);
+  margin-top: var(--space-3);
 }
 
-.weekCompact {
-  padding: 0;
-  background: transparent;
+.weekFacts .muted {
+  margin-bottom: var(--space-1);
+}
+
+.weekCompact .boardButton {
+  background: var(--bg);
 }
 
 .weekCompact .boardTrack {
   height: 48px;
 }
 
-/* --- today --------------------------------------------------------------------------------------- */
-
-.today {
-  background: var(--bg-selected);
-}
-
-.todayHead {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  align-items: center;
-  gap: var(--space-2) var(--space-5);
-  margin-bottom: var(--space-3);
-}
-
-.capacity {
-  margin: 0;
-  font-size: 32px;
-  line-height: 36px;
-  font-weight: 800;
-  letter-spacing: -0.03em;
-  color: var(--fg);
-}
-
-.capacityTrack {
-  height: 8px;
-  border-radius: 4px;
-  background: var(--fill);
-  overflow: hidden;
-}
-
-.capacityFill {
-  display: block;
-  height: 100%;
-  border-radius: 4px;
-  background: var(--primary);
-  transition: width 300ms var(--ease-spring);
-}
-
-.checkin {
-  grid-row: 1 / span 3;
-  grid-column: 2;
-  min-height: 56px;
-  padding: 0 var(--space-6);
-  font-size: 17px;
-}
+/* --- today's roster -------------------------------------------------------------------------------- */
 
 .roster {
   display: grid;
@@ -711,50 +1057,41 @@ button.boardButton:active {
   color: var(--danger);
 }
 
-/* No-show tally: N little bars, filled up to the absences that count. */
-.strikes {
-  display: inline-flex;
-  gap: 3px;
+/* --- one second of cake when a debt is paid -------------------------------------------------------- */
+
+.confetti {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  pointer-events: none;
+  overflow: hidden;
 }
 
-.strike {
-  width: 6px;
-  height: 18px;
-  border-radius: 2px;
-  background: var(--fill);
+.piece {
+  position: absolute;
+  top: -40px;
+  font-size: 28px;
+  animation: fall 1100ms var(--ease-spring) forwards;
 }
 
-.strike[data-on] {
-  background: var(--stale-3);
+@keyframes fall {
+  0% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(70vh) rotate(260deg);
+    opacity: 0;
+  }
 }
 
-.featuredExcuse {
-  margin: var(--space-2) 0 var(--space-3);
-  padding-bottom: var(--space-3);
-  border-bottom: 1px solid var(--separator);
+@media (prefers-reduced-motion: reduce) {
+  .confetti {
+    display: none;
+  }
 }
 
-.quoteBig {
-  margin: var(--space-2) 0;
-  font-size: 22px;
-  line-height: 30px;
-  font-weight: 600;
-  font-style: italic;
-  letter-spacing: -0.01em;
-  color: var(--fg);
-}
-
-.quote {
-  font-style: italic;
-  color: var(--fg-body);
-}
-
-.adminCard {
-  background: transparent;
-  border: 1px dashed var(--border);
-}
-
-/* --- cards inside chat messages ------------------------------------------------------------------ */
+/* --- cards inside chat messages -------------------------------------------------------------------- */
 
 .chatCard {
   margin-top: var(--space-2);
@@ -778,11 +1115,15 @@ button.boardButton:active {
   color: var(--fg-body);
 }
 
-/* --- phones -------------------------------------------------------------------------------------- */
+/* --- narrower screens ------------------------------------------------------------------------------ */
 
-@media (max-width: 900px) {
-  .layout {
-    grid-template-columns: 1fr;
+@media (max-width: 1180px) {
+  .hero {
+    grid-template-columns: auto minmax(0, 1fr);
+  }
+
+  .says {
+    grid-column: 1 / -1;
   }
 }
 
@@ -800,31 +1141,74 @@ button.boardButton:active {
 
   .scroll {
     padding: var(--space-4) var(--space-3) var(--space-8);
+    gap: var(--space-6);
   }
 
-  .says {
-    flex-basis: 100%;
+  .hero {
+    gap: var(--space-4) var(--space-5);
+    padding: var(--space-5) var(--space-4) var(--space-4);
+  }
+
+  .senha {
+    width: 124px;
+    padding: var(--space-3) var(--space-3) var(--space-2);
+  }
+
+  .senhaStub::before {
+    left: calc(-1 * var(--space-3) - 8px);
+  }
+
+  .senhaStub::after {
+    right: calc(-1 * var(--space-3) - 8px);
+  }
+
+  .senhaNumber {
+    font-size: 48px;
+    line-height: 50px;
+  }
+
+  .senhaWho {
+    font-size: 13px;
+    line-height: 18px;
+  }
+
+  .calendarPage {
+    width: 112px;
+  }
+
+  .calendarNumber {
+    font-size: 56px;
+    line-height: 60px;
+  }
+
+  .heroDay {
+    font-size: 26px;
+    line-height: 30px;
+  }
+
+  .heroBig {
+    font-size: 38px;
+    line-height: 42px;
   }
 
   .saysArt {
-    width: 72px;
-    height: 72px;
+    width: 64px;
+    height: 64px;
   }
 
   .bubble p {
-    font-size: 17px;
-    line-height: 24px;
+    font-size: 15px;
+    line-height: 21px;
   }
 
-  .stats {
-    gap: var(--space-5);
-    flex-wrap: wrap;
+  .ledgerRow {
+    grid-template-columns: 28px minmax(0, 1fr) auto;
+    gap: var(--space-3);
   }
 
-  .statNumber,
-  .daysNumber {
-    font-size: 34px;
-    line-height: 36px;
+  .ledgerRow[data-rank='1'] .daysNumber {
+    font-size: 40px;
+    line-height: 42px;
   }
 
   .board {
@@ -844,13 +1228,14 @@ button.boardButton:active {
   .boardMine {
     font-size: 9px;
   }
+}
 
-  .todayHead {
+@media (max-width: 420px) {
+  .hero {
     grid-template-columns: 1fr;
   }
 
-  .checkin {
-    grid-row: auto;
-    grid-column: auto;
+  .heroMain {
+    grid-column: 1;
   }
 }

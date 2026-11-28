@@ -102,7 +102,8 @@ so it can be bundled. **Bundle the woff2 files locally. No Google Fonts CDN at r
 blue ring is invisible on the blue header) · `--on-brand-divider` (decorative) · `--overlay` (dialog backdrop) ·
 `--highlight-bg` (message jumped to from a reply) · `--sidebar-accent` (mint, as text only on the navy sidebar) ·
 `--separator`, `--fill`, `--fill-hover`, `--material-sheet`, `--material-bar`, `--blur`, `--on-brand-fill`,
-`--shadow-3`, `--ease-spring`, `--hit-min` (D-48: Apple-style refresh). The avatar fills were removed with the avatars (D-48).
+`--shadow-3`, `--ease-spring`, `--hit-min` (D-48: Apple-style refresh). `--stale-1..4` (debt freshness bars, never text) · `--hero-*` and `--paper-*` (D-57: the navy hero band on
+Bolos/Escritório and the paper senha/calendar on it; every text pair is in the contrast test). The avatar fills were removed with the avatars (D-48).
 
 Theme: follow the OS by default (`prefers-color-scheme`), user override System / Light / Dark, remembered in
 `localStorage` (wrapped in try/catch). The override sets `data-theme` on `<html>`.

@@ -78,6 +78,17 @@ const TEXT_PAIRS: [fg: string, bg: string][] = [
   ['--sidebar-fg', '--sidebar-bg'],
   ['--sidebar-muted', '--sidebar-bg'],
   ['--sidebar-accent', '--sidebar-bg'],
+  // Phase 20: the hero band and the paper objects on it.
+  ['--hero-fg', '--hero-bg'],
+  ['--hero-muted', '--hero-bg'],
+  ['--hero-accent', '--hero-bg'],
+  ['--hero-fg', '--hero-raised'],
+  ['--hero-fg', '--hero-raised-hover'],
+  ['--hero-muted', '--hero-raised'],
+  ['--paper-fg', '--paper'],
+  ['--paper-muted', '--paper'],
+  ['--paper-ink', '--paper'],
+  ['--hero-fg', '--paper-band'],
 ];
 
 describe.each([

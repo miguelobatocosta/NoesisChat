@@ -248,3 +248,17 @@ Nuvem (lazy cat). Original SVG drawings in `features/mascots/Mascot.tsx`, colour
   for the next office day, and the connection status only when there's a problem.
 - Called or mentioned with a known question ("quem deve mais bolos?", "quem trouxe mais?", "quantos devo?",
   "quando é o escritório?", "quem leva bolo?"), a mascot answers from the real data, in its own voice.
+
+### D-57 · One hero per page, theme in the menu, revoked members skipped by the import: SETTLED (2026-11-28, owner)
+- Bolos and Escritório each open with one **hero band** (navy, `--hero-*` tokens, mint only for the key number)
+  holding a paper object from the team's world: the pastelaria **senha** ("Bolo nº N de AAAA", who brings it) and
+  a **desk calendar page** (the next office day, or today with the headcount and "Estou cá"). The #geral mascot's
+  bubble sits on the band. Below, in decreasing weight: **A tua situação**, the main list (ranked cake book; the
+  vote while voting), quiet reference blocks (hairlines, no cards), and **Ferramentas de admin** folded in a
+  `<details>` (extra day, change day, judge excuses). The three hero stats were dropped: they repeated the page.
+  The birthday form became a dialog; the paid history shows 6 rows, grouped by year, with "Ver todos".
+- Inside the app the **theme** (Sistema/Claro/Escuro) lives in the account menu; the sign-in pages keep it in the
+  header. "Pesquisar" left the menu (the top bar has it), and you're no longer listed under Online.
+- The Excel import **never matches a revoked member** by name: their history is hidden, so it becomes a guest to
+  merge instead.
+- Extra office days can fall on a weekend, so the weekday names cover all seven days.

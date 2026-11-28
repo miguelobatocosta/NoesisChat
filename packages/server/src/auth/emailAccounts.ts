@@ -11,7 +11,7 @@ import { createDevice } from './sessions';
  * Nothing here ever grants admin to anyone else.
  */
 
-export function userByEmail(db: Db, email: string): UserRow | undefined {
+function userByEmail(db: Db, email: string): UserRow | undefined {
   return db.prepare('SELECT * FROM users WHERE lower(email) = ?').get(email) as UserRow | undefined;
 }
 

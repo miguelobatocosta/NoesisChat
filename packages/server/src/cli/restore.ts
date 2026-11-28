@@ -4,7 +4,7 @@ import { cpSync, existsSync, mkdirSync, readdirSync, renameSync } from 'node:fs'
 import { basename, join, resolve } from 'node:path';
 import { type Config, loadConfig } from '../config';
 
-export async function serverIsRunning(config: Config): Promise<boolean> {
+async function serverIsRunning(config: Config): Promise<boolean> {
   try {
     const res = await fetch(`http://127.0.0.1:${config.port}/health`, {
       signal: AbortSignal.timeout(1500),

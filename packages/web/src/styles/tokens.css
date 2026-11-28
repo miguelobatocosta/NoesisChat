@@ -75,6 +75,19 @@
   --stale-2: #e0a100; /* dusty */
   --stale-3: #e5671b; /* fossil */
   --stale-4: #b42318; /* national heritage */
+  /* added (Phase 20): the hero band on Bolos/Escritório (navy, mint for the one key number) and the
+     paper objects on it (the pastelaria "senha" and the desk calendar page), light in both themes. */
+  --hero-bg: #132153;
+  --hero-fg: #ffffff;
+  --hero-muted: #b8c0da;
+  --hero-accent: #00ff94;
+  --hero-raised: #22306a; /* bubble and buttons on the band */
+  --hero-raised-hover: #2c3c80;
+  --paper: #ffffff;
+  --paper-fg: #132153;
+  --paper-muted: #5b6378;
+  --paper-band: #184bff; /* calendar band; white text on it */
+  --paper-ink: #184bff; /* the ticket number */
 
   --font-sans: 'Raleway', 'Segoe UI', system-ui, sans-serif;
   --font-mono: 'JetBrains Mono', 'Cascadia Code', Consolas, monospace;
@@ -115,6 +128,11 @@
   --stale-2: #f2c14e;
   --stale-3: #ff8a4c;
   --stale-4: #ff6b5b;
+  --hero-bg: #1a2866;
+  --hero-raised: #26387f;
+  --hero-raised-hover: #30448f;
+  --paper: #e8eeff;
+  --paper-muted: #4a5370;
   --bg: #0b1230;
   --bg-subtle: #132153;
   --bg-selected: #1c2a63;

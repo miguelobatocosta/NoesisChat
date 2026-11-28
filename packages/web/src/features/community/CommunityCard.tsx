@@ -3,6 +3,7 @@ import { t } from '../../i18n';
 import { getStore, useChat } from '../../state/store';
 import buttons from '../../ui/buttons.module.css';
 import styles from './Community.module.css';
+import { useMe, useNameOf } from './hooks';
 import { Week } from './OfficePage';
 import { goingIds, showDate } from './selectors';
 
@@ -25,13 +26,12 @@ export function CommunityCard({ card }: { card: MessageCard }) {
 }
 
 function DebtCard({ c, debtId }: { c: CommunityState; debtId: string }) {
-  const me = useChat((s) => s.me);
+  const { me, staff } = useMe();
   const store = getStore();
   const debt = c.debts.find((d) => d.id === debtId);
   const status = !debt ? t('cards.gone') : t(`cards.status.${debt.status}`);
   const person = debt && c.people.find((p) => p.id === debt.personId);
   const mine = !!person && person.userId === me.id;
-  const staff = me.role === 'host' || me.role === 'admin';
   const canConfirm = debt?.status === 'pending' && (debt.recordedBy !== me.id || mine || staff);
 
   return (
@@ -68,8 +68,7 @@ function OfficeCard({ c, card }: { c: CommunityState; card: MessageCard }) {
       ? c.weeks.find((w) => w.weekStart === card.ref)
       : c.weeks.find((w) => w.chosenOn === card.ref);
   const day = c.days.find((d) => d.date === card.ref);
-  const me = useChat((s) => s.me);
-  const mine = c.people.find((p) => p.userId === me.id);
+  const { person: mine } = useMe();
   const isToday = card.ref === c.today;
   const present =
     !!mine &&
@@ -109,7 +108,7 @@ function CakeCallCard({ c, date }: { c: CommunityState; date: string }) {
   const cake = c.debts.filter(
     (d) => d.pledgedOn === date || (d.paidOn === date && d.status === 'paid'),
   );
-  const nameOf = (id: string) => c.people.find((p) => p.id === id)?.name ?? '?';
+  const nameOf = useNameOf();
   return (
     <div className={styles.chatCard}>
       <div className={styles.chatCardRow}>
