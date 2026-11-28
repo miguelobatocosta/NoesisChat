@@ -18,7 +18,7 @@ interface PersonRow {
 const SELECT = `SELECT p.*, u.display_name FROM people p LEFT JOIN users u ON u.id = p.user_id`;
 
 /** Every active, non-bot member gets a person (idempotent; cheap enough to run before each read). */
-export function syncPeople(db: Db): void {
+function syncPeople(db: Db): void {
   const missing = db
     .prepare(
       `SELECT u.id, u.display_name, u.name_key FROM users u
@@ -68,13 +68,17 @@ export function personOfUser(db: Db, userId: string): Person | undefined {
   return row ? toPerson(row) : undefined;
 }
 
-/** A member or guest by name (accent/case-insensitive), as Excel names come in. */
+/**
+ * A member or guest by name (accent/case-insensitive), as Excel names come in. Revoked members are
+ * skipped: their history is hidden, so a match would make imported rows vanish.
+ */
 export function findPersonByName(db: Db, name: string): Person | undefined {
   syncPeople(db);
   const key = nameKey(cleanDisplayName(name));
   const row = db
     .prepare(
-      `${SELECT} WHERE coalesce(u.name_key, p.name_key) = ? ORDER BY p.user_id IS NULL LIMIT 1`,
+      `${SELECT} WHERE coalesce(u.name_key, p.name_key) = ? AND (p.user_id IS NULL OR u.revoked_at IS NULL)
+       ORDER BY p.user_id IS NULL LIMIT 1`,
     )
     .get(key) as PersonRow | undefined;
   return row ? toPerson(row) : undefined;

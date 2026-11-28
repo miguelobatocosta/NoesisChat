@@ -248,6 +248,27 @@ describe('Excel import', () => {
     });
   });
 
+  it('never attaches rows to a revoked member: the name becomes a guest to merge', async () => {
+    s = await startTestServer(ENV);
+    const host = await s.connect(s.user('Costa', 'host'));
+    const old = s.user('Miguel Costa');
+    expect((await state(host)).people.some((p) => p.userId === old.id)).toBe(true);
+    await call(host, 'admin:members:revoke', { userId: old.id });
+    const { rows } = await call(host, 'admin:import:preview', {
+      sheet: 'cakes',
+      text: '06/07/2026\tMiguel Costa\tPai First Time\tOk',
+    });
+    expect(rows[0]!.personId).toBeNull();
+    expect(
+      await call(host, 'admin:import:commit', {
+        sheet: 'cakes',
+        text: '06/07/2026\tMiguel Costa\tPai First Time\tOk',
+      }),
+    ).toMatchObject({ created: 1, guests: 1 });
+    const guest = (await state(host)).people.find((p) => p.name === 'Miguel Costa')!;
+    expect(guest.userId).toBeNull();
+  });
+
   it('birthdays set the day and month and the year’s cake', async () => {
     const { host } = await setup();
     await call(host, 'admin:import:commit', {
